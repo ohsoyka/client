@@ -1,0 +1,33 @@
+.article-footer {
+  margin: 3em auto;
+
+  .article-footer-date {
+    color: $light-grey;
+    font-weight: $font-weight-light;
+  }
+
+  .article-footer-tags {
+    list-style: none;
+    font-weight: $font-weight-bold;
+    color: $green;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+    }
+
+    .article-footer-tag {
+      display: inline;
+      margin-left: 1em;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .article-footer-separator {
+    margin: 3em auto;
+    width: 90%;
+  }
+}

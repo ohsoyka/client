@@ -1,0 +1,33 @@
+.article-header {
+  width: 100vw;
+  height: calc(100vh - #{$header-height});
+  box-sizing: border-box;
+
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+
+  margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding});
+
+  @media (max-width: $breakpoint-middle) {
+    margin-left: -$container-padding-middle;
+  }
+
+  .react-parallax-bgimage {
+    object-fit: cover;
+  }
+
+  .react-parallax-content {
+    height: 100%;
+  }
+
+  .article-title {
+    color: $white;
+    position: absolute;
+    bottom: 0;
+    z-index: 20;
+    margin: 0;
+    padding: 0.8em 1em ;
+    background: linear-gradient(to top, transparentize($black, 0.2), $transparent);
+  }
+}
