@@ -1,0 +1,26 @@
+$black: #000;
+$white: #fff;
+$extra-light-grey: #d0d0d0;
+$light-grey: #8d8d8d;
+$grey: #797979;
+$dark-grey: #404040;
+$green: #64b510;
+$dark-green: darken(#64b510, 10%);
+$transparent: rgba(0,0,0,0);
+
+$font-family-header: 'Circe';
+$font-family-main: 'Source Sans Pro', helvetica, sans-serif;
+
+$font-weight-extralight: 100;
+$font-weight-light: 200;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+$header-height: 3.5em;
+$container-padding: 1em;
+$container-padding-middle: 3em;
+
+$breakpoint-tiny: 450px;
+$breakpoint-small: 700px;
+$breakpoint-middle: 1000px;

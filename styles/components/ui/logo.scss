@@ -1,0 +1,17 @@
+.logo {
+  fill: $black;
+  color: $black;
+  font-size: 1em;
+
+  .logo-icon {
+    width: 2.5em;
+  }
+
+  .logo-text {
+
+    font-family: 'Circe';
+    font-weight: 900;
+
+    margin-left: 0.5em;
+  }
+}

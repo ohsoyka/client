@@ -1,0 +1,49 @@
+.footer {
+  background-color: $dark-grey;
+  border-top: 0.4em solid $green;
+  box-sizing: border-box;
+  padding: 0;
+  flex-shrink: 0;
+
+  .footer-logo {
+    fill: $light-grey;
+    font-size: 1.5em;
+    padding-right: 2em;
+  }
+
+  .footer-menu,
+  .footer-social {
+    list-style: none;
+    text-align: right;
+    margin: 1em 0;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      color: $light-grey;
+
+      &:hover {
+        color: lighten($light-grey, 20%);
+      }
+    }
+
+    li {
+      display: inline;
+      text-transform: lowercase;
+      font-family: $font-family-header;
+      font-weight: $font-weight-light;
+      font-size: 1em;
+      margin-left: 1em;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .footer-horizontal-line {
+    border-color: transparentize($light-grey, 0.3);
+    margin-left: -1em;
+    width: calc(100% + 2em);
+  }
+}
