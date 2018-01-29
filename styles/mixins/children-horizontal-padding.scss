@@ -1,0 +1,9 @@
+@mixin children-horizontal-padding($padding: 0.5em) {
+  width: calc(100% + 2 * #{$padding});
+  margin-left: -$padding;
+
+  > * {
+    box-sizing: border-box;
+    padding: 0 $padding;
+  }
+}

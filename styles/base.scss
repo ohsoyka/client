@@ -1,0 +1,165 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  font-size: 20px;
+  font-family: $font-family-main;
+
+  @media (max-width: $breakpoint-middle) {
+    font-size: 16px;
+  }
+
+  @media (max-width: $breakpoint-small) {
+    font-size: 14px;
+  }
+
+  @media (max-width: $breakpoint-tiny) {
+    font-size: 12px;
+  }
+}
+
+.container {
+  max-width: $breakpoint-middle;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+
+  @media (max-width: $breakpoint-middle) {
+    padding: 0 $container-padding-middle;
+  }
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-family-header;
+}
+
+h1 {
+  font-size: 4em;
+  font-weight: $font-weight-black;
+
+  @media (max-width: $breakpoint-tiny) {
+    font-size: 3em;
+  }
+}
+
+h2 {
+  font-size: 2.5em;
+  font-weight: $font-weight-black;
+  margin: 0.5em 0;
+
+  @media (max-width: $breakpoint-tiny) {
+    font-size: 1.75em;
+  }
+}
+
+h3 {
+  font-size: 1.5em;
+  font-weight: $font-weight-black;
+  margin: 0.5em 0;
+
+  @media (max-width: $breakpoint-tiny) {
+    font-size: 1.2em;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+svg {
+  width: auto;
+  height: auto;
+}
+
+a {
+  color: $green;
+  text-decoration: underline;
+  transition: color 150ms linear;
+  cursor: pointer;
+
+  &:hover {
+    color: darken($green, 10%)
+  }
+}
+
+hr {
+  border-top: 1px solid $extra-light-grey;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+}
+
+.headroom {
+  transition: all 200ms linear;
+
+  &.headroom--pinned {
+    transform: translateY(0%);
+  }
+
+  &.headroom--unpinned {
+    transform: translateY(-100%);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.aspect-ratio-16-9 {
+  @include aspect-ratio(16, 9);
+}
+
+.aspect-ratio-16-10 {
+  @include aspect-ratio(16, 10);
+}
+
+.aspect-ratio-4-3 {
+  @include aspect-ratio(4, 3);
+}
+
+.children-equal-horizontal-padding {
+  @include children-horizontal-padding(1em);
+}
+
+.grid-item-width-sm {
+  width: 25%;
+}
+
+.grid-item-width-md {
+  width: 50%;
+}
+
+.grid-item-width-lg {
+  width: 100%;
+}
+
+@media (max-width: $breakpoint-middle) {
+  .grid-item-width-sm {
+    width: calc(100% / 3);
+  }
+
+  .grid-item-width-md {
+    width: calc(100% / 3 * 2);
+  }
+}
+
+@media (max-width: $breakpoint-small) {
+  .grid-item-width-sm {
+    width: 50%;
+  }
+
+  .grid-item-width-md {
+    width: 100%;
+  }
+}
+
+@media (max-width: $breakpoint-tiny) {
+  .grid-item-width-sm {
+    width: 100%;
+  }
+}
