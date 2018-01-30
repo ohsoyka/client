@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import Link from 'next/link';
 import Error from './_error';
 import { current } from '../config';
 
@@ -51,11 +52,15 @@ class ArticlePage extends React.Component {
     const title = `${article.title} - ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(article.body, 60));
     const image = article.featuredImage;
-    const url = `${current.clientURL}/p/${article.path}`;
+    const url = `${current.clientURL}/${article.path}`;
 
     const relatedArticlesTitle = project
-      ? `Інше з проекту «${project.title}»`
-      : `Інше з категорії «${category.title}»`;
+      ? (<span>Інше з проекту:</span>)
+      : (
+        <span>
+          Інше з категорії <Link href={`/category?path=${category.path}`} as={`/categories/${category.path}`}><a>«{category.title}»</a></Link>
+        </span>
+      );
 
     return (
       <Wrapper>
@@ -83,11 +88,17 @@ class ArticlePage extends React.Component {
         <Content className="container">
           <Article key={article.id} {...article} project={project} />
 
-          <h2>{relatedArticlesTitle}</h2>
-          <ArticlesGroup
-            key={relatedArticles.map(relatedArticle => relatedArticle.id).join(' ')}
-            articles={relatedArticles}
-          />
+          {
+            Boolean(relatedArticles.length) && (
+              <div className="related-articles-section">
+                <h2>{relatedArticlesTitle}</h2>
+                <ArticlesGroup
+                  key={relatedArticles.map(relatedArticle => relatedArticle.id).join(' ')}
+                  articles={relatedArticles}
+                />
+              </div>
+            )
+          }
         </Content>
         <Footer />
       </Wrapper>

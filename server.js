@@ -27,6 +27,10 @@ app.prepare()
       app.render(req, res, '/projects', req.query);
     });
 
+    server.get('/projects/:project_path', (req, res) => {
+      app.render(req, res, '/project', Object.assign({}, req.query, { path: req.params.project_path }));
+    });
+
     server.get('/categories', (req, res) => {
       app.render(req, res, '/categories', req.query);
     });

@@ -4,7 +4,7 @@ import { Parallax, Background } from 'react-parallax';
 
 const ArticleHeader = props => (
   <Parallax
-    strength={200}
+    strength={300}
     className="article-header"
   >
     <Background className="article-header-background-wrapper">

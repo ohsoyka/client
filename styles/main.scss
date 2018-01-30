@@ -3,11 +3,13 @@
 @import "~slick-carousel/slick/slick-theme.scss";
 @import 'angular-material/angular-material.layouts';
 
-@import 'mixins/aspect-ratio';
-@import 'mixins/children-horizontal-padding';
-
 @import 'variables';
 @import 'fonts';
+
+@import 'mixins/aspect-ratio';
+@import 'mixins/children-horizontal-padding';
+@import 'mixins/article-paragraph';
+
 @import 'base';
 
 @import 'components/ui/logo';
@@ -21,5 +23,7 @@
 @import 'components/article';
 @import 'components/article-preview';
 
+@import 'components/project';
 @import 'components/project-preview';
+
 @import 'components/category-preview';

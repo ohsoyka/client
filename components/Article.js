@@ -18,7 +18,7 @@ class Article extends React.Component {
         <Header image={this.props.featuredImage} title={this.props.title} />
         {intro && <div className="article-intro balance-text">{intro}</div>}
         <div className="article-body" dangerouslySetInnerHTML={{ __html: this.props.body }} />
-        <Footer date={this.props.publishedAt} tags={this.props.tags} />
+        <Footer date={this.props.publishedAt} tags={this.props.tags} project={this.props.project} />
       </article>
     );
   }
