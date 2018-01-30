@@ -17,13 +17,21 @@ const ProjectPreview = (props) => {
     classList.push('project-preview-no-image');
   }
 
+  if (props.large) {
+    classList.push('project-preview-large');
+  }
+
+  const title = props.large
+    ? <h2 className="project-preview-title flex-100">{props.title}</h2>
+    : <h3 className="project-preview-title flex-100">{props.title}</h3>;
+
   return (
     <Link href={`/project?path=${props.path}`} as={`/projects/${props.path}`}>
       <a className={classList.join(' ')} style={style}>
         <div className="project-preview-content layout-row layout-align-start-center">
           <div className="project-preview-text layout-row layout-align-start-center layout-wrap flex-100">
-            <h3 className="project-preview-title flex-100">{props.title}</h3>
-            <div className="flex-100">{props.description}</div>
+            {title}
+            <div className="project-preview-description flex-100">{props.description}</div>
           </div>
         </div>
         <div className="project-preview-background-gradient" />
@@ -37,11 +45,13 @@ ProjectPreview.propTypes = {
   description: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   image: PropTypes.string,
+  large: PropTypes.bool,
   className: PropTypes.string,
 };
 
 ProjectPreview.defaultProps = {
   image: '',
+  large: false,
   className: '',
 };
 

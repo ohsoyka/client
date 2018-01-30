@@ -23,6 +23,14 @@ app.prepare()
       res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
     });
 
+    server.get('/projects', (req, res) => {
+      app.render(req, res, '/projects', req.query);
+    });
+
+    server.get('/categories', (req, res) => {
+      app.render(req, res, '/categories', req.query);
+    });
+
     server.get('/:article_path', (req, res) => {
       app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
     });
