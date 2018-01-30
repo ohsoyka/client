@@ -1,0 +1,87 @@
+.project-preview {
+  color: $white;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  position: relative;
+
+  @include aspect-ratio(9, 2);
+
+  @media (max-width: $breakpoint-small) {
+    @include aspect-ratio(3, 1);
+  }
+
+  @media (max-width: $breakpoint-tiny) {
+    @include aspect-ratio(5, 2);
+  }
+
+  .project-preview-content {
+    padding: 2em;
+    z-index: 30;
+  }
+
+  .project-preview-text {
+    padding: 1em;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .project-preview-title {
+    margin-top: 0;
+  }
+
+  .project-preview-background-gradient {
+    background: linear-gradient(to bottom left, transparentize($black, 0.7), transparentize($black, 0.6));
+    opacity: 0.6;
+    transition: opacity 300ms linear;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+  }
+
+  &:hover {
+    color: $white;
+
+    .project-preview-background-gradient {
+      opacity: 1;
+    }
+  }
+}
+
+.project-preview-with-image {
+  @include aspect-ratio(7, 2);
+
+  @media (max-width: $breakpoint-small) {
+    @include aspect-ratio(2, 1);
+  }
+
+  @media (max-width: $breakpoint-tiny) {
+    @include aspect-ratio(10, 7);
+  }
+
+  .project-preview-background-gradient {
+    opacity: 0.7;
+  }
+
+  .project-preview-text {
+    background-color: transparent;
+    border: 0.3em solid transparent;
+    transition: background-color 300ms linear, border-color 300ms linear;
+    height: auto;
+  }
+
+  &:hover {
+    .project-preview-background-gradient {
+      opacity: 0.1;
+    }
+
+    .project-preview-text {
+      background-color: transparentize($black, 0.4);
+      border-color: $white;
+    }
+  }
+}
