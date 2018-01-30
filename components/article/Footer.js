@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import * as Grammar from '../../services/grammar';
 
-const Footer = props => (
+const ArticleFooter = props => (
   <div className={`article-footer ${props.className}`}>
     <div className="text-center layout-gt-xs-row layout-align-space-between-center">
       <div className="article-footer-date">{Grammar.formatPostDate(props.date)}</div>
@@ -23,15 +23,15 @@ const Footer = props => (
   </div>
 );
 
-Footer.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
+ArticleFooter.propTypes = {
+  date: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,
 };
 
-Footer.defaultProps = {
+ArticleFooter.defaultProps = {
   tags: [],
   className: '',
 };
 
-export default Footer;
+export default ArticleFooter;

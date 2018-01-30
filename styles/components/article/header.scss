@@ -3,31 +3,47 @@
   height: calc(100vh - #{$header-height});
   box-sizing: border-box;
 
-  background-size: cover;
-  background-position: center center;
-  position: relative;
-
   margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding});
 
   @media (max-width: $breakpoint-middle) {
     margin-left: -$container-padding-middle;
   }
 
-  .react-parallax-bgimage {
-    object-fit: cover;
+  .react-parallax-content,
+  .react-parallax-background-children {
+    width: 100%;
+    height: 100%;
   }
 
-  .react-parallax-content {
+  .article-header-background-wrapper {
+    height: 100vh;
+  }
+
+  .article-header-background {
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
     height: 100%;
+  }
+
+  .article-header-content {
+    background: linear-gradient(to top, transparentize($black, 0.2), $transparent);
+
+    position: absolute;
+    bottom: 0;
+
+    margin: 0;
+    padding: 3em;
+    box-sizing: border-box;
+
+    width: 100%;
+
+    z-index: 20;
   }
 
   .article-title {
     color: $white;
-    position: absolute;
-    bottom: 0;
-    z-index: 20;
     margin: 0;
-    padding: 0.8em 1em ;
-    background: linear-gradient(to top, transparentize($black, 0.2), $transparent);
+    word-wrap: break-word;
   }
 }

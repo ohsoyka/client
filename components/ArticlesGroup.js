@@ -14,18 +14,18 @@ class RelatedArticles extends React.Component {
   render() {
     const previews = this.props.articles.map((article, index, array) => {
       if (array.length === 1) {
-        return <ArticlePreview {...article} large horizontal className="grid-item-width-lg" />;
+        return <ArticlePreview {...article} large horizontal key={article.id} className="grid-item-width-lg" />;
       }
 
       if (array.length === 2) {
-        return <ArticlePreview {...article} large className="grid-item-width-md" />;
+        return <ArticlePreview {...article} large key={article.id} className="grid-item-width-md" />;
       }
 
       if (index === 0) {
-        return <ArticlePreview {...article} large className="grid-item-width-md" />;
+        return <ArticlePreview {...article} large key={article.id} className="grid-item-width-md" />;
       }
 
-      return <ArticlePreview {...article} className="grid-item-width-sm" />;
+      return <ArticlePreview {...article} key={article.id} className="grid-item-width-sm" />;
     });
 
     return (

@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Parallax } from 'react-parallax';
+import { Parallax, Background } from 'react-parallax';
 
-const Header = props => (
+const ArticleHeader = props => (
   <Parallax
-    bgImage={props.image}
     strength={200}
     className="article-header"
   >
-    <h1 className="article-title">{props.title}</h1>
+    <Background className="article-header-background-wrapper">
+      <div className="article-header-background" style={{ backgroundImage: `url("${props.image}")` }} />
+    </Background>
+    <div className="article-header-content">
+      <h1 className="article-title balance-text">{props.title}</h1>
+    </div>
   </Parallax>
 );
 
-Header.propTypes = {
+ArticleHeader.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default ArticleHeader;
