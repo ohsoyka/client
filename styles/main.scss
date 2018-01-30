@@ -1,4 +1,6 @@
 @import '~normalize.css';
+@import "~slick-carousel/slick/slick.scss";
+@import "~slick-carousel/slick/slick-theme.scss";
 @import 'angular-material/angular-material.layouts';
 
 @import 'mixins/aspect-ratio';
@@ -9,6 +11,7 @@
 @import 'base';
 
 @import 'components/ui/logo';
+@import 'components/carousel';
 
 @import 'components/wrapper';
 @import 'components/header';

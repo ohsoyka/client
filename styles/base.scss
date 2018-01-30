@@ -2,6 +2,10 @@ html, body {
   height: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-size: 20px;
   font-family: $font-family-main;
@@ -26,6 +30,7 @@ body {
   padding: 0 $container-padding;
 
   @media (max-width: $breakpoint-middle) {
+    max-width: 100vw;
     padding: 0 $container-padding-middle;
   }
 }
@@ -136,6 +141,18 @@ hr {
 
 .grid-item-width-lg {
   width: 100%;
+}
+
+.smaller {
+  font-size: 0.75em;
+}
+
+.larger {
+  font-size: 1.2em;
+}
+
+.balance-text {
+  text-wrap: balance;
 }
 
 @media (max-width: $breakpoint-middle) {

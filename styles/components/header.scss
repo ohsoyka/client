@@ -1,6 +1,8 @@
+$border-bottom: 1px solid $extra-light-grey;
+
 .header {
   background-color: $white;
-  border-bottom: 1px solid $extra-light-grey;
+  border-bottom: $border-bottom;
 
   width: 100%;
   height: $header-height;
@@ -26,6 +28,7 @@
     justify-content: space-between;
     align-items: center;
     white-space: nowrap;
+    padding: 0;
 
     li {
       font-family: $font-family-header;
@@ -34,10 +37,45 @@
       text-transform: lowercase;
       display: inline;
       margin-left: 1.5em;
+    }
+  }
 
-      &:first-child {
+  .menu-hamburger {
+    display: none;
+    color: $green;
+    cursor: pointer;
+    margin-left: 1em;
+  }
+
+  @media (max-width: $breakpoint-tiny) {
+    .menu {
+      background-color: $white;
+      border-bottom: $border-bottom;
+
+      position: absolute;
+      left: 0;
+      top: $header-height;
+      padding: 1em;
+      margin: 0;
+      width: 100%;
+
+      opacity: 0;
+      transition: opacity 150ms linear;
+
+      display: flex;
+      justify-content: space-around;
+
+      li {
         margin-left: 0;
       }
+
+      &.menu-visible {
+        opacity: 1;
+      }
+    }
+
+    .menu-hamburger {
+      display: block;
     }
   }
 
