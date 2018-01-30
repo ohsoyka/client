@@ -1,0 +1,45 @@
+.category-preview {
+  .category-preview-inner {
+    color: $white;
+    background-size: cover;
+    background-position: center center;
+    cursor: pointer;
+    position: relative;
+
+    @include aspect-ratio(1, 1);
+  }
+
+  .category-preview-content {
+    padding: 0.5em;
+    z-index: 30;
+  }
+
+  .category-preview-text {
+    height: 100%;
+    padding: 1em;
+  }
+
+  .category-preview-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .category-preview-background-gradient {
+    background: linear-gradient(to bottom left, transparentize($black, 0.5), transparentize($black, 0.4));
+    opacity: 0.3;
+    transition: opacity 200ms linear;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+  }
+
+  &:hover {
+    .category-preview-background-gradient {
+      opacity: 1;
+    }
+  }
+}
