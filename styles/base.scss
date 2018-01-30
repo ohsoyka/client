@@ -115,6 +115,14 @@ hr {
   text-align: center;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .aspect-ratio-16-9 {
   @include aspect-ratio(16, 9);
 }
@@ -127,8 +135,12 @@ hr {
   @include aspect-ratio(4, 3);
 }
 
-.children-equal-horizontal-padding {
+.children-equal-horizontal-padding-1 {
   @include children-horizontal-padding(1em);
+}
+
+.children-equal-horizontal-padding {
+  @include children-horizontal-padding();
 }
 
 .grid-item-width-sm {

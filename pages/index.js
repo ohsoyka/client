@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { current } from '../config';
 
 import Data from '../services/data';
@@ -8,7 +9,10 @@ import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
+
 import ArticlePreview from '../components/ArticlePreview';
+import ProjectPreview from '../components/ProjectPreview';
+import CategoryPreview from '../components/CategoryPreview';
 import Carousel from '../components/Carousel';
 import ArticlesGroup from '../components/ArticlesGroup';
 
@@ -21,8 +25,10 @@ const IndexPage = () => {
     social,
   } = current.meta;
 
-  const lastArticles = Data.articles.slice(0, 10);
-  const mostPopularArticles = [].concat(Data.articles).reverse();
+  const lastArticles = Data.articles.slice(0, 5);
+  const mostPopularArticles = [].concat(Data.articles).reverse().slice(0, 8);
+  const projects = Data.projects.slice(0, 3);
+  const categories = Data.categories.slice(0, 3);
 
   return (
     <Wrapper>
@@ -52,7 +58,28 @@ const IndexPage = () => {
           }
         </Carousel>
         <div className="container">
-          <ArticlesGroup articles={mostPopularArticles} title="Найцікавіше" />
+          <div className="most-interesting-section">
+            <h2>Найцікавіше</h2>
+            <ArticlesGroup articles={mostPopularArticles} />
+          </div>
+
+          <div className="projects-section">
+            <h2>Проекти</h2>
+            {
+              projects.map(project => <ProjectPreview key={project.id} {...project} />)
+            }
+            <p className="text-right larger"><Link href="/projects"><a>Всі проекти &rarr;</a></Link></p>
+          </div>
+
+          <div className="categories-section">
+            <h2>Категорії</h2>
+            <div className="categories-wrapper children-equal-horizontal-padding layout-row">
+              {
+                categories.map(category => <CategoryPreview key={category.id} {...category} className="flex-100 flex-gt-xs-33 flex-gt-sm-25" />)
+              }
+            </div>
+            <p className="text-right larger"><Link href="/categories"><a>Всі категорії &rarr;</a></Link></p>
+          </div>
         </div>
       </Content>
       <Footer />

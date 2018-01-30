@@ -21,7 +21,7 @@ const ArticlePreviewStandart = (props) => {
           <div className="article-preview-image-shadow" />
         </div>
         <div className="article-preview-text">
-          <h3 className="article-preview-header">{props.title}</h3>
+          <h3 className="article-preview-title">{props.title}</h3>
           <p>{props.brief}</p>
           <div className="article-preview-bottomline" />
         </div>

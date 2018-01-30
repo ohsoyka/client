@@ -82,10 +82,11 @@ class ArticlePage extends React.Component {
         <Header />
         <Content className="container">
           <Article key={article.id} {...article} project={project} />
+
+          <h2>{relatedArticlesTitle}</h2>
           <ArticlesGroup
             key={relatedArticles.map(relatedArticle => relatedArticle.id).join(' ')}
             articles={relatedArticles}
-            title={relatedArticlesTitle}
           />
         </Content>
         <Footer />

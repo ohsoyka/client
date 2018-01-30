@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import ArticlePreview from './ArticlePreview';
 
 class RelatedArticles extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const id = props.articles.map(article => article.id).join('');
+
+    this.state = { id };
+  }
+
   componentDidMount() {
-    new window.Masonry('.masonry', { // eslint-disable-line
+    new window.Masonry(`.articles-group[data-id="${this.state.id}"]`, { // eslint-disable-line
       itemSelector: '.article-preview',
       percentPosition: true,
       columnWidth: '.grid-sizer',
@@ -29,24 +37,19 @@ class RelatedArticles extends React.Component {
     });
 
     return (
-      <div className="related-articles">
-        <h2>{this.props.title}</h2>
-        <div className="masonry children-equal-horizontal-padding">
-          <div className="grid-sizer grid-item-width-sm" />
-          {previews}
-        </div>
+      <div data-id={this.state.id} className="articles-group children-equal-horizontal-padding-1">
+        <div className="grid-sizer grid-item-width-sm" />
+        {previews}
       </div>
     );
   }
 }
 
 RelatedArticles.propTypes = {
-  title: PropTypes.string,
   articles: PropTypes.arrayOf(PropTypes.object),
 };
 
 RelatedArticles.defaultProps = {
-  title: 'Схожі статті',
   articles: [],
 };
 

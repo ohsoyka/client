@@ -8,6 +8,20 @@ const projects = [
     description: 'Серія статей про те, шоб ти здох. В ній ми намагаємось розкрити тему здихання.',
     image: null,
   },
+  {
+    id: 2,
+    title: 'Вафлі та печиво',
+    path: 'waffles-and-cookies',
+    description: 'Пошуки найкращих українських виробників вафель і печива.',
+    image: '/static/demo/waffles.jpg',
+  },
+  {
+    id: 3,
+    title: 'Дивний проект',
+    path: 'strange-project',
+    description: 'Бла бла. Багато тексту, або не дуже. Скорше не дуже. Але краще б тут було більше тексту, це ж опис проекту, а проект це має бути шось серйозне.',
+    image: '/static/demo/land-rover.jpg',
+  },
 ];
 
 const categories = [
@@ -23,7 +37,7 @@ const categories = [
     title: 'Прочитане',
     path: 'books',
     description: 'Відгуки про книжки',
-    image: null,
+    image: '/static/demo/book.jpg',
   },
 ];
 
