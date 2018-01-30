@@ -1,11 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Wrapper = props => (
-  <div className="wrapper">
-    {props.children}
-  </div>
-);
+class Wrapper extends React.Component {
+  componentDidMount() {
+    window.balanceText('.balance-text');
+  }
+
+  componentDidUpdate() {
+    window.balanceText('.balance-text');
+  }
+
+  render() {
+    return (
+      <div className="wrapper">
+        {this.props.children}
+      </div>
+    );
+  }
+}
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
