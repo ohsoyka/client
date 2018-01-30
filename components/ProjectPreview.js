@@ -21,9 +21,19 @@ const ProjectPreview = (props) => {
     classList.push('project-preview-large');
   }
 
-  const title = props.large
-    ? <h2 className="project-preview-title flex-100">{props.title}</h2>
-    : <h3 className="project-preview-title flex-100">{props.title}</h3>;
+  if (props.short) {
+    classList.push('project-preview-short');
+  }
+
+  let title;
+
+  if (props.large) {
+    title = <h2 className="project-preview-title flex-100">{props.title}</h2>;
+  } else if (props.short) {
+    title = <h3 className="project-preview-title flex-100">Проект «{props.title}»</h3>;
+  } else {
+    title = <h3 className="project-preview-title flex-100">{props.title}</h3>;
+  }
 
   return (
     <Link href={`/project?path=${props.path}`} as={`/projects/${props.path}`}>
@@ -46,12 +56,14 @@ ProjectPreview.propTypes = {
   path: PropTypes.string.isRequired,
   image: PropTypes.string,
   large: PropTypes.bool,
+  short: PropTypes.bool,
   className: PropTypes.string,
 };
 
 ProjectPreview.defaultProps = {
   image: '',
   large: false,
+  short: false,
   className: '',
 };
 

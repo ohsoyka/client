@@ -106,3 +106,19 @@
     }
   }
 }
+
+.project-preview-short {
+  .project-preview-content {
+    padding: 0.5em;
+  }
+
+  @include aspect-ratio(6, 1);
+
+  @media (max-width: $breakpoint-small) {
+    @include aspect-ratio(4, 1);
+  }
+
+  @media (max-width: $breakpoint-tiny) {
+    @include aspect-ratio(2, 1);
+  }
+}
