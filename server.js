@@ -23,6 +23,10 @@ app.prepare()
       res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
     });
 
+    server.get('/:article_path', (req, res) => {
+      app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
+    });
+
     server.get('*', (req, res) => handle(req, res));
 
     server.listen(config.port, (error) => {

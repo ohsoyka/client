@@ -34,6 +34,7 @@ class MyDocument extends Document {
 
           <script src="/static/libs/headroom/headroom.js" />
           <script src="/static/libs/masonry/masonry.min.js" />
+          <script src="/static/libs/balancetext/balancetext.min.js" />
 
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>

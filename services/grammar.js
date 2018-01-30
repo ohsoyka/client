@@ -54,7 +54,7 @@ export function formatPostDate(date) {
     return `Вчора ${oOrOb} ${target.format('HH:mm')}`;
   }
 
-  return `${target.format('D MMMM YYYY')} ${oOrOb} ${target.format('HH:mm')}`;
+  return `${target.format('D MMMM YYYY')}`;
 }
 
 const HTTPDescriptions = {
