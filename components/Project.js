@@ -40,7 +40,11 @@ Project.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
+  body: PropTypes.string,
+};
+
+Project.defaultProps = {
+  body: '',
 };
 
 export default Project;

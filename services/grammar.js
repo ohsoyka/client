@@ -32,7 +32,7 @@ export function createWordCountDescriptor([one, twoToFour, rest]) {
   return count => describeWordCount(count, [one, twoToFour, rest]);
 }
 
-export function formatPostDate(date) {
+export function formatDate(date) {
   moment.locale('uk');
 
   const todayStart = moment().startOf('day');
@@ -70,6 +70,6 @@ export function describeHTTPCode(code) {
 export default {
   describeWordCount,
   createWordCountDescriptor,
-  formatPostDate,
+  formatDate,
   describeHTTPCode,
 };

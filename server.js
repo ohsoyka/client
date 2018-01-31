@@ -35,6 +35,10 @@ app.prepare()
       app.render(req, res, '/categories', req.query);
     });
 
+    server.get('/categories/:category_path', (req, res) => {
+      app.render(req, res, '/category', Object.assign({}, req.query, { path: req.params.category_path }));
+    });
+
     server.get('/:article_path', (req, res) => {
       app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
     });

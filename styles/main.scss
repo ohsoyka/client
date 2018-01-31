@@ -8,9 +8,12 @@
 
 @import 'mixins/aspect-ratio';
 @import 'mixins/children-horizontal-padding';
+@import 'mixins/children-vertical-padding';
 @import 'mixins/article-paragraph';
 
 @import 'base';
+
+@import 'nprogress';
 
 @import 'components/ui/logo';
 @import 'components/carousel';
@@ -26,4 +29,5 @@
 @import 'components/project';
 @import 'components/project-preview';
 
+@import 'components/category';
 @import 'components/category-preview';

@@ -64,5 +64,9 @@ $padding: 3em;
     @media (max-width: $breakpoint-middle) {
       margin-left: -$container-padding-middle;
     }
+
+    @media (max-width: $breakpoint-tiny) {
+      margin-left: -$container-padding-tiny;
+    }
   }
 }

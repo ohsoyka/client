@@ -18,7 +18,7 @@ body {
     font-size: 14px;
   }
 
-  @media (max-width: $breakpoint-tiny) {
+  @media (max-width: $breakpoint-tiny), (min-aspect-ratio: 2/1) {
     font-size: 12px;
   }
 }
@@ -139,12 +139,20 @@ hr {
   @include aspect-ratio(4, 3);
 }
 
-.children-equal-horizontal-padding-1 {
+.children-horizontal-padding-1 {
   @include children-horizontal-padding(1em);
 }
 
-.children-equal-horizontal-padding {
+.children-horizontal-padding {
   @include children-horizontal-padding();
+}
+
+.children-vertical-padding-1 {
+  @include children-vertical-padding(1em);
+}
+
+.children-vertical-padding {
+  @include children-vertical-padding();
 }
 
 .grid-item-width-sm {

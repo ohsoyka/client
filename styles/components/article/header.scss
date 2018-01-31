@@ -9,6 +9,10 @@
     margin-left: -$container-padding-middle;
   }
 
+  @media (max-width: $breakpoint-tiny) {
+    margin-left: -$container-padding-tiny;
+  }
+
   .react-parallax-content,
   .react-parallax-background-children {
     width: 100%;

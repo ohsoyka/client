@@ -1,0 +1,9 @@
+@mixin children-vertical-padding($padding: 0.5em) {
+  margin-top: -$padding;
+
+  > * {
+    box-sizing: border-box;
+    padding-top: $padding;
+    padding-bottom: $padding;
+  }
+}

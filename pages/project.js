@@ -9,7 +9,6 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 
-import ArticlePreview from '../components/ArticlePreview';
 import ArticlesGroup from '../components/ArticlesGroup';
 import Project from '../components/Project';
 
@@ -39,7 +38,7 @@ class ProjectPage extends React.Component {
       project,
       articles,
     } = this.props;
-    const title = `Проект «${project.title}» - ${current.meta.title}`;
+    const title = `Проект «${project.title}» / ${current.meta.title}`;
     const { description, image } = project;
     const url = `${current.clientURL}/projects/${project.path}`;
 

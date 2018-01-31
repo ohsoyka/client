@@ -49,7 +49,7 @@ class ArticlePage extends React.Component {
       project,
       category,
     } = this.props;
-    const title = `${article.title} - ${current.meta.title}`;
+    const title = `${article.title} / ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(article.body, 60));
     const image = article.featuredImage;
     const url = `${current.clientURL}/${article.path}`;
@@ -95,6 +95,7 @@ class ArticlePage extends React.Component {
                 <ArticlesGroup
                   key={relatedArticles.map(relatedArticle => relatedArticle.id).join(' ')}
                   articles={relatedArticles}
+                  articlesCount={{ xs: 3 }}
                 />
               </div>
             )

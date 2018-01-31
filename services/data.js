@@ -6,7 +6,6 @@ const projects = [
     title: 'Шоб ти здох',
     path: 'wish-you-were-dead',
     description: 'Серія статей про те, шоб ти здох. В ній ми намагаємось розкрити тему здихання.',
-    image: null,
   },
   {
     id: 2,
@@ -31,7 +30,6 @@ const categories = [
     title: 'Музика',
     path: 'music',
     description: 'Шось про музику',
-    image: null,
   },
   {
     id: 2,
@@ -39,6 +37,18 @@ const categories = [
     path: 'books',
     description: 'Відгуки про книжки',
     image: '/static/demo/book.jpg',
+  },
+  {
+    id: 3,
+    title: 'Туфтотень',
+    path: 'tufta',
+    description: 'Всяка туфта',
+  },
+  {
+    id: 4,
+    title: 'Ниття',
+    path: 'whining',
+    description: 'Ниття, як завжди',
   },
 ];
 
@@ -118,7 +128,7 @@ const articles = [
     body: `<p>Прогноз погоди</p>`,
     publishedAt: new Date(Date.now() - 120000000000).toISOString(),
     project: null,
-    category: 2,
+    category: 3,
     tags: ['погода', 'хмарки', 'небо'],
   },
   {

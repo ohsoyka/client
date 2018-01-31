@@ -21,23 +21,41 @@ class RelatedArticles extends React.Component {
 
   render() {
     const previews = this.props.articles.map((article, index, array) => {
+      const classList = Object.keys(this.props.articlesCount).map((breakpointName) => {
+        const articlesToShow = this.props.articlesCount[breakpointName];
+
+        if (index >= articlesToShow) {
+          return `hide-${breakpointName}`;
+        }
+
+        return '';
+      });
+
       if (array.length === 1) {
-        return <ArticlePreview {...article} large horizontal key={article.id} className="grid-item-width-lg" />;
+        classList.push('grid-item-width-lg');
+
+        return <ArticlePreview {...article} large horizontal key={article.id} className={classList.join(' ')} />;
       }
 
       if (array.length === 2) {
-        return <ArticlePreview {...article} large key={article.id} className="grid-item-width-md" />;
+        classList.push('grid-item-width-md');
+
+        return <ArticlePreview {...article} large key={article.id} className={classList.join(' ')} />;
       }
 
       if (index === 0) {
-        return <ArticlePreview {...article} large key={article.id} className="grid-item-width-md" />;
+        classList.push('grid-item-width-md');
+
+        return <ArticlePreview {...article} large key={article.id} className={classList.join(' ')} />;
       }
 
-      return <ArticlePreview {...article} key={article.id} className="grid-item-width-sm" />;
+      classList.push('grid-item-width-sm');
+
+      return <ArticlePreview {...article} key={article.id} className={classList.join(' ')} />;
     });
 
     return (
-      <div data-id={this.state.id} className="articles-group children-equal-horizontal-padding-1">
+      <div data-id={this.state.id} className="articles-group children-horizontal-padding-1">
         <div className="grid-sizer grid-item-width-sm" />
         {previews}
       </div>
@@ -47,10 +65,17 @@ class RelatedArticles extends React.Component {
 
 RelatedArticles.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.object),
+  articlesCount: PropTypes.shape({
+    xs: PropTypes.string,
+    sm: PropTypes.string,
+    md: PropTypes.string,
+    lg: PropTypes.string,
+  }),
 };
 
 RelatedArticles.defaultProps = {
   articles: [],
+  articlesCount: {},
 };
 
 export default RelatedArticles;

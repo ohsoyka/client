@@ -82,27 +82,29 @@
     @include aspect-ratio(5, 4);
   }
 
-  .project-preview-title {
-    margin-top: 0;
-    margin-bottom: 0;
-    transition: margin-bottom 250ms linear;
-  }
-
-  .project-preview-description {
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: height 250ms linear, opacity 350ms linear;
-  }
-
-  &:hover {
+  @media (min-width: $breakpoint-small) {
     .project-preview-title {
-      margin-bottom: 0.3em;
+      margin-top: 0;
+      margin-bottom: 0;
+      transition: margin-bottom 250ms linear;
     }
 
     .project-preview-description {
-      height: auto;
-      opacity: 1;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: height 250ms linear, opacity 350ms linear;
+    }
+
+    &:hover {
+      .project-preview-title {
+        margin-bottom: 0.3em;
+      }
+
+      .project-preview-description {
+        height: auto;
+        opacity: 1;
+      }
     }
   }
 }

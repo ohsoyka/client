@@ -36,6 +36,10 @@
     }
   }
 
+  .article-preview-date {
+    display: none;
+  }
+
   .article-preview-bottomline {
     background-color: $green;
     height: 2px;
@@ -83,6 +87,15 @@
 
   .article-preview-title {
     margin-top: 0;
+  }
+
+  .article-preview-date {
+    display: block;
+    color: $light-grey;
+  }
+
+  .article-preview-bottomline {
+    margin-left: 0;
   }
 }
 

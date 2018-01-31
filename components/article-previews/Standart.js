@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import * as Grammar from '../../services/grammar';
 
 const ArticlePreviewStandart = (props) => {
   const classList = ['article-preview', props.className];
@@ -23,6 +24,7 @@ const ArticlePreviewStandart = (props) => {
         <div className="article-preview-text">
           <h3 className="article-preview-title">{props.title}</h3>
           <p>{props.brief}</p>
+          <div className="article-preview-date smaller">{Grammar.formatDate(props.publishedAt)}</div>
           <div className="article-preview-bottomline" />
         </div>
       </a>
@@ -35,6 +37,7 @@ ArticlePreviewStandart.propTypes = {
   featuredImage: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   brief: PropTypes.string.isRequired,
+  publishedAt: PropTypes.string.isRequired,
   className: PropTypes.string,
   large: PropTypes.bool,
   horizontal: PropTypes.bool,

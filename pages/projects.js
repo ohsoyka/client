@@ -29,7 +29,7 @@ class ProjectsPage extends React.Component {
     }
 
     const { projects } = this.props;
-    const title = `Проекти — ${current.meta.title}`;
+    const title = `Проекти / ${current.meta.title}`;
 
     return (
       <Wrapper>
@@ -52,19 +52,14 @@ class ProjectsPage extends React.Component {
 }
 
 ProjectsPage.propTypes = {
-  article: PropTypes.shape({}).isRequired,
-  relatedArticles: PropTypes.arrayOf(PropTypes.object),
-  project: PropTypes.shape({}),
-  category: PropTypes.shape({}),
+  projects: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
 };
 
 ProjectsPage.defaultProps = {
-  relatedArticles: [],
-  project: null,
-  category: null,
+  projects: [],
   error: null,
 };
 

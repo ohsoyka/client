@@ -28,7 +28,7 @@ const IndexPage = () => {
   const lastArticles = Data.articles.slice(0, 5);
   const mostPopularArticles = [].concat(Data.articles).reverse().slice(0, 8);
   const projects = Data.projects.slice(0, 3);
-  const categories = Data.categories.slice(0, 3);
+  const categories = Data.categories.slice(0, 4);
 
   return (
     <Wrapper>
@@ -60,7 +60,7 @@ const IndexPage = () => {
         <div className="container">
           <div className="most-interesting-section">
             <h2>Найцікавіше</h2>
-            <ArticlesGroup articles={mostPopularArticles} />
+            <ArticlesGroup articles={mostPopularArticles} articlesCount={{ xs: 3 }} />
           </div>
 
           <div className="projects-section">
@@ -73,9 +73,21 @@ const IndexPage = () => {
 
           <div className="categories-section">
             <h2>Категорії</h2>
-            <div className="categories-wrapper children-equal-horizontal-padding layout-row">
+            <div className="categories-wrapper children-horizontal-padding children-vertical-padding layout-row layout-wrap">
               {
-                categories.map(category => <CategoryPreview key={category.id} {...category} className="flex-100 flex-gt-xs-33 flex-gt-sm-25" />)
+                categories.map((category, index) => {
+                  const classList = ['flex-50', 'flex-gt-xs-33', 'flex-gt-sm-25'];
+
+                  if (index > 1) {
+                    classList.push('hide-xs');
+                  }
+
+                  if (index > 2) {
+                    classList.push('hide-sm');
+                  }
+
+                  return <CategoryPreview key={category.id} {...category} className={classList.join(' ')} />;
+                })
               }
             </div>
             <p className="text-right larger"><Link href="/categories"><a>Всі категорії &rarr;</a></Link></p>

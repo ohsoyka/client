@@ -46,7 +46,8 @@ function stringToHEX(string) {
 
 function stringToHEXGradient(string = '') {
   const asciiCodes = string.split('').map(char => char.charCodeAt());
-  const hue = (Math.cos(asciiCodes.reduce((accumulator, code) => accumulator + code, 0)) + 1) / 2;
+  const sum = asciiCodes.reduce((accumulator, code) => accumulator + code, 0);
+  const hue = (Math.cos(sum) + 1) / 2;
   const fromRGB = HSVToRGB(hue, 0.6, 1);
   const toRGB = HSVToRGB(hue + 0.1, 0.8, 1);
 

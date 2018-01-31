@@ -22,7 +22,7 @@ class Error extends React.Component {
     return (
       <Wrapper>
         <Head>
-          <title>Шось пішло не так - {current.meta.title}</title>
+          <title>Шось пішло не так / {current.meta.title}</title>
         </Head>
         <Header />
         <Content>
