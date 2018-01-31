@@ -24,7 +24,16 @@ const ArticlePreviewStandart = (props) => {
         <div className="article-preview-text">
           <h3 className="article-preview-title">{props.title}</h3>
           <p>{props.brief}</p>
-          <div className="article-preview-date smaller">{Grammar.formatDate(props.publishedAt)}</div>
+          <div className="layout-row layout-align-start-center layout-wrap">
+            <div className="article-preview-date smaller">{Grammar.formatDate(props.publishedAt)}</div>
+            <div className="article-preview-tags smaller">
+              {
+                props.tags.map(tag => (
+                  <span className="article-preview-tag"><Link href={`/tag?tag=${tag}`} as={`/tag/${tag}`}><a>#{tag}</a></Link></span>
+                ))
+              }
+            </div>
+          </div>
           <div className="article-preview-bottomline" />
         </div>
       </a>
@@ -38,6 +47,7 @@ ArticlePreviewStandart.propTypes = {
   path: PropTypes.string.isRequired,
   brief: PropTypes.string.isRequired,
   publishedAt: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string),
   className: PropTypes.string,
   large: PropTypes.bool,
   horizontal: PropTypes.bool,
@@ -47,6 +57,7 @@ ArticlePreviewStandart.defaultProps = {
   className: '',
   large: false,
   horizontal: false,
+  tags: [],
 };
 
 export default ArticlePreviewStandart;

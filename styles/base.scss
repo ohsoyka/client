@@ -18,7 +18,7 @@ body {
     font-size: 14px;
   }
 
-  @media (max-width: $breakpoint-tiny), (min-aspect-ratio: 2/1) {
+  @media (max-width: $breakpoint-tiny), (min-aspect-ratio: 2/1) and (max-width: $breakpoint-middle) {
     font-size: 12px;
   }
 }

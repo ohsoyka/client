@@ -37,7 +37,28 @@
   }
 
   .article-preview-date {
+    color: $light-grey;
+    font-weight: $font-weight-light;
     display: none;
+  }
+
+  .article-preview-tags {
+    display: none;
+    margin: 0.5em 0;
+
+    .article-preview-tag {
+      font-family: $font-family-header;
+      font-weight: $font-weight-bold;
+      margin-left: 0.5em;
+
+      a {
+        text-decoration: none;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 
   .article-preview-bottomline {
@@ -70,6 +91,14 @@
   p {
     font-size: 1.3em;
   }
+
+  @media (max-width: $breakpoint-tiny) {
+    font-size: 1em;
+
+    p {
+      font-size: 1em;
+    }
+  }
 }
 
 .article-preview-horizontal {
@@ -91,7 +120,11 @@
 
   .article-preview-date {
     display: block;
-    color: $light-grey;
+    margin-right: 1em;
+  }
+
+  .article-preview-tags {
+    display: block;
   }
 
   .article-preview-bottomline {

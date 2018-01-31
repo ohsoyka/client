@@ -40,7 +40,7 @@ class CategoryPage extends React.Component {
     } = this.props;
     const title = `Категорія «${category.title}» / ${current.meta.title}`;
     const { description, image } = category;
-    const url = `${current.clientURL}/categorys/${category.path}`;
+    const url = `${current.clientURL}/categories/${category.path}`;
 
     const articlesSectionTitle = articles.length ? <h2>У цій категорії:</h2> : <h2 className="text-center">Поки що тут порожньо</h2>;
 
