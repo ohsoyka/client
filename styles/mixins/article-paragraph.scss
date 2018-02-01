@@ -1,8 +1,6 @@
 @mixin article-paragraph {
   margin: 2em auto;
   padding: 0 7em;
-  line-height: 1.5em;
-  hyphens: auto;
 
   @media (max-width: $breakpoint-middle) {
     padding: 0 4em;

@@ -72,6 +72,13 @@ h3 {
   }
 }
 
+.article, .page, .project, .category {
+  p {
+    line-height: 1.5em;
+    hyphens: auto;
+  }
+}
+
 img {
   max-width: 100%;
   display: block;

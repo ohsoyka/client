@@ -1,5 +1,5 @@
 export default {
-  name: 'project',
+  name: 'image',
   schema: {
     original: String,
     large: String,

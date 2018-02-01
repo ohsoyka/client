@@ -9,7 +9,6 @@ class Project extends React.Component {
   }
 
   render() {
-    const { averageColor } = this.props.image;
     const { from, to } = generateBackgroundGradient(this.props);
     const backgroundImage = `url("${this.props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
@@ -29,9 +28,7 @@ class Project extends React.Component {
             </div>
           </div>
         </Parallax>
-        <div className="project-body">
-          {this.props.body && <p>{this.props.body}</p>}
-        </div>
+        {this.props.body && <div className="project-body" dangerouslySetInnerHTML={{ __html: this.props.body }} />}
       </div>
     );
   }

@@ -9,22 +9,17 @@ import Header from '../components/Header';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 
-import ArticlesGroup from '../components/ArticlesGroup';
-import Project from '../components/Project';
+import Page from '../components/Page';
 
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
-class ProjectPage extends React.Component {
+class PagePage extends React.Component {
   static async getInitialProps({ req, query }) {
     try {
-      const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
-      const { docs } = await API.articles.find({ project: project.id, include: 'image' }, getAllCookies(req));
+      const page = await API.pages.findOne(query.path, {}, getAllCookies(req));
 
-      return {
-        project,
-        articles: docs,
-      };
+      return { page };
     } catch (error) {
       return { error };
     }
@@ -36,14 +31,11 @@ class ProjectPage extends React.Component {
     }
 
     const {
-      project,
-      articles,
+      page,
     } = this.props;
-    const title = `Проект «${project.title}» / ${current.meta.title}`;
-    const { description, image } = project;
-    const url = `${current.clientURL}/projects/${project.path}`;
-
-    const articlesSectionTitle = articles.length ? <h2>У цьому проекті:</h2> : <h2 className="text-center">Поки що тут порожньо</h2>;
+    const title = `${page.title} / ${current.meta.title}`;
+    const { description, image } = page;
+    const url = `${current.clientURL}/pages/${page.path}`;
 
     return (
       <Wrapper>
@@ -68,17 +60,7 @@ class ProjectPage extends React.Component {
         </Head>
         <Header />
         <Content className="container">
-          <Project key={project.id} {...project} />
-
-          {articlesSectionTitle}
-          <div className="project-articles">
-            {
-              <ArticlesGroup
-                key={articles.map(relatedArticle => relatedArticle.id).join(' ')}
-                articles={articles}
-              />
-            }
-          </div>
+          <Page key={page.id} {...page} />
         </Content>
         <Footer />
       </Wrapper>
@@ -86,17 +68,15 @@ class ProjectPage extends React.Component {
   }
 }
 
-ProjectPage.propTypes = {
-  project: PropTypes.shape({}).isRequired,
-  articles: PropTypes.arrayOf(PropTypes.object),
+PagePage.propTypes = {
+  page: PropTypes.shape({}).isRequired,
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
 };
 
-ProjectPage.defaultProps = {
-  articles: [],
+PagePage.defaultProps = {
   error: null,
 };
 
-export default ProjectPage;
+export default PagePage;

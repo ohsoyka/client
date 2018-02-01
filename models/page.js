@@ -1,10 +1,9 @@
 export default {
-  name: 'category',
+  name: 'page',
   schema: {
     title: String,
     body: String,
     path: String,
     private: Boolean,
-    image: String,
   },
 };

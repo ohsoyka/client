@@ -58,7 +58,7 @@ class Header extends React.Component {
             <li><Link href="/projects"><a>Проекти</a></Link></li>
             <li><a>Ниття</a></li>
             <li><a>Ше шось</a></li>
-            <li><Link href="/page?path=about" as="/about"><a>Про</a></Link></li>
+            <li><Link href="/page?path=about" as="/pages/about"><a>Про</a></Link></li>
           </ul>
           <i className="menu-hamburger fa fa-bars" />
         </nav>

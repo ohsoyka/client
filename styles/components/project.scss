@@ -65,7 +65,8 @@
       color: $light-grey;
       font-size: 1.5em;
       font-weight: $font-weight-light;
-      margin: 2em 2em;
+      line-height: 1.3em;
+      margin: 2em 0;
 
       @media (max-width: $breakpoint-middle) {
         font-size: 1.3em;

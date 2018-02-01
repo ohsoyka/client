@@ -47,6 +47,10 @@ app.prepare()
       app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
     });
 
+    server.get('/pages/:page_path', (req, res) => {
+      app.render(req, res, '/page', Object.assign({}, req.query, { path: req.params.page_path }));
+    });
+
     server.get('*', (req, res) => handle(req, res));
 
     server.listen(config.port, (error) => {
