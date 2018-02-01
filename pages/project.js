@@ -12,17 +12,19 @@ import Footer from '../components/Footer';
 import ArticlesGroup from '../components/ArticlesGroup';
 import Project from '../components/Project';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 class ProjectPage extends React.Component {
-  static getInitialProps({ query }) {
+  static async getInitialProps({ req, query }) {
     try {
-      const project = Data.projects.find(_project => _project.path === query.path);
-      const articles = Data.articles.filter(_article => _article.project === project.id);
+      const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ project: project.id, include: 'image' }, getAllCookies(req));
 
+      console.log(project);
       return {
         project,
-        articles,
+        articles: docs,
       };
     } catch (error) {
       return { error };

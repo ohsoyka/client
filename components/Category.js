@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Parallax, Background } from 'react-parallax';
-import Colors from '../services/colors';
+import generateBackgroundGradient from '../helpers/generate-background-gradient';
 
 class Category extends React.Component {
   componentDidMount() {
@@ -9,8 +9,8 @@ class Category extends React.Component {
   }
 
   render() {
-    const { from, to } = Colors.stringToHEXGradient(this.props.title);
-    const backgroundImage = this.props.image ? `url("${this.props.image}")` : `linear-gradient(to bottom right, ${from}, ${to})`;
+    const { from, to } = generateBackgroundGradient(this.props);
+    const backgroundImage = `url("${this.props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
     return (
       <div className="category">
@@ -35,8 +35,18 @@ class Category extends React.Component {
 
 Category.propTypes = {
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    original: PropTypes.string,
+    large: PropTypes.string,
+    medium: PropTypes.string,
+    small: PropTypes.string,
+    averageColor: PropTypes.arrayOf(PropTypes.number),
+  }),
   description: PropTypes.string.isRequired,
+};
+
+Category.defaultProps = {
+  image: {},
 };
 
 export default Category;

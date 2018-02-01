@@ -12,17 +12,18 @@ import Footer from '../components/Footer';
 import ArticlePreview from '../components/ArticlePreview';
 import Category from '../components/Category';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 class CategoryPage extends React.Component {
-  static getInitialProps({ query }) {
+  static async getInitialProps({ req, query }) {
     try {
-      const category = Data.categories.find(_category => _category.path === query.path);
-      const articles = Data.articles.filter(_article => _article.category === category.id);
+      const category = await API.categories.findOne(query.path, { include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ category: category.id, include: 'image' }, getAllCookies(req));
 
       return {
         category,
-        articles,
+        articles: docs,
       };
     } catch (error) {
       return { error };

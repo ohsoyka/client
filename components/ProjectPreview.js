@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import Colors from '../services/colors';
+import generateBackgroundGradient from '../helpers/generate-background-gradient';
 
 const ProjectPreview = (props) => {
-  const { from, to } = Colors.stringToHEXGradient(props.title);
+  const { from, to } = generateBackgroundGradient(props);
 
   const style = {};
   const classList = ['project-preview', props.className];
 
+  style.backgroundImage = `url("${props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+
   if (props.image) {
-    style.backgroundImage = `url("${props.image}")`;
     classList.push('project-preview-with-image');
   } else {
-    style.background = `linear-gradient(to bottom right, ${from}, ${to})`;
     classList.push('project-preview-no-image');
   }
 
@@ -54,14 +54,20 @@ ProjectPreview.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  image: PropTypes.string,
+  image: PropTypes.shape({
+    original: PropTypes.string,
+    large: PropTypes.string,
+    medium: PropTypes.string,
+    small: PropTypes.string,
+    averageColor: PropTypes.arrayOf(PropTypes.number),
+  }),
   large: PropTypes.bool,
   short: PropTypes.bool,
   className: PropTypes.string,
 };
 
 ProjectPreview.defaultProps = {
-  image: '',
+  image: {},
   large: false,
   short: false,
   className: '',

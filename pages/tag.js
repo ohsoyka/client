@@ -10,15 +10,16 @@ import Content from '../components/Content';
 import ArticlePreview from '../components/ArticlePreview';
 import Footer from '../components/Footer';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 class TagPage extends React.Component {
-  static getInitialProps({ query }) {
+  static async getInitialProps({ req, query }) {
     try {
       const { tag } = query;
-      const articles = Data.articles.filter(article => article.tags.includes(tag));
+      const { docs } = await API.articles.find({ tag, include: 'image' }, getAllCookies(req));
 
-      return { tag, articles };
+      return { tag, articles: docs };
     } catch (error) {
       return { error };
     }

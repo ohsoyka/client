@@ -10,14 +10,15 @@ import Content from '../components/Content';
 import CategoryPreview from '../components/CategoryPreview';
 import Footer from '../components/Footer';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 class CategoriesPage extends React.Component {
-  static getInitialProps() {
+  static async getInitialProps({ req }) {
     try {
-      const { categories } = Data;
+      const { docs } = await API.categories.find({ include: 'image' }, getAllCookies(req));
 
-      return { categories };
+      return { categories: docs };
     } catch (error) {
       return { error };
     }

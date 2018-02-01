@@ -12,26 +12,24 @@ import Article from '../components/Article';
 import ArticlesGroup from '../components/ArticlesGroup';
 import Footer from '../components/Footer';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 import * as Text from '../services/text';
 
 class ArticlePage extends React.Component {
-  static getInitialProps({ query }) {
+  static async getInitialProps({ req, query }) {
     try {
-      const article = Data.articles.find(_article => _article.path === query.path);
-      const project = article.project ? Data.projects.find(_project => _project.id === article.project) : null;
-      const category = article.category ? Data.categories.find(_category => _category.id === article.category) : null;
-      const relatedArticles = project
-        ? Data.articles.filter(_article => _article.project === project.id)
-          .filter(_article => _article.id !== article.id)
-        : Data.articles.filter(_article => _article.category === category.id)
-          .filter(_article => _article.id !== article.id);
+      const article = await API.articles.findOne(query.path, { include: 'image, project, project.image, category' }, getAllCookies(req));
+      const relatedArticlesQuery = article.project
+        ? { project: article.project.id, include: 'image, project.image' }
+        : { category: article.category.id, include: 'image' };
+      const { docs } = await API.articles
+        .find(Object.assign(relatedArticlesQuery, { page: 1, limit: 3 }), getAllCookies(req));
+      const relatedArticles = docs.filter(relatedArticle => relatedArticle.id !== article.id);
 
       return {
         article,
         relatedArticles,
-        project,
-        category,
       };
     } catch (error) {
       return { error };
@@ -46,12 +44,12 @@ class ArticlePage extends React.Component {
     const {
       article,
       relatedArticles,
-      project,
-      category,
     } = this.props;
+
+    const { project, category, image } = article;
+
     const title = `${article.title} / ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(article.body, 60));
-    const image = article.featuredImage;
     const url = `${current.clientURL}/${article.path}`;
 
     const relatedArticlesTitle = project
@@ -74,11 +72,11 @@ class ArticlePage extends React.Component {
           <meta name="twitter:description" content={description} />
           <meta name="twitter:site" content={current.meta.social.twitter.username} />
           <meta name="twitter:creator" content={current.meta.social.twitter.username} />
-          <meta name="twitter:image:src" content={image} />
+          <meta name="twitter:image:src" content={image.medium} />
 
           <meta name="og:title" content={title} />
           <meta name="og:description" content={description} />
-          <meta name="og:image" content={image} />
+          <meta name="og:image" content={image.medium} />
           <meta name="og:url" content={url} />
           <meta name="og:site_name" content={current.meta.title} />
           <meta name="og:locale" content={current.meta.language} />
@@ -86,7 +84,7 @@ class ArticlePage extends React.Component {
         </Head>
         <Header />
         <Content className="container">
-          <Article key={article.id} {...article} project={project} />
+          <Article key={article.id} {...article} project={project} category={category} />
 
           {
             Boolean(relatedArticles.length) && (

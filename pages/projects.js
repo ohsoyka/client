@@ -10,14 +10,15 @@ import Content from '../components/Content';
 import ProjectPreview from '../components/ProjectPreview';
 import Footer from '../components/Footer';
 
-import Data from '../services/data';
+import API from '../services/api';
+import { getAllCookies } from '../services/cookies';
 
 class ProjectsPage extends React.Component {
-  static getInitialProps() {
+  static async getInitialProps({ req }) {
     try {
-      const { projects } = Data;
+      const { docs } = await API.projects.find({ include: 'image' }, getAllCookies(req));
 
-      return { projects };
+      return { projects: docs };
     } catch (error) {
       return { error };
     }

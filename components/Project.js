@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Parallax, Background } from 'react-parallax';
-import Colors from '../services/colors';
+import generateBackgroundGradient from '../helpers/generate-background-gradient';
 
 class Project extends React.Component {
   componentDidMount() {
@@ -9,8 +9,9 @@ class Project extends React.Component {
   }
 
   render() {
-    const { from, to } = Colors.stringToHEXGradient(this.props.title);
-    const backgroundImage = this.props.image ? `url("${this.props.image}")` : `linear-gradient(to bottom right, ${from}, ${to})`;
+    const { averageColor } = this.props.image;
+    const { from, to } = generateBackgroundGradient(this.props);
+    const backgroundImage = `url("${this.props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
     return (
       <div className="project">
@@ -38,13 +39,20 @@ class Project extends React.Component {
 
 Project.propTypes = {
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    original: PropTypes.string,
+    large: PropTypes.string,
+    medium: PropTypes.string,
+    small: PropTypes.string,
+    averageColor: PropTypes.arrayOf(PropTypes.number),
+  }),
   description: PropTypes.string.isRequired,
   body: PropTypes.string,
 };
 
 Project.defaultProps = {
   body: '',
+  image: {},
 };
 
 export default Project;

@@ -25,7 +25,7 @@ const config = {
   development: Object.assign({}, shared, {
     port: 7200,
     clientURL: 'http://localhost:7200',
-    apiURL: 'http://localhost:3000',
+    apiURL: 'http://localhost:3200',
     cookiesDomain: 'localhost',
 
     google: {},

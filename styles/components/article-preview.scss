@@ -36,14 +36,16 @@
     }
   }
 
-  .article-preview-date {
-    color: $light-grey;
-    font-weight: $font-weight-light;
+  .article-preview-footer {
     display: none;
   }
 
+  .article-preview-date {
+    color: $light-grey;
+    font-weight: $font-weight-light;
+  }
+
   .article-preview-tags {
-    display: none;
     margin: 0.5em 0;
 
     .article-preview-tag {
@@ -118,13 +120,12 @@
     margin-top: 0;
   }
 
-  .article-preview-date {
-    display: block;
-    margin-right: 1em;
+  .article-preview-footer {
+    display: flex;
   }
 
-  .article-preview-tags {
-    display: block;
+  .article-preview-date {
+    margin-right: 1em;
   }
 
   .article-preview-bottomline {

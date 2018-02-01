@@ -1,4 +1,4 @@
-function HSVToRGB(h, s, v) {
+function HSLToRGB(h, s, v) {
   const i = Math.floor(h * 6);
   const f = (h * 6) - i;
   const p = v * (1 - s);
@@ -26,6 +26,38 @@ function HSVToRGB(h, s, v) {
   };
 }
 
+function RGBToHSL(red, green, blue) {
+  const r = red / 255;
+  const g = green / 255;
+  const b = blue / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+
+  let h;
+  let s;
+  const l = (max + min) / 2;
+
+  if (max === min) {
+    h = 0;
+    s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = ((g - b) / d) + (g < b ? 6 : 0); break;
+      case g: h = ((b - r) / d) + 2; break;
+      case b: h = ((r - g) / d) + 4; break;
+      default: h = 0;
+    }
+
+    h /= 6;
+  }
+
+  return { h, s, l };
+}
+
 function componentToHEX(c) {
   const hex = c.toString(16);
 
@@ -39,17 +71,31 @@ function RGBToHEX(r, g, b) {
 function stringToHEX(string) {
   const asciiCodes = string.split('').map(char => char.charCodeAt());
   const hue = (Math.cos(asciiCodes.reduce((prevCode, code) => prevCode + code)) + 1) / 2;
-  const { r, g, b } = HSVToRGB(hue, 0.5, 1);
+  const { r, g, b } = HSLToRGB(hue, 0.5, 1);
 
   return RGBToHEX(r, g, b);
 }
 
-function stringToHEXGradient(string = '') {
+function stringToHEXGradient(string = '', { saturation = 0.7, luminosity = 1 } = {}) {
   const asciiCodes = string.split('').map(char => char.charCodeAt());
   const sum = asciiCodes.reduce((accumulator, code) => accumulator + code, 0);
   const hue = (Math.cos(sum) + 1) / 2;
-  const fromRGB = HSVToRGB(hue, 0.6, 1);
-  const toRGB = HSVToRGB(hue + 0.1, 0.8, 1);
+  const fromRGB = HSLToRGB(hue, Math.max(saturation - 0.1, 0), luminosity);
+  const toRGB = HSLToRGB(hue + 0.1, Math.min(saturation + 0.1, 1), luminosity);
+
+  return {
+    from: RGBToHEX(fromRGB.r, fromRGB.g, fromRGB.b),
+    to: RGBToHEX(toRGB.r, toRGB.g, toRGB.b),
+  };
+}
+
+function RGBToGradient(r, g, b) {
+  const { h, s, l } = RGBToHSL(r, g, b);
+  const minSaturation = Math.max(s - 0.2, 0);
+  const maxSaturation = Math.min(s + 0.2, 1);
+
+  const fromRGB = HSLToRGB(h, minSaturation, l);
+  const toRGB = HSLToRGB(h, maxSaturation, l);
 
   return {
     from: RGBToHEX(fromRGB.r, fromRGB.g, fromRGB.b),
@@ -58,8 +104,10 @@ function stringToHEXGradient(string = '') {
 }
 
 export default {
-  HSVToRGB,
+  HSLToRGB,
+  RGBToHSL,
   RGBToHEX,
   stringToHEX,
   stringToHEXGradient,
+  RGBToGradient,
 };
