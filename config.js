@@ -38,8 +38,14 @@ const config = {
     cookiesDomain: '.ohsoyka.com',
 
     git: {
-      repo: 'git@github.com:ohsoyka/client.git',
+      repo: 'git@bitbucket.org:soyka/client.git',
       branch: 'stable',
+    },
+
+    server: {
+      host: '46.101.99.203',
+      username: 'poohitan',
+      folder: '~/ohsoyka.com/client',
     },
 
     pm2: {
