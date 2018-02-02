@@ -23,6 +23,10 @@ const ArticlePreviewStandart = (props) => {
     classList.push('article-preview-horizontal');
   }
 
+  if (props.withFooter) {
+    classList.push('article-preview-with-footer');
+  }
+
   style.backgroundImage = `url("${backgroundImageURL}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
   return (
@@ -68,12 +72,14 @@ ArticlePreviewStandart.propTypes = {
   className: PropTypes.string,
   large: PropTypes.bool,
   horizontal: PropTypes.bool,
+  withFooter: PropTypes.bool,
 };
 
 ArticlePreviewStandart.defaultProps = {
   className: '',
   large: false,
   horizontal: false,
+  withFooter: false,
   tags: [],
   image: {},
 };

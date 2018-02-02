@@ -40,9 +40,16 @@
     display: none;
   }
 
+  &.article-preview-with-footer {
+    .article-preview-footer {
+      display: flex;
+    }
+  }
+
   .article-preview-date {
     color: $light-grey;
     font-weight: $font-weight-light;
+    margin-right: 1em;
   }
 
   .article-preview-tags {
@@ -122,10 +129,6 @@
 
   .article-preview-footer {
     display: flex;
-  }
-
-  .article-preview-date {
-    margin-right: 1em;
   }
 
   .article-preview-bottomline {

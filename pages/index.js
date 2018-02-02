@@ -24,13 +24,13 @@ class IndexPage extends React.Component {
     try {
       const lastArticles = await API.articles.find({
         page: 1,
-        limit: 5,
+        limit: 7,
         include: 'image',
         sort: '-publishedAt',
       }, getAllCookies(req));
       const mostPopularArticles = await API.articles.find({
         page: 1,
-        limit: 5,
+        limit: 7,
         sort: '-views',
         include: 'image',
       }, getAllCookies(req));
@@ -97,13 +97,13 @@ class IndexPage extends React.Component {
         <Content>
           <Carousel fullScreen autoplaySpeed={10000} pauseOnHover={false}>
             {
-              lastArticles.map(article => <ArticlePreview key={article.id} {...article} fullScreen />)
+              lastArticles.slice(0, 5).map(article => <ArticlePreview key={article.id} {...article} fullScreen />)
             }
           </Carousel>
           <div className="container">
-            <div className="most-interesting-section">
+            <div className="most-interesting-articles-section">
               <h2>Найцікавіше</h2>
-              <ArticlesGroup articles={mostPopularArticles} articlesCount={{ xs: 3 }} />
+              <ArticlesGroup articles={mostPopularArticles} articlesCount={{ xs: 5 }} />
             </div>
 
             <div className="projects-section">
@@ -134,6 +134,12 @@ class IndexPage extends React.Component {
                 }
               </div>
               <p className="text-right larger"><Link href="/categories"><a>Всі категорії &rarr;</a></Link></p>
+            </div>
+
+            <div className="last-articles-section">
+              <h2>Останні статті</h2>
+              <ArticlesGroup articles={lastArticles} articlesCount={{ xs: 5 }} />
+              <p className="text-right larger"><Link href="/articles"><a>Всі статті &rarr;</a></Link></p>
             </div>
           </div>
         </Content>
