@@ -32,7 +32,7 @@ const config = {
   }),
 
   production: Object.assign({}, shared, {
-    port: 4000,
+    port: 4300,
     clientURL: 'https://ohsoyka.com',
     apiURL: 'https://api.ohsoyka.com',
     cookiesDomain: '.ohsoyka.com',

@@ -9,6 +9,7 @@
     "babel-plugin-wrap-in-js": "^1.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
+    "exec-ssh": "git+https://github.com/poohitan-blog/exec-ssh.git",
     "image-average-color": "^1.0.0",
     "isomorphic-unfetch": "^2.0.0",
     "jquery": "^3.3.1",
