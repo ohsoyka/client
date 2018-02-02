@@ -14,7 +14,7 @@ const Footer = () => (
           <li><a>Про</a></li>
         </ul>
         <hr className="footer-horizontal-line" />
-        <ul className="footer-social">
+        <ul className="footer-contacts">
           <li>
             <a className="fa fa-facebook-f" href={current.meta.social.facebook.link}><span className="sr-only">Facebook</span></a>
           </li>
