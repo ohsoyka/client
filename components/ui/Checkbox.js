@@ -14,17 +14,27 @@ class Checkbox extends React.Component {
   }
 
   render() {
-    const { checked, label, className } = this.props;
+    const {
+      checked,
+      disabled,
+      label,
+      className,
+    } = this.props;
     const checkboxId = `checkbox-${label}`;
+    const classList = ['checkbox', className];
+
+    if (disabled) {
+      classList.push('checkbox-disabled');
+    }
 
     return (
-      <div className={`checkbox ${className}`}>
+      <div className={classList.join(' ')}>
         <label htmlFor={checkboxId} className="layout-row layout-align-start-center">
           <div className="checkbox-square">
             {checked && <CheckIcon />}
           </div>
           <span className="checkbox-label">{label}</span>
-          <input id={checkboxId} type="checkbox" checked={checked} onChange={this.change} className="checkbox-native" />
+          <input id={checkboxId} type="checkbox" disabled={disabled} checked={checked} onChange={this.change} className="checkbox-native" />
         </label>
       </div>
     );
@@ -33,6 +43,7 @@ class Checkbox extends React.Component {
 
 Checkbox.propTypes = {
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   className: PropTypes.string,
@@ -40,6 +51,7 @@ Checkbox.propTypes = {
 
 Checkbox.defaultProps = {
   checked: false,
+  disabled: false,
   className: '',
 };
 

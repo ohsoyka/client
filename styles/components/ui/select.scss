@@ -30,6 +30,11 @@
     box-shadow: none;
     background: $white;
   }
+
+  .Select.is-disabled > .Select-control {
+    background-color: $almost-white;
+    color: $light-grey;
+  }
 }
 
 /**

@@ -29,15 +29,23 @@ class EditPagePage extends ProtectedPage {
   constructor(props) {
     super(props);
 
+    this.state = { formDisabled: false };
+
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
   }
 
   async update(page) {
-    const savedPage = await API.pages.update(this.props.page.path, page, getAllCookies());
+    this.setState({ formDisabled: true });
 
-    if (this.props.page.path !== savedPage.path) {
+    try {
+      const savedPage = await API.pages.update(this.props.page.path, page, getAllCookies());
+
+      this.setState({ formDisabled: false });
+
       Router.push(`/admin/pages/edit?path=${savedPage.path}`, `/admin/pages/${savedPage.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
   }
 
@@ -53,7 +61,7 @@ class EditPagePage extends ProtectedPage {
     } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -66,6 +74,7 @@ class EditPagePage extends ProtectedPage {
           <PageForm
             page={page}
             key={page.path}
+            disabled={this.state.formDisabled}
             onSubmit={this.update}
             onRemove={this.remove}
           />

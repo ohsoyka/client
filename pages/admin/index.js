@@ -89,7 +89,7 @@ class IndexPage extends ProtectedPage {
               {lastPublishedArticles.map(article => <PanelSectionItem {...article} type="article" />)}
             </PanelSection>
             <PanelSection title="Чернетки" href="articles?private=true" className="flex-100 flex-gt-xs-50">
-              {lastDrafts.map(draft => <PanelSectionItem {...draft} type="article" />)}
+              {lastDrafts.map(draft => <PanelSectionItem hideBadges {...draft} type="article" />)}
             </PanelSection>
             <PanelSection title="Проекти" href="projects" className="flex-100 flex-gt-xs-50">
               {lastProjects.map(project => <PanelSectionItem {...project} type="project" />)}

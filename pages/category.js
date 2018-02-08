@@ -21,7 +21,7 @@ class CategoryPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const category = await API.categories.findOne(query.path, { include: 'image' }, getAllCookies(req));
-      const { docs } = await API.articles.find({ category: category.id, include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ category: category.id, include: 'image', private: false }, getAllCookies(req));
 
       return {
         ...parentProps,

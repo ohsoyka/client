@@ -24,27 +24,43 @@ class NewProjectPage extends ProtectedPage {
     };
   }
 
-  static async submit(project) {
-    const imageFile = project.image;
-    let savedProject;
+  constructor(props) {
+    super(props);
 
-    if (imageFile) {
-      const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-      const projectWithImage = Object.assign({}, project, { image: uploadedImage.id });
+    this.state = { formDisabled: false };
 
-      savedProject = await API.projects.create(projectWithImage, getAllCookies());
-    } else {
-      savedProject = await API.projects.create(project, getAllCookies());
+    this.submit = this.submit.bind(this);
+  }
+
+  async submit(project) {
+    this.setState({ formDisabled: true });
+
+    try {
+      const imageFile = project.image;
+      let savedProject;
+
+      if (imageFile) {
+        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const projectWithImage = Object.assign({}, project, { image: uploadedImage.id });
+
+        savedProject = await API.projects.create(projectWithImage, getAllCookies());
+      } else {
+        savedProject = await API.projects.create(project, getAllCookies());
+      }
+
+      this.setState({ formDisabled: false });
+
+      Router.push(`/admin/projects/edit?path=${savedProject.path}`, `/admin/projects/${savedProject.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
-
-    Router.push(`/admin/projects/edit?path=${savedProject.path}`, `/admin/projects/${savedProject.path}/edit`);
   }
 
   render() {
     const { error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -54,7 +70,7 @@ class NewProjectPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <ProjectForm onSubmit={NewProjectPage.submit} />
+          <ProjectForm disabled={this.state.formDisabled} onSubmit={this.submit} />
         </Content>
         <Footer />
       </Wrapper>

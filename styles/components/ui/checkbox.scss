@@ -34,3 +34,17 @@
     }
   }
 }
+
+.checkbox-disabled {
+  .checkbox-square {
+    background-color: $almost-white;
+    border-color: $extra-light-grey;
+    fill: $light-grey;
+  }
+
+  &:hover {
+    .checkbox-square {
+      border-color: $extra-light-grey;
+    }
+  }
+}

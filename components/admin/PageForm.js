@@ -40,7 +40,8 @@ class PageForm extends React.Component {
   }
 
   render() {
-    const formTitle = this.props.page.path ? 'Редагувати сторінку' : 'Нова сторінка';
+    const { page, disabled } = this.props;
+    const formTitle = page.path ? 'Редагувати сторінку' : 'Нова сторінка';
     const link = this.generatePageLink();
 
     return (
@@ -50,6 +51,7 @@ class PageForm extends React.Component {
           <Input
             label="Назва"
             value={this.state.title}
+            disabled={disabled}
             onChange={title => this.setState({ title })}
             className="flex-100"
           />
@@ -58,6 +60,7 @@ class PageForm extends React.Component {
               compact
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
+              disabled={disabled}
               onChange={path => this.setState({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
@@ -68,13 +71,13 @@ class PageForm extends React.Component {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Текст</div>
-            <Editor html={this.state.body} onChange={body => this.setState({ body })} />
+            <Editor disabled={disabled} html={this.state.body} onChange={body => this.setState({ body })} />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
             <div className="flex-15">
               {
                 this.props.page.id &&
-                <Button onClick={() => this.setState({ removePopupVisible: true })} color="red">
+                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
                   Видалити
                 </Button>
               }
@@ -83,9 +86,10 @@ class PageForm extends React.Component {
               <Checkbox
                 label="Заховати"
                 checked={this.state.private}
+                disabled={disabled}
                 onChange={hidden => this.setState({ private: hidden })}
               />
-              <Button onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
+              <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>
           </div>
         </div>
@@ -106,12 +110,14 @@ PageForm.propTypes = {
     id: PropTypes.string,
     path: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
 };
 
 PageForm.defaultProps = {
   page: {},
+  disabled: false,
   onRemove: null,
 };
 

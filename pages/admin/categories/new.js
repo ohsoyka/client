@@ -24,27 +24,43 @@ class NewCategoryPage extends ProtectedPage {
     };
   }
 
-  static async submit(category) {
-    const imageFile = category.image;
-    let savedCategory;
+  constructor(props) {
+    super(props);
 
-    if (imageFile) {
-      const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-      const categoryWithImage = Object.assign({}, category, { image: uploadedImage.id });
+    this.state = { formDisabled: false };
 
-      savedCategory = await API.categories.create(categoryWithImage, getAllCookies());
-    } else {
-      savedCategory = await API.categories.create(category, getAllCookies());
+    this.submit = this.submit.bind(this);
+  }
+
+  async submit(category) {
+    this.setState({ formDisabled: true });
+
+    try {
+      const imageFile = category.image;
+      let savedCategory;
+
+      if (imageFile) {
+        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const categoryWithImage = Object.assign({}, category, { image: uploadedImage.id });
+
+        savedCategory = await API.categories.create(categoryWithImage, getAllCookies());
+      } else {
+        savedCategory = await API.categories.create(category, getAllCookies());
+      }
+
+      this.setState({ formDisabled: false });
+
+      Router.push(`/admin/categories/edit?path=${savedCategory.path}`, `/admin/categories/${savedCategory.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
-
-    Router.push(`/admin/categories/edit?path=${savedCategory.path}`, `/admin/categories/${savedCategory.path}/edit`);
   }
 
   render() {
     const { error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -54,7 +70,7 @@ class NewCategoryPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <CategoryForm onSubmit={NewCategoryPage.submit} />
+          <CategoryForm disabled={this.state.formDisabled} onSubmit={this.submit} />
         </Content>
         <Footer />
       </Wrapper>

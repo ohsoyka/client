@@ -28,6 +28,10 @@ const Button = (props) => {
 
   const classList = ['button', `button-color-${props.color}`, props.className];
 
+  if (props.disabled) {
+    classList.push('button-disabled');
+  }
+
   return (
     <div className={classList.join(' ')}>
       {buttonElement}
@@ -37,6 +41,7 @@ const Button = (props) => {
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func,
   href: PropTypes.string,
   as: PropTypes.string,
@@ -46,6 +51,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   className: '',
+  disabled: false,
   color: 'green',
   onClick: null,
   href: '',

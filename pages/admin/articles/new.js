@@ -28,27 +28,43 @@ class NewArticlePage extends ProtectedPage {
     };
   }
 
-  static async submit(article) {
-    const imageFile = article.image;
-    let savedArticle;
+  constructor(props) {
+    super(props);
 
-    if (imageFile) {
-      const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-      const articleWithImage = Object.assign({}, article, { image: uploadedImage.id });
+    this.state = { formDisabled: false };
 
-      savedArticle = await API.articles.create(articleWithImage, getAllCookies());
-    } else {
-      savedArticle = await API.articles.create(article, getAllCookies());
+    this.submit = this.submit.bind(this);
+  }
+
+  async submit(article) {
+    this.setState({ formDisabled: true });
+
+    try {
+      const imageFile = article.image;
+      let savedArticle;
+
+      if (imageFile) {
+        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const articleWithImage = Object.assign({}, article, { image: uploadedImage.id });
+
+        savedArticle = await API.articles.create(articleWithImage, getAllCookies());
+      } else {
+        savedArticle = await API.articles.create(article, getAllCookies());
+      }
+
+      this.setState({ formDisabled: false });
+
+      Router.push(`/admin/articles/edit?path=${savedArticle.path}`, `/admin/articles/${savedArticle.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
-
-    Router.push(`/admin/articles/edit?path=${savedArticle.path}`, `/admin/articles/${savedArticle.path}/edit`);
   }
 
   render() {
     const { projects, categories, error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -58,7 +74,12 @@ class NewArticlePage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <ArticleForm projects={projects} categories={categories} onSubmit={NewArticlePage.submit} />
+          <ArticleForm
+            disabled={this.state.formDisabled}
+            projects={projects}
+            categories={categories}
+            onSubmit={this.submit}
+          />
         </Content>
         <Footer />
       </Wrapper>

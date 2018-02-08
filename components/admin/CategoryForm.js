@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { current } from '../../config';
 
-import Dropzone from '../Dropzone';
+import ImageDropzone from '../ImageDropzone';
 import Popup from '../Popup';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
@@ -39,8 +39,10 @@ class CategoryForm extends React.Component {
   }
 
   render() {
-    const formTitle = this.props.category.path ? 'Редагувати категорію' : 'Нова категорія';
+    const { category, disabled } = this.props;
+    const formTitle = category.path ? 'Редагувати категорію' : 'Нова категорія';
     const link = this.generateCategoryLink();
+    const imageURL = category.image ? category.image.small : null;
 
     return (
       <div className="category-form">
@@ -49,6 +51,7 @@ class CategoryForm extends React.Component {
           <Input
             label="Назва"
             value={this.state.title}
+            disabled={disabled}
             onChange={title => this.setState({ title })}
             className="flex-100"
           />
@@ -57,6 +60,7 @@ class CategoryForm extends React.Component {
               compact
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
+              disabled={disabled}
               onChange={path => this.setState({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
@@ -65,19 +69,20 @@ class CategoryForm extends React.Component {
               {link}
             </div>
           </div>
-          <div className="layout-row layout-wrap layout-align-start-start flex-100">
-            <div className="flex-100 flex-gt-xs-50">
-              <div className="margin-bottom-small">Головне зображення</div>
-              <Dropzone
-                limit={1}
-                files={[this.state.image]}
-                onDrop={([image]) => this.setState({ image })}
-              />
-            </div>
+          <div className="flex-100">
+            <div className="margin-bottom-small">Зображення</div>
+            <ImageDropzone
+              imageURL={imageURL}
+              key={imageURL}
+              disabled={disabled}
+              onChange={image => this.setState({ image })}
+              className="flex-100"
+            />
           </div>
           <Input
             label="Короткий опис"
             value={this.state.description}
+            disabled={disabled}
             onChange={description => this.setState({ description })}
             className="flex-100"
           />
@@ -85,13 +90,13 @@ class CategoryForm extends React.Component {
             <div className="flex-15">
               {
                 this.props.category.id &&
-                <Button onClick={() => this.setState({ removePopupVisible: true })} color="red">
+                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
                   Видалити
                 </Button>
               }
             </div>
             <div className="layout-row layout-align-start-center flex-30">
-              <Button onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
+              <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>
           </div>
         </div>
@@ -111,13 +116,16 @@ CategoryForm.propTypes = {
   category: PropTypes.shape({
     id: PropTypes.string,
     path: PropTypes.string,
+    image: PropTypes.object,
   }),
+  disabled: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
 };
 
 CategoryForm.defaultProps = {
   category: {},
+  disabled: false,
   onRemove: null,
 };
 

@@ -29,25 +29,33 @@ class EditCategoryPage extends ProtectedPage {
   constructor(props) {
     super(props);
 
+    this.state = { formDisabled: false };
+
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
   }
 
   async update(category) {
-    const shouldUploadImage = category.image instanceof window.File;
-    let image = (category.image && category.image.id) || category.image;
+    this.setState({ formDisabled: true });
 
-    if (shouldUploadImage) {
-      const [uploadedImage] = await API.upload(category.image, getAllCookies());
+    try {
+      const shouldUploadImage = category.image instanceof window.File;
+      let image = (category.image && category.image.id) || category.image;
 
-      image = uploadedImage.id;
-    }
+      if (shouldUploadImage) {
+        const [uploadedImage] = await API.upload(category.image, getAllCookies());
 
-    const categoryWithImage = Object.assign({}, category, { image });
-    const savedCategory = await API.categories.update(this.props.category.path, categoryWithImage, getAllCookies());
+        image = uploadedImage.id;
+      }
 
-    if (this.props.category.path !== savedCategory.path) {
+      const categoryWithImage = Object.assign({}, category, { image });
+      const savedCategory = await API.categories.update(this.props.category.path, categoryWithImage, getAllCookies());
+
+      this.setState({ formDisabled: false });
+
       Router.push(`/admin/categories/edit?path=${savedCategory.path}`, `/admin/categories/${savedCategory.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
   }
 
@@ -63,7 +71,7 @@ class EditCategoryPage extends ProtectedPage {
     } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -76,6 +84,7 @@ class EditCategoryPage extends ProtectedPage {
           <CategoryForm
             category={category}
             key={category.path}
+            disabled={this.state.formDisabled}
             onSubmit={this.update}
             onRemove={this.remove}
           />

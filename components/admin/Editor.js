@@ -112,11 +112,19 @@ class Editor extends React.Component {
   }
 
   render() {
+    const { label, disabled } = this.props;
+    const classList = ['editor-wrapper'];
+
+    if (disabled) {
+      classList.push('editor-wrapper-disabled');
+    }
+
     return (
-      <div className="editor-wrapper">
-        {this.props.label && <div className="editor-label">{this.props.label}</div>}
+      <div className={classList.join(' ')}>
+        {label && <div className="editor-label">{label}</div>}
         <style>{ editorStyles + styles + theme }</style>
         <div className="editor" />
+        <div className="editor-mask" />
       </div>
     );
   }
@@ -125,11 +133,13 @@ class Editor extends React.Component {
 Editor.propTypes = {
   label: PropTypes.string,
   html: PropTypes.string,
+  disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
 
 Editor.defaultProps = {
   label: '',
+  disabled: false,
   html: '<p></p>',
 };
 

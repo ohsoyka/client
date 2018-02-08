@@ -8,8 +8,9 @@ const CategoryPreview = (props) => {
 
   const style = {};
   const classList = ['category-preview', props.className];
+  const image = props.image || {};
 
-  style.backgroundImage = `url("${props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+  style.backgroundImage = `url("${image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
   if (props.image) {
     classList.push('category-preview-with-image');

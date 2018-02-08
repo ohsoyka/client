@@ -20,23 +20,33 @@ class Dropzone extends React.Component {
   }
 
   render() {
-    const fileList = this.props.files.filter(file => file && file.name);
+    const {
+      files,
+      loading,
+      disabled,
+    } = this.props;
+    const fileList = files.filter(file => file && file.name);
     const placeholderVisible = !fileList.length;
-    const loaderVisible = this.props.loading;
+    const classList = ['dropzone', this.props.className];
+
+    if (disabled) {
+      classList.push('dropzone-disabled');
+    }
 
     return (
       <ReactDropzone
         onDrop={this.onDrop}
         accept={this.props.accept}
-        className={`dropzone ${this.props.className}`}
+        className={classList.join(' ')}
         activeClassName="dropzone-active"
         acceptClassName="dropzone-accept"
         rejectClassName="dropzone-reject"
         disablePreview
-        disabled={this.props.loading}
+        disabled={loading || disabled}
+        style={{ height: this.props.height }}
       >
         <div className="dropzone-content">
-          <div className={`dropzone-loader ${loaderVisible ? 'visible' : ''}`}>
+          <div className={`dropzone-loader ${loading ? 'visible' : ''}`}>
             <LoaderIcon className="dropzone-loader-icon" />
           </div>
           <div className={`dropzone-placeholder text-center ${placeholderVisible ? 'visible' : ''}`}>
@@ -59,6 +69,8 @@ Dropzone.propTypes = {
   accept: PropTypes.string,
   className: PropTypes.string,
   loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  height: PropTypes.string,
 };
 
 Dropzone.defaultProps = {
@@ -68,6 +80,8 @@ Dropzone.defaultProps = {
   accept: null,
   className: '',
   loading: false,
+  disabled: false,
+  height: 'auto',
 };
 
 export default Dropzone;

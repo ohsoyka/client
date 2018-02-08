@@ -29,25 +29,33 @@ class EditProjectPage extends ProtectedPage {
   constructor(props) {
     super(props);
 
+    this.state = { formDisabled: false };
+
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
   }
 
   async update(project) {
-    const shouldUploadImage = project.image instanceof window.File;
-    let image = (project.image && project.image.id) || project.image;
+    this.setState({ formDisabled: true });
 
-    if (shouldUploadImage) {
-      const [uploadedImage] = await API.upload(project.image, getAllCookies());
+    try {
+      const shouldUploadImage = project.image instanceof window.File;
+      let image = (project.image && project.image.id) || project.image;
 
-      image = uploadedImage.id;
-    }
+      if (shouldUploadImage) {
+        const [uploadedImage] = await API.upload(project.image, getAllCookies());
 
-    const projectWithImage = Object.assign({}, project, { image });
-    const savedProject = await API.projects.update(this.props.project.path, projectWithImage, getAllCookies());
+        image = uploadedImage.id;
+      }
 
-    if (this.props.project.path !== savedProject.path) {
+      const projectWithImage = Object.assign({}, project, { image });
+      const savedProject = await API.projects.update(this.props.project.path, projectWithImage, getAllCookies());
+
+      this.setState({ formDisabled: false });
+
       Router.push(`/admin/projects/edit?path=${savedProject.path}`, `/admin/projects/${savedProject.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
     }
   }
 
@@ -63,7 +71,7 @@ class EditProjectPage extends ProtectedPage {
     } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -76,6 +84,7 @@ class EditProjectPage extends ProtectedPage {
           <ProjectForm
             project={project}
             key={project.path}
+            disabled={this.state.formDisabled}
             onSubmit={this.update}
             onRemove={this.remove}
           />

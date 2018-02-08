@@ -5,7 +5,8 @@ import generateBackgroundGradient from '../../helpers/generate-background-gradie
 
 const ArticleHeader = (props) => {
   const { from, to } = generateBackgroundGradient(props);
-  const backgroundImage = `url("${props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+  const image = props.image || {};
+  const backgroundImage = `url("${image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
   return (
     <Parallax

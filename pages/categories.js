@@ -18,7 +18,7 @@ class CategoriesPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
       const parentProps = await super.getInitialProps({ req });
-      const { docs } = await API.categories.find({ include: 'image' }, getAllCookies(req));
+      const { docs } = await API.categories.find({ include: 'image', private: false }, getAllCookies(req));
 
       return { ...parentProps, categories: docs };
     } catch (error) {

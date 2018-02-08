@@ -19,7 +19,7 @@ class TagPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const { tag } = query;
-      const { docs } = await API.articles.find({ tag, include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ tag, include: 'image', private: false }, getAllCookies(req));
 
       return { ...parentProps, tag, articles: docs };
     } catch (error) {

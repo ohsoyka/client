@@ -4,7 +4,7 @@
 
     display: block;
 
-    background-color: transparent;
+    background-color: $white;
     border: 1px solid $grey;
     font-family: $font-family-header;
     padding: 0.6em 1em 0.5em 1em;
@@ -35,5 +35,15 @@
   &.button-color-black .button-element:hover {
     border-color: $black;
     background-color: $black;
+  }
+
+  &.button-disabled {
+    .button-element {
+      pointer-events: none;
+
+      background-color: $almost-white;
+      color: $light-grey;
+      border-color: $extra-light-grey;
+    }
   }
 }

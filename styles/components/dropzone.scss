@@ -2,8 +2,7 @@
   border: 1px dashed $light-grey;
   cursor: pointer;
   transition: all 150ms linear;
-  min-height: 3em;
-  height: 7em;
+  min-height: 5em;
 
   &:hover {
     border-color: $green;
@@ -74,5 +73,10 @@
     background-color: lighten($bloody-red, 30%);
     border-color: $bloody-red;
     color: $white;
+  }
+
+  &.dropzone-disabled {
+    background-color: $almost-white;
+    color: $light-grey;
   }
 }

@@ -73,7 +73,8 @@ class ArticlePage extends AuthenticatablePage {
       relatedArticles,
     } = this.props;
 
-    const { project, category, image = {} } = article;
+    const { project, category } = article;
+    const image = article.image || {};
 
     const title = `${article.title} / ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(article.body, 60));

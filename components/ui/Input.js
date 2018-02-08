@@ -7,6 +7,7 @@ const Input = (props) => {
     compact,
     lite,
     multiline,
+    disabled,
     rows,
     type,
     value,
@@ -23,6 +24,10 @@ const Input = (props) => {
     classList.push('input-lite');
   }
 
+  if (disabled) {
+    classList.push('input-disabled');
+  }
+
   if (multiline) {
     classList.push('input-multiline');
 
@@ -31,6 +36,7 @@ const Input = (props) => {
         {!compact && <span className="input-label">{label}</span>}
         <textarea
           placeholder={placeholder}
+          disabled={disabled}
           value={value}
           rows={rows}
           onChange={event => onChange(event.target.value)}
@@ -45,6 +51,7 @@ const Input = (props) => {
       {!compact && <span className="input-label">{label}</span>}
       <input
         type={type}
+        disabled={disabled}
         placeholder={placeholder}
         value={value}
         pattern={pattern}
@@ -66,6 +73,7 @@ Input.propTypes = {
   nativeElementClassName: PropTypes.string,
   compact: PropTypes.bool,
   lite: PropTypes.bool,
+  disabled: PropTypes.bool,
   multiline: PropTypes.bool,
   rows: PropTypes.number,
 };
@@ -81,6 +89,7 @@ Input.defaultProps = {
   compact: false,
   lite: false,
   multiline: false,
+  disabled: false,
   rows: 3,
 };
 

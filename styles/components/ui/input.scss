@@ -20,3 +20,8 @@
     border-bottom-width: 2px;
   }
 }
+
+.input-disabled .input-element {
+  background-color: $almost-white;
+  color: $light-grey;
+}

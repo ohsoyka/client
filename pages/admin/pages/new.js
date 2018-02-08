@@ -24,17 +24,33 @@ class NewPagePage extends ProtectedPage {
     };
   }
 
-  static async submit(page) {
-    const savedPage = await API.pages.create(page, getAllCookies());
+  constructor(props) {
+    super(props);
 
-    Router.push(`/admin/pages/edit?path=${savedPage.path}`, `/admin/pages/${savedPage.path}/edit`);
+    this.state = { formDisabled: false };
+
+    this.submit = this.submit.bind(this);
+  }
+
+  async submit(page) {
+    this.setState({ formDisabled: true });
+
+    try {
+      const savedPage = await API.pages.create(page, getAllCookies());
+
+      this.setState({ formDisabled: false });
+
+      Router.push(`/admin/pages/edit?path=${savedPage.path}`, `/admin/pages/${savedPage.path}/edit`);
+    } catch (error) {
+      this.setState({ formDisabled: false });
+    }
   }
 
   render() {
     const { error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error statusCode={error.status} />;
     }
 
     return (
@@ -44,7 +60,7 @@ class NewPagePage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <PageForm onSubmit={NewPagePage.submit} />
+          <PageForm disabled={this.state.formDisabled} onSubmit={this.submit} />
         </Content>
         <Footer />
       </Wrapper>

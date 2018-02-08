@@ -39,10 +39,13 @@ class PanelSectionItem extends React.Component {
 
   render() {
     const link = this.generateItemLink();
+    const { hideBadges, className } = this.props;
+    const badges = this.props.private ? <div className="admin-panel-section-item-badges">(заховано)</div> : null;
 
     return (
-      <div className={`admin-panel-section-item ${this.props.className}`}>
+      <div className={`admin-panel-section-item layout-row layout-align-start-start ${className}`}>
         <div className="admin-panel-section-item-title">{link}</div>
+        {!hideBadges && badges}
       </div>
     );
   }
@@ -52,10 +55,14 @@ PanelSectionItem.propTypes = {
   title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['article', 'category', 'project', 'page']).isRequired,
+  private: PropTypes.bool,
+  hideBadges: PropTypes.bool,
   className: PropTypes.string,
 };
 
 PanelSectionItem.defaultProps = {
+  private: false,
+  hideBadges: false,
   className: '',
 };
 

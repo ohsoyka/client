@@ -6,7 +6,7 @@ import moment from 'moment';
 import { current } from '../../config';
 
 import Editor from '../../utils/editor';
-import Dropzone from '../Dropzone';
+import ImageDropzone from '../ImageDropzone';
 import Popup from '../Popup';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
@@ -55,6 +55,8 @@ class ArticleForm extends React.Component {
   render() {
     const formTitle = this.props.article.path ? 'Редагувати статтю' : 'Нова стаття';
     const link = this.generateArticleLink();
+    const { disabled, article } = this.props;
+    const imageURL = article.image ? article.image.small : null;
 
     return (
       <div className="article-form">
@@ -63,6 +65,7 @@ class ArticleForm extends React.Component {
           <Input
             label="Назва"
             value={this.state.title}
+            disabled={disabled}
             onChange={title => this.setState({ title })}
             className="flex-100"
           />
@@ -71,6 +74,7 @@ class ArticleForm extends React.Component {
               compact
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
+              disabled={disabled}
               onChange={path => this.setState({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
@@ -79,37 +83,40 @@ class ArticleForm extends React.Component {
               {link}
             </div>
           </div>
-          <div className="layout-row layout-wrap layout-align-start-start flex-100">
-            <div className="flex-100 flex-gt-xs-50">
-              <div className="margin-bottom-small">Головне зображення</div>
-              <Dropzone
-                limit={1}
-                files={[this.state.image]}
-                onDrop={([image]) => this.setState({ image })}
-              />
-            </div>
-            <div className="flex-100 flex-gt-xs-50 padding-left">
-              <Select
-                label="Проект"
-                value={this.state.project}
-                options={this.props.projects.map(project => ({ value: project.id, label: project.title }))}
-                clearable
-                onChange={project => this.setState({ project })}
-                className="flex-100 margin-bottom"
-              />
-              <Select
-                label="Категорія"
-                value={this.state.category}
-                options={this.props.categories.map(category => ({ value: category.id, label: category.title }))}
-                clearable
-                onChange={category => this.setState({ category })}
-                className="flex-100"
-              />
-            </div>
+          <div className="flex-100">
+            <div className="margin-bottom-small">Головне зображення</div>
+            <ImageDropzone
+              imageURL={imageURL}
+              key={imageURL}
+              disabled={disabled}
+              onChange={image => this.setState({ image })}
+              className="flex-100"
+            />
+          </div>
+          <div className="layout-row flex-100">
+            <Select
+              label="Проект"
+              value={this.state.project}
+              options={this.props.projects.map(project => ({ value: project.id, label: project.title }))}
+              clearable
+              disabled={disabled}
+              onChange={project => this.setState({ project })}
+              className="flex-50"
+            />
+            <Select
+              label="Категорія"
+              value={this.state.category}
+              options={this.props.categories.map(category => ({ value: category.id, label: category.title }))}
+              clearable
+              disabled={disabled}
+              onChange={category => this.setState({ category })}
+              className="flex-50 margin-left"
+            />
           </div>
           <Input
             label="Короткий опис"
             value={this.state.brief}
+            disabled={disabled}
             onChange={brief => this.setState({ brief })}
             className="flex-100"
           />
@@ -119,6 +126,7 @@ class ArticleForm extends React.Component {
               !this.state.projectDescriptionAsIntro &&
               <Input
                 value={this.state.intro}
+                disabled={disabled}
                 onChange={intro => this.setState({ intro })}
                 multiline
                 className="flex-100"
@@ -129,6 +137,7 @@ class ArticleForm extends React.Component {
               <Checkbox
                 label="Використати опис проекту замість вступу"
                 checked={this.state.projectDescriptionAsIntro}
+                disabled={disabled}
                 onChange={projectDescriptionAsIntro => this.setState({ projectDescriptionAsIntro })}
                 className="margin-top-small"
               />
@@ -136,12 +145,13 @@ class ArticleForm extends React.Component {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Текст</div>
-            <Editor html={this.state.body} onChange={body => this.setState({ body })} />
+            <Editor html={this.state.body} onChange={body => this.setState({ body })} disabled={disabled} />
           </div>
           <div className="layout-row layout-align-start-center flex-100">
             <Input
               label="Теґи (через кому)"
               value={this.state.tagsString}
+              disabled={disabled}
               onChange={tagsString => this.setState({ tagsString })}
               className="flex-100"
             />
@@ -149,6 +159,7 @@ class ArticleForm extends React.Component {
               label="Дата публікації"
               placeholder="ДД.ММ.РРРР гг:хх"
               value={this.state.dateString}
+              disabled={disabled}
               onChange={dateString => this.setState({ dateString })}
               pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
               className="margin-left"
@@ -159,7 +170,7 @@ class ArticleForm extends React.Component {
             <div className="flex-15">
               {
                 this.props.article.id &&
-                <Button onClick={() => this.setState({ removePopupVisible: true })} color="red">
+                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
                   Видалити
                 </Button>
               }
@@ -168,9 +179,10 @@ class ArticleForm extends React.Component {
               <Checkbox
                 label="Заховати"
                 checked={this.state.private}
+                disabled={disabled}
                 onChange={hidden => this.setState({ private: hidden })}
               />
-              <Button onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
+              <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>
           </div>
         </div>
@@ -192,9 +204,11 @@ ArticleForm.propTypes = {
     path: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
     publishedAt: PropTypes.instanceOf(Date),
+    image: PropTypes.object,
   }),
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
+  disabled: PropTypes.bool,
   projects: PropTypes.arrayOf(PropTypes.object).isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
@@ -202,6 +216,7 @@ ArticleForm.propTypes = {
 ArticleForm.defaultProps = {
   article: {},
   onRemove: null,
+  disabled: false,
 };
 
 export default ArticleForm;

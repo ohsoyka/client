@@ -21,7 +21,7 @@ class ProjectPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
-      const { docs } = await API.articles.find({ project: project.id, include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ project: project.id, include: 'image', private: false }, getAllCookies(req));
 
       return {
         ...parentProps,

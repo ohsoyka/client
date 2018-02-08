@@ -10,7 +10,8 @@ class Category extends React.Component {
 
   render() {
     const { from, to } = generateBackgroundGradient(this.props);
-    const backgroundImage = `url("${this.props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+    const image = this.props.image || {};
+    const backgroundImage = `url("${image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
     return (
       <div className="category">
