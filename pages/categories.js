@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
 import { current } from '../config';
+import AuthenticatablePage from './_authenticatable';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -13,12 +14,13 @@ import Footer from '../components/Footer';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
-class CategoriesPage extends React.Component {
+class CategoriesPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
+      const parentProps = await super.getInitialProps({ req });
       const { docs } = await API.categories.find({ include: 'image' }, getAllCookies(req));
 
-      return { categories: docs };
+      return { ...parentProps, categories: docs };
     } catch (error) {
       return { error };
     }

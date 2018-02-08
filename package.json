@@ -8,8 +8,8 @@
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "cookie-parser": "^1.4.3",
-    "express": "^4.16.2",
     "exec-ssh": "git+https://github.com/poohitan-blog/exec-ssh.git",
+    "express": "^4.16.2",
     "image-average-color": "^1.0.0",
     "isomorphic-unfetch": "^2.0.0",
     "jquery": "^3.3.1",
@@ -25,7 +25,9 @@
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.7",
     "react-parallax": "^1.6.0",
+    "react-select": "^1.2.1",
     "react-slick": "^0.16.0",
     "sass-loader": "^6.0.6",
     "slick-carousel": "^1.8.1"
@@ -38,7 +40,8 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.0"
+    "eslint-plugin-react": "^7.6.0",
+    "yargs": "^11.0.0"
   },
   "scripts": {
     "dev": "node server.js",

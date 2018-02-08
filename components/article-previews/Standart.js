@@ -30,29 +30,33 @@ const ArticlePreviewStandart = (props) => {
   style.backgroundImage = `url("${backgroundImageURL}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
   return (
-    <Link href={`/article?path=${props.path}`} as={`/${props.path}`}>
-      <a className={classList.join(' ')}>
-        <div className="article-preview-image-wrapper aspect-ratio-16-10">
+    <div className={classList.join(' ')}>
+      <Link href={`/article?path=${props.path}`} as={`/${props.path}`}>
+        <a className="article-preview-image-wrapper aspect-ratio-16-10">
           <div className="article-preview-image" style={style} />
           <div className="article-preview-image-shadow" />
-        </div>
-        <div className="article-preview-text">
-          <h3 className="article-preview-title">{props.title}</h3>
-          <p>{props.brief}</p>
-          <div className="article-preview-footer layout-row layout-align-start-center layout-wrap">
-            <div className="article-preview-date smaller">{Grammar.formatDate(props.publishedAt)}</div>
-            <div className="article-preview-tags smaller">
-              {
-                props.tags.map(tag => (
-                  <span key={tag} className="article-preview-tag"><Link href={`/tag?tag=${tag}`} as={`/tag/${tag}`}><a>#{tag}</a></Link></span>
-                ))
-              }
-            </div>
+        </a>
+      </Link>
+      <div className="article-preview-text">
+        <Link href={`/article?path=${props.path}`} as={`/${props.path}`}>
+          <a>
+            <h3 className="article-preview-title">{props.title}</h3>
+            <p className="article-preview-brief">{props.brief}</p>
+          </a>
+        </Link>
+        <div className="article-preview-footer layout-row layout-align-start-center layout-wrap">
+          <div className="article-preview-date smaller">{Grammar.formatDate(props.publishedAt)}</div>
+          <div className="article-preview-tags smaller">
+            {
+              props.tags.map(tag => (
+                <span key={tag} className="article-preview-tag"><Link href={`/tag?tag=${tag}`} as={`/tag/${tag}`}><a>#{tag}</a></Link></span>
+              ))
+            }
           </div>
-          <div className="article-preview-bottomline" />
         </div>
-      </a>
-    </Link>
+        <div className="article-preview-bottomline" />
+      </div>
+    </div>
   );
 };
 

@@ -2,15 +2,36 @@
   margin: 2em auto;
   padding: 0 7em;
 
+  img {
+    margin-left: -7em !important;
+    width: calc(100% + 14em) !important;
+    max-width: 100vw;
+  }
+
   @media (max-width: $breakpoint-middle) {
     padding: 0 4em;
+
+    img {
+      margin-left: -4em !important;
+      width: calc(100% + 8em) !important;
+    }
   }
 
   @media (max-width: $breakpoint-small) {
     padding: 0 2em;
+
+    img {
+      margin-left: -2em !important;
+      width: calc(100% + 4em) !important;
+    }
   }
 
   @media (max-width: $breakpoint-tiny) {
     padding: 0;
+
+    img {
+      margin-left: 0 !important;
+      width: 100% !important;
+    }
   }
 }

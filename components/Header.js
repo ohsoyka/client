@@ -1,6 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Logo from './ui/Logo';
+
+import Session from '../services/session';
+
+const menuItems = [
+  {
+    id: 5,
+    markup: <Link href="/admin/index" as="/admin"><a>Панель керування</a></Link>,
+    loggedInOnly: true,
+  },
+  {
+    id: 1,
+    markup: <Link href="/projects"><a>Проекти</a></Link>,
+  },
+  {
+    id: 2,
+    markup: <a>Ниття</a>,
+  },
+  {
+    id: 3,
+    markup: <a>Ше шось</a>,
+  },
+  {
+    id: 4,
+    markup: <Link href="/page?path=about" as="/pages/about"><a>Про</a></Link>,
+  },
+];
+
+const adminPanelMenuItems = [
+  {
+    id: 1,
+    markup: <Link href="/"><a>Перейти на сайт</a></Link>,
+  },
+  {
+    id: 4,
+    markup: <a onClick={Session.logOut}>Вийти</a>,
+  },
+];
 
 class Header extends React.Component {
   static initHeadroom() {
@@ -43,9 +81,19 @@ class Header extends React.Component {
   }
 
   render() {
+    const isLoggedIn = this.context.isAuthenticated;
+    const isInAdminPanel = this.props.admin;
+
+    const menu = (isInAdminPanel
+      ? adminPanelMenuItems
+      : menuItems.filter(item => !item.loggedInOnly || isLoggedIn))
+      .map(item => <li key={item.id}>{item.markup}</li>);
+
+    const logoHref = this.props.admin ? '/admin' : '/';
+
     return (
       <section className="header">
-        <Link href="/"><a><Logo /></a></Link>
+        <Link href={logoHref}><a><Logo /></a></Link>
         <nav className="layout-row layout-align-start-center">
           <div className="search-button">
             <Link href="/search">
@@ -55,10 +103,7 @@ class Header extends React.Component {
             </Link>
           </div>
           <ul className="menu">
-            <li><Link href="/projects"><a>Проекти</a></Link></li>
-            <li><a>Ниття</a></li>
-            <li><a>Ше шось</a></li>
-            <li><Link href="/page?path=about" as="/pages/about"><a>Про</a></Link></li>
+            {menu}
           </ul>
           <i className="menu-hamburger fa fa-bars" />
         </nav>
@@ -66,5 +111,17 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  admin: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  admin: false,
+};
+
+Header.contextTypes = {
+  isAuthenticated: PropTypes.bool,
+};
 
 export default Header;

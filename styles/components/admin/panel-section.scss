@@ -1,0 +1,35 @@
+.admin-panel-section-wrapper {
+  .admin-panel-section {
+    border: 1px solid $extra-light-grey;
+    box-sizing: border-box;
+    padding: 1em;
+    height: 100%;
+
+    .admin-panel-section-title {
+      margin-top: 0;
+
+      a {
+        text-decoration: none;
+      }
+
+      > * {
+        margin-top: 0;
+      }
+    }
+
+    .admin-panel-section-content > * {
+      padding: 0.5em 0;
+
+      border-bottom: 1px solid $extra-light-grey;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .admin-panel-section-placeholder {
+      color: $light-grey;
+      text-align: center;
+    }
+  }
+}

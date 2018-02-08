@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Error from './_error';
 import { current } from '../config';
+import AuthenticatablePage from './_authenticatable';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -19,9 +20,10 @@ import ArticlesGroup from '../components/ArticlesGroup';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
-class IndexPage extends React.Component {
+class IndexPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
+      const parentProps = await super.getInitialProps({ req });
       const lastArticles = await API.articles.find({
         page: 1,
         limit: 7,
@@ -34,7 +36,12 @@ class IndexPage extends React.Component {
         sort: '-views',
         include: 'image',
       }, getAllCookies(req));
-      const projects = await API.projects.find({ include: 'image', sort: '-createdAt' }, getAllCookies(req));
+      const projects = await API.projects.find({
+        include: 'image',
+        page: 1,
+        limit: 3,
+        sort: '-createdAt',
+      }, getAllCookies(req));
       const categories = await API.categories.find({
         include: 'image',
         page: 1,
@@ -42,6 +49,7 @@ class IndexPage extends React.Component {
       }, getAllCookies(req));
 
       return {
+        ...parentProps,
         lastArticles: lastArticles.docs,
         mostPopularArticles: mostPopularArticles.docs,
         projects: projects.docs,
@@ -104,6 +112,7 @@ class IndexPage extends React.Component {
             <div className="most-interesting-articles-section">
               <h2>Найцікавіше</h2>
               <ArticlesGroup articles={mostPopularArticles} articlesCount={{ xs: 5 }} />
+              <p className="text-right larger"><Link href="/articles"><a>Всі статті &rarr;</a></Link></p>
             </div>
 
             <div className="projects-section">

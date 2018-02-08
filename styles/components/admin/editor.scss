@@ -1,0 +1,33 @@
+.editor-wrapper {
+  .editor-label {
+    margin-bottom: 0.5em;
+  }
+
+  .fr-wrapper {
+    a[href*="froala.com/wysiwyg-editor?k=u"] {
+      display: none !important;
+    }
+  }
+
+  .editor {
+    font-size: 0.9em;
+
+    p {
+      margin: 0.5em 0;
+    }
+
+    pre {
+      background: $dark-grey;
+      color: $white;
+    }
+
+    hr {
+      margin: 1em 0;
+    }
+  }
+}
+
+.editor-loader-icon {
+  fill: $green;
+  width: 3em;
+}

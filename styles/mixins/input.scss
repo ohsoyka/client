@@ -1,0 +1,17 @@
+@mixin input {
+  color: $dark-grey;
+  border: 1px solid $extra-light-grey;
+  font-family: $font-family-main;
+  font-weight: 200;
+  outline: none;
+  padding: 0.5em;
+
+  &:focus {
+    border-color: $green;
+  }
+
+  &:invalid {
+    border-color: $bloody-red;
+    box-shadow: none;
+  }
+}

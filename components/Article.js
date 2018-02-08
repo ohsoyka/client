@@ -9,9 +9,9 @@ class Article extends React.Component {
   }
 
   render() {
-    const intro = this.props.intro || (this.props.projectDescriptionAsIntro && this.props.project)
+    const intro = (this.props.projectDescriptionAsIntro && this.props.project
       ? this.props.project.description
-      : null;
+      : null) || this.props.intro;
 
     return (
       <article className="article">

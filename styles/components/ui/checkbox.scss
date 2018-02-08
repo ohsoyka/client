@@ -1,0 +1,36 @@
+.checkbox {
+  .checkbox-native {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .checkbox-square {
+    border: 1px solid $light-grey;
+    fill: $grey;
+    box-sizing: border-box;
+    width: 1em;
+    height: 1em;
+
+    svg {
+      margin-bottom: 1px;
+    }
+  }
+
+  .checkbox-label {
+    margin-left: 0.5em;
+    font-weight: 200;
+    user-select: none;
+  }
+
+  &:hover {
+    .checkbox-square {
+      border-color: $green;
+    }
+  }
+}

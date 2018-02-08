@@ -100,6 +100,18 @@ a {
   }
 }
 
+input {
+  border-width: 0;
+  border-bottom-width: 2px;
+}
+
+textarea {
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  resize: none;
+}
+
 hr {
   border-top: 1px solid $extra-light-grey;
   border-right: none;
@@ -180,6 +192,38 @@ hr {
 
 .larger {
   font-size: 1.2em;
+}
+
+.margin-left {
+  margin-left: 1em;
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.margin-bottom-small {
+  margin-bottom: 0.5em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.margin-top-small {
+  margin-top: 0.5em;
+}
+
+.padding-left {
+  padding-left: 1em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
 }
 
 .balance-text {

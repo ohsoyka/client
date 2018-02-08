@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Error from './_error';
 import { current } from '../config';
+import AuthenticatablePage from './_authenticatable';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -15,13 +16,15 @@ import Project from '../components/Project';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
-class ProjectPage extends React.Component {
+class ProjectPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const parentProps = await super.getInitialProps({ req });
       const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
       const { docs } = await API.articles.find({ project: project.id, include: 'image' }, getAllCookies(req));
 
       return {
+        ...parentProps,
         project,
         articles: docs,
       };

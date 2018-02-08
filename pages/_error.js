@@ -25,9 +25,9 @@ class Error extends React.Component {
           <title>Шось пішло не так / {current.meta.title}</title>
         </Head>
         <Header />
-        <Content>
+        <Content className="container">
           <h1>Шось пішло не так</h1>
-          <p className="fatty larger text-center">{this.props.statusCode}</p>
+          <p className="larger text-center">{this.props.statusCode}</p>
         </Content>
         <Footer />
       </Wrapper>

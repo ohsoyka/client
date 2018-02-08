@@ -47,12 +47,36 @@ app.prepare()
       app.render(req, res, '/articles', req.query);
     });
 
-    server.get('/:article_path', (req, res) => {
-      app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
-    });
-
     server.get('/pages/:page_path', (req, res) => {
       app.render(req, res, '/page', Object.assign({}, req.query, { path: req.params.page_path }));
+    });
+
+    server.get('/login', (req, res) => {
+      app.render(req, res, '/login', req.query);
+    });
+
+    server.get('/admin', (req, res) => {
+      app.render(req, res, '/admin', req.query);
+    });
+
+    server.get('/admin/articles/:article_path/edit', (req, res) => {
+      app.render(req, res, '/admin/articles/edit', Object.assign({}, req.query, { path: req.params.article_path }));
+    });
+
+    server.get('/admin/pages/:page_path/edit', (req, res) => {
+      app.render(req, res, '/admin/pages/edit', Object.assign({}, req.query, { path: req.params.page_path }));
+    });
+
+    server.get('/admin/projects/:project_path/edit', (req, res) => {
+      app.render(req, res, '/admin/projects/edit', Object.assign({}, req.query, { path: req.params.project_path }));
+    });
+
+    server.get('/admin/categories/:category_path/edit', (req, res) => {
+      app.render(req, res, '/admin/categories/edit', Object.assign({}, req.query, { path: req.params.category_path }));
+    });
+
+    server.get('/:article_path', (req, res) => {
+      app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
     });
 
     server.get('*', (req, res) => handle(req, res));

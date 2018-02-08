@@ -1,0 +1,22 @@
+.input {
+  .input-label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+
+  .input-element {
+    width: 100%;
+
+    @include input;
+  }
+}
+
+.input-lite {
+  .input-label {
+    margin-bottom: 0;
+  }
+  .input-element {
+    border-width: 0;
+    border-bottom-width: 2px;
+  }
+}

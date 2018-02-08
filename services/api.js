@@ -89,8 +89,10 @@ async function search(query, cookies) {
 }
 
 async function upload(files, cookies) {
-  const images = files.filter(file => INLINE_IMAGE_TYPES.includes(file.type));
-  const restFiles = files.filter(file => !images.includes(file));
+  const filesArray = Array.isArray(files) ? files : [files];
+
+  const images = filesArray.filter(file => INLINE_IMAGE_TYPES.includes(file.type));
+  const restFiles = filesArray.filter(file => !images.includes(file));
 
   const imagesFormData = new FormData();
   images.forEach(image => imagesFormData.append('image', image));
@@ -145,18 +147,18 @@ const pages = {
 
 const projects = {
   find: (query, cookies) => find({ model: Project, query }, cookies),
-  findOne: (id, query, cookies) => findOne({ model: Project, param: id, query }, cookies),
-  update: (id, body, cookies) => update({ model: Project, param: id, body }, cookies),
+  findOne: (path, query, cookies) => findOne({ model: Project, param: path, query }, cookies),
+  update: (path, body, cookies) => update({ model: Project, param: path, body }, cookies),
   create: (body, cookies) => create({ model: Project, body }, cookies),
-  remove: (id, cookies) => remove({ model: Project, param: id }, cookies),
+  remove: (path, cookies) => remove({ model: Project, param: path }, cookies),
 };
 
 const categories = {
   find: (query, cookies) => find({ model: Category, query }, cookies),
-  findOne: (id, query, cookies) => findOne({ model: Category, param: id, query }, cookies),
-  update: (id, body, cookies) => update({ model: Category, param: id, body }, cookies),
+  findOne: (path, query, cookies) => findOne({ model: Category, param: path, query }, cookies),
+  update: (path, body, cookies) => update({ model: Category, param: path, body }, cookies),
   create: (body, cookies) => create({ model: Category, body }, cookies),
-  remove: (id, cookies) => remove({ model: Category, param: id }, cookies),
+  remove: (path, cookies) => remove({ model: Category, param: path }, cookies),
 };
 
 const tags = {

@@ -1,0 +1,39 @@
+.button {
+  .button-element {
+    @include input;
+
+    display: block;
+
+    background-color: transparent;
+    border: 1px solid $grey;
+    font-family: $font-family-header;
+    padding: 0.6em 1em 0.5em 1em;
+    width: 100%;
+
+    text-decoration: none;
+    transition: all 100ms linear;
+
+    &:hover {
+      color: $white;
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  &.button-color-green .button-element:hover {
+    border-color: $green;
+    background-color: $green;
+  }
+
+  &.button-color-red .button-element:hover {
+    border-color: $bloody-red;
+    background-color: $bloody-red;
+  }
+
+  &.button-color-black .button-element:hover {
+    border-color: $black;
+    background-color: $black;
+  }
+}

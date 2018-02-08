@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Error from './_error';
 import { current } from '../config';
+import AuthenticatablePage from './_authenticatable';
 
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -16,18 +17,44 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 import * as Text from '../services/text';
 
-class ArticlePage extends React.Component {
+class ArticlePage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const parentProps = await super.getInitialProps({ req });
       const article = await API.articles.findOne(query.path, { include: 'image, project, project.image, category' }, getAllCookies(req));
-      const relatedArticlesQuery = article.project
-        ? { project: article.project.id, include: 'image, project.image' }
-        : { category: article.category.id, include: 'image' };
-      const { docs } = await API.articles
-        .find(Object.assign(relatedArticlesQuery, { page: 1, limit: 3 }), getAllCookies(req));
-      const relatedArticles = docs.filter(relatedArticle => relatedArticle.id !== article.id);
+      let relatedArticles = [];
+
+      if (article.project) {
+        const { docs } = await API.articles
+          .find({
+            project: article.project.id,
+            include: 'image, project.image',
+            page: 1,
+            limit: 3,
+          }, getAllCookies(req));
+
+        relatedArticles = docs;
+      } else if (article.category) {
+        const { docs } = await API.articles
+          .find({
+            category: article.category.id,
+            include: 'image',
+            page: 1,
+            limit: 3,
+          }, getAllCookies(req));
+
+        relatedArticles = docs;
+      } else {
+        const searchQuery = [article.title, article.brief, ...article.tags].join(' ');
+        const { docs } = await API.search({ query: searchQuery, include: 'image' }, getAllCookies(req));
+
+        relatedArticles = docs.filter(searchResult => searchResult.searchResultType === 'article');
+      }
+
+      relatedArticles = relatedArticles.filter(relatedArticle => relatedArticle.id !== article.id).slice(0, 3);
 
       return {
+        ...parentProps,
         article,
         relatedArticles,
       };
@@ -46,19 +73,23 @@ class ArticlePage extends React.Component {
       relatedArticles,
     } = this.props;
 
-    const { project, category, image } = article;
+    const { project, category, image = {} } = article;
 
     const title = `${article.title} / ${current.meta.title}`;
     const description = Text.stripHTML(Text.shorten(article.body, 60));
     const url = `${current.clientURL}/${article.path}`;
 
-    const relatedArticlesTitle = project
-      ? (<span>Інше з проекту:</span>)
-      : (
+    let relatedArticlesTitle = <span>Схожі статті</span>;
+
+    if (project) {
+      relatedArticlesTitle = <span>Інше з проекту</span>;
+    } else if (category) {
+      relatedArticlesTitle = (
         <span>
           Інше з категорії <Link href={`/category?path=${category.path}`} as={`/categories/${category.path}`}><a>«{category.title}»</a></Link>
         </span>
       );
+    }
 
     return (
       <Wrapper>
