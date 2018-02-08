@@ -12,6 +12,7 @@ class Project extends React.Component {
     const { from, to } = generateBackgroundGradient(this.props);
     const image = this.props.image || {};
     const backgroundImage = `url("${image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+    const { title, description, body } = this.props;
 
     return (
       <div className="project">
@@ -24,12 +25,12 @@ class Project extends React.Component {
           </Background>
           <div className="project-header-content-wrapper">
             <div className="project-header-content text-center layout-row layout-wrap layout-align-center-center">
-              <h1 className="project-title balance-text">{this.props.title}</h1>
-              <p className="project-description balance-text flex-100">{this.props.description}</p>
+              <h1 className="project-title balance-text">{title}</h1>
+              {description && <p className="project-description balance-text flex-100">{description}</p>}
             </div>
           </div>
         </Parallax>
-        {this.props.body && <div className="project-body" dangerouslySetInnerHTML={{ __html: this.props.body }} />}
+        {body && <div className="project-body" dangerouslySetInnerHTML={{ __html: body }} />}
       </div>
     );
   }

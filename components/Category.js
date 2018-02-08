@@ -12,6 +12,7 @@ class Category extends React.Component {
     const { from, to } = generateBackgroundGradient(this.props);
     const image = this.props.image || {};
     const backgroundImage = `url("${image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+    const { title, description } = this.props;
 
     return (
       <div className="category">
@@ -24,8 +25,8 @@ class Category extends React.Component {
           </Background>
           <div className="category-header-content-wrapper">
             <div className="category-header-content text-center layout-row layout-wrap layout-align-center-center">
-              <h1 className="category-title balance-text">{this.props.title}</h1>
-              <p className="category-description balance-text flex-100">{this.props.description}</p>
+              <h1 className="category-title balance-text">{title}</h1>
+              {description && <p className="category-description balance-text flex-100">{description}</p>}
             </div>
           </div>
         </Parallax>

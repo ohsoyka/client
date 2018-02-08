@@ -45,10 +45,6 @@
       background-color: $extra-light-grey !important;
     }
 
-    // .custom-theme.fr-box.fr-basic .fr-element {
-    //   color: $light-grey;
-    // }
-
     .editor-mask {
       display: block;
     }
@@ -56,6 +52,6 @@
 }
 
 .editor-loader-icon {
-  fill: $green;
-  width: 3em;
+  stroke: $green;
+  width: 2em;
 }

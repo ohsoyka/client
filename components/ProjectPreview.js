@@ -42,7 +42,7 @@ const ProjectPreview = (props) => {
         <div className="project-preview-content layout-row layout-align-start-center">
           <div className="project-preview-text layout-row layout-align-start-center layout-wrap flex-100">
             {title}
-            <div className="project-preview-description flex-100">{props.description}</div>
+            {props.description && <div className="project-preview-description flex-100">{props.description}</div>}
           </div>
         </div>
         <div className="project-preview-background-gradient" />

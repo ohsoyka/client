@@ -10,7 +10,7 @@ class Page extends React.Component {
     return (
       <div className="page">
         <h1>{this.props.title}</h1>
-        <div className="project-body" dangerouslySetInnerHTML={{ __html: this.props.body }} />
+        <div className="page-body" dangerouslySetInnerHTML={{ __html: this.props.body }} />
       </div>
     );
   }
