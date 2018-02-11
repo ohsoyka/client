@@ -12,8 +12,6 @@ import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
 import styles from '../../static/libs/froala/froala_style.min.css';
 import theme from '../../static/libs/froala/themes/custom.css';
 
-const LinaKostenko = require('linakostenko');
-
 $.FroalaEditor.DefineIcon('prettify', { NAME: 'heart' });
 $.FroalaEditor.RegisterCommand('prettify', {
   title: 'Відтипографити',
@@ -22,7 +20,7 @@ $.FroalaEditor.RegisterCommand('prettify', {
   refreshAfterCallback: true,
   callback() {
     const currentHTML = this.html.get();
-    const beautifiedHTML = LinaKostenko.default(currentHTML);
+    const beautifiedHTML = global.LinaKostenko(currentHTML);
 
     this.html.set(beautifiedHTML);
   },

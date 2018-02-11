@@ -27,7 +27,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
           <meta httpEquiv="content-type" content="text/html; charset=utf-8" key="content-type" />
 
-          <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
+          <link rel="icon" href="/static/icons/favicon-black.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS сайту" href={`${current.clientURL}/rss`} />
 
           <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -35,6 +35,7 @@ class MyDocument extends Document {
           <script src="/static/libs/headroom/headroom.js" />
           <script src="/static/libs/masonry/masonry.min.js" />
           <script src="/static/libs/balancetext/balancetext.min.js" />
+          <script src="/static/libs/linakostenko/linakostenko.min.js" />
 
           <style dangerouslySetInnerHTML={{ __html: styles }} />
         </Head>
