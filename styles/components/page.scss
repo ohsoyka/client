@@ -1,2 +1,9 @@
 .page {
+  p {
+    @include article-paragraph;
+  }
+
+  .image-full-width {
+    @include article-image-full-width;
+  }
 }

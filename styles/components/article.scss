@@ -55,18 +55,6 @@ $padding: 3em;
   }
 
   .image-full-width {
-    width: 100vw;
-    max-width: 100vw;
-    max-height: 100vh;
-    object-fit: cover;
-    margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding});
-
-    @media (max-width: $breakpoint-middle) {
-      margin-left: -$container-padding-middle;
-    }
-
-    @media (max-width: $breakpoint-tiny) {
-      margin-left: -$container-padding-tiny;
-    }
+    @include article-image-full-width;
   }
 }

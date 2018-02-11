@@ -12,9 +12,25 @@ import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
 import styles from '../../static/libs/froala/froala_style.min.css';
 import theme from '../../static/libs/froala/themes/custom.css';
 
+const LinaKostenko = require('linakostenko');
+
+$.FroalaEditor.DefineIcon('prettify', { NAME: 'heart' });
+$.FroalaEditor.RegisterCommand('prettify', {
+  title: 'Відтипографити',
+  focus: true,
+  undo: true,
+  refreshAfterCallback: true,
+  callback() {
+    const currentHTML = this.html.get();
+    const beautifiedHTML = LinaKostenko.default(currentHTML);
+
+    this.html.set(beautifiedHTML);
+  },
+});
+
 const buttons = [
-  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'color', 'clearFormatting',
-  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html',
+  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'clearFormatting',
+  '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'prettify',
 ];
 
 class Editor extends React.Component {
@@ -64,7 +80,6 @@ class Editor extends React.Component {
         H2: 'Заголовок 2',
         H3: 'Заголовок 3',
         H4: 'Заголовок 4',
-        PRE: 'Код',
         SMALL: 'Маленький',
       },
 
@@ -90,25 +105,16 @@ class Editor extends React.Component {
 
     $editor.froalaEditor('html.set', this.props.html);
 
-    $editor.on('keyup', () => this.sendContent($editor));
-    $editor.on('froalaEditor.contentChanged', () => this.sendContent($editor));
+    $editor.on('froalaEditor.contentChanged', () => {
+      const content = $editor.froalaEditor('html.get');
+
+      this.props.onChange(content);
+    });
 
     $editor.on('froalaEditor.video.inserted', (e, editor, $video) => {
       const videoSource = $video.contents().get(0).src;
       $video.html(`<p class="video-16-9"><iframe src="${videoSource}" frameborder="0" allowfullscreen></iframe></p>`);
     });
-  }
-
-  sendContent($editor) {
-    let content;
-
-    if ($editor.froalaEditor('codeView.isActive')) {
-      content = $editor.froalaEditor('codeView.get').replace(/[\r\n]/g, '');
-    } else {
-      content = $editor.froalaEditor('html.get');
-    }
-
-    this.props.onChange(content);
   }
 
   render() {

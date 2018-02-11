@@ -15,7 +15,32 @@
     font-size: 0.9em;
 
     p {
-      margin: 0.5em 0;
+      margin: 1em 0;
+      line-height: 1.6em;
+    }
+
+    $paragraph-side-padding: 3em;
+
+    p,
+    .fr-element > img:not(.image-full-width) {
+      padding: 0 $paragraph-side-padding;
+    }
+
+    .image-full-width {
+      max-width: 100vw !important;
+      width: calc(100% + 2 * #{$paragraph-side-padding});
+      transform: translate(-$paragraph-side-padding, 0);
+    }
+
+    blockquote {
+      font-size: 1.1em;
+      margin-left: 4em;
+      margin-right: 4em;
+      padding-left: 1em;
+
+      p {
+        padding: 0;
+      }
     }
 
     pre {
@@ -48,6 +73,11 @@
     .editor-mask {
       display: block;
     }
+  }
+
+  .fr-view blockquote {
+    color: $green;
+    border-color: $green;
   }
 }
 

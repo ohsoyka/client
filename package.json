@@ -14,6 +14,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
+    "linakostenko": "^1.0.6",
     "masonry-layout": "^4.2.1",
     "next": "^4.2.3",
     "node-sass": "^4.7.2",
