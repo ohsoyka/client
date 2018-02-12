@@ -6,8 +6,8 @@ const shared = {
     language: 'uk_UA',
     social: {
       twitter: {
-        username: '@ohsojka',
-        link: 'https://twitter.com/ohsojka',
+        username: '@ohsoyka',
+        link: 'https://twitter.com/ohsoyka',
       },
       facebook: {
         username: 'sofiia.soliar',
