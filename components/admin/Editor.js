@@ -12,6 +12,8 @@ import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
 import styles from '../../static/libs/froala/froala_style.min.css';
 import theme from '../../static/libs/froala/themes/custom.css';
 
+const FULL_WIDTH_IMAGE_CLASS = 'image-full-width';
+
 $.FroalaEditor.DefineIcon('prettify', { NAME: 'heart' });
 $.FroalaEditor.RegisterCommand('prettify', {
   title: 'Відтипографити',
@@ -24,6 +26,25 @@ $.FroalaEditor.RegisterCommand('prettify', {
 
     this.html.set(beautifiedHTML);
   },
+});
+
+$.FroalaEditor.DefineIcon('imageFullWidth', { NAME: 'align-justify' });
+$.FroalaEditor.RegisterCommand('imageFullWidth', {
+  title: 'Розтягнення на всю ширину',
+  focus: false,
+  undo: false,
+  refreshAfterCallback: false,
+  callback() {
+    const $image = this.image.get();
+
+    console.log($image);
+
+    if ($image.hasClass(FULL_WIDTH_IMAGE_CLASS)) {
+      $image.removeClass(FULL_WIDTH_IMAGE_CLASS);
+    } else {
+      $image.addClass(FULL_WIDTH_IMAGE_CLASS);
+    }
+  }
 });
 
 const buttons = [
@@ -63,7 +84,7 @@ class Editor extends React.Component {
 
       imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
       imageDefaultWidth: 0,
-      imageEditButtons: ['imageReplace', 'imageRemove', 'imageSize', '-', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', 'imageAlt', 'imageAlign'],
+      imageEditButtons: ['imageReplace', 'imageRemove', 'imageFullWidth', '-', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove'],
       imageMaxSize: 15 * 1024 * 1024,
       imagePasteProcess: true,
       imageUploadMethod: 'POST',
