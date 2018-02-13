@@ -13,9 +13,11 @@ import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
 import Select from '../ui/Select';
 
+import FormWithAutosave from './FormWithAutosave';
+
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
 
-class ArticleForm extends React.Component {
+class ArticleForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
@@ -24,7 +26,10 @@ class ArticleForm extends React.Component {
     this.state.tagsString = props.article.tags && props.article.tags.length ? props.article.tags.join(', ') : '';
     this.state.dateString = props.article.publishedAt ? moment(props.article.publishedAt).format(DATE_FORMAT) : '';
 
+    this.state.autosaveId = props.article.id || 'new-article';
+
     this.generateArticleLink = this.generateArticleLink.bind(this);
+    this.updateFormData = this.updateFormData.bind(this);
     this.submit = this.submit.bind(this);
   }
 
@@ -66,7 +71,7 @@ class ArticleForm extends React.Component {
             label="Назва"
             value={this.state.title}
             disabled={disabled}
-            onChange={title => this.setState({ title })}
+            onChange={title => this.updateFormData({ title })}
             className="flex-100"
           />
           <div className="layout-row layout-align-start-center flex-100">
@@ -75,7 +80,7 @@ class ArticleForm extends React.Component {
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
               disabled={disabled}
-              onChange={path => this.setState({ path })}
+              onChange={path => this.updateFormData({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
             />
@@ -89,7 +94,7 @@ class ArticleForm extends React.Component {
               imageURL={imageURL}
               key={imageURL}
               disabled={disabled}
-              onChange={image => this.setState({ image })}
+              onChange={image => this.updateFormData({ image })}
               className="flex-100"
             />
           </div>
@@ -100,7 +105,7 @@ class ArticleForm extends React.Component {
               options={this.props.projects.map(project => ({ value: project.id, label: project.title }))}
               clearable
               disabled={disabled}
-              onChange={project => this.setState({ project })}
+              onChange={project => this.updateFormData({ project })}
               className="flex-50"
             />
             <Select
@@ -109,7 +114,7 @@ class ArticleForm extends React.Component {
               options={this.props.categories.map(category => ({ value: category.id, label: category.title }))}
               clearable
               disabled={disabled}
-              onChange={category => this.setState({ category })}
+              onChange={category => this.updateFormData({ category })}
               className="flex-50 margin-left"
             />
           </div>
@@ -117,7 +122,7 @@ class ArticleForm extends React.Component {
             label="Короткий опис"
             value={this.state.brief}
             disabled={disabled}
-            onChange={brief => this.setState({ brief })}
+            onChange={brief => this.updateFormData({ brief })}
             className="flex-100"
           />
           <div className="flex-100">
@@ -127,7 +132,7 @@ class ArticleForm extends React.Component {
               <Input
                 value={this.state.intro}
                 disabled={disabled}
-                onChange={intro => this.setState({ intro })}
+                onChange={intro => this.updateFormData({ intro })}
                 multiline
                 className="flex-100"
               />
@@ -138,21 +143,21 @@ class ArticleForm extends React.Component {
                 label="Використати опис проекту замість вступу"
                 checked={this.state.projectDescriptionAsIntro}
                 disabled={disabled}
-                onChange={projectDescriptionAsIntro => this.setState({ projectDescriptionAsIntro })}
+                onChange={projectDescriptionAsIntro => this.updateFormData({ projectDescriptionAsIntro })}
                 className="margin-top-small"
               />
             }
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Текст</div>
-            <Editor html={this.state.body} onChange={body => this.setState({ body })} disabled={disabled} />
+            <Editor html={this.state.body} onChange={body => this.updateFormData({ body })} disabled={disabled} />
           </div>
           <div className="layout-row layout-align-start-center flex-100">
             <Input
               label="Теґи (через кому)"
               value={this.state.tagsString}
               disabled={disabled}
-              onChange={tagsString => this.setState({ tagsString })}
+              onChange={tagsString => this.updateFormData({ tagsString })}
               className="flex-100"
             />
             <Input
@@ -160,7 +165,7 @@ class ArticleForm extends React.Component {
               placeholder="ДД.ММ.РРРР гг:хх"
               value={this.state.dateString}
               disabled={disabled}
-              onChange={dateString => this.setState({ dateString })}
+              onChange={dateString => this.updateFormData({ dateString })}
               pattern="[0-3][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9] [0-2][0-9]:[0-5][0-9]"
               className="margin-left"
               nativeElementClassName="text-center"
@@ -180,7 +185,7 @@ class ArticleForm extends React.Component {
                 label="Заховати"
                 checked={this.state.private}
                 disabled={disabled}
-                onChange={hidden => this.setState({ private: hidden })}
+                onChange={hidden => this.updateFormData({ private: hidden })}
               />
               <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>

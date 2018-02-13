@@ -52,8 +52,7 @@ const config = {
       appName: 'ohsoyka-client',
     },
 
-    google: {
-    },
+    google: {},
   }),
 };
 

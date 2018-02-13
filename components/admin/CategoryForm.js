@@ -9,12 +9,15 @@ import Popup from '../Popup';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 
-class CategoryForm extends React.Component {
+import FormWithAutosave from './FormWithAutosave';
+
+class CategoryForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
     this.state = { ...props.category };
     this.state.removePopupVisible = false;
+    this.state.autosaveId = props.category.id || 'new-category';
 
     this.generateCategoryLink = this.generateCategoryLink.bind(this);
     this.submit = this.submit.bind(this);
@@ -52,7 +55,7 @@ class CategoryForm extends React.Component {
             label="Назва"
             value={this.state.title}
             disabled={disabled}
-            onChange={title => this.setState({ title })}
+            onChange={title => this.updateFormData({ title })}
             className="flex-100"
           />
           <div className="layout-row layout-align-start-center flex-100">
@@ -61,7 +64,7 @@ class CategoryForm extends React.Component {
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
               disabled={disabled}
-              onChange={path => this.setState({ path })}
+              onChange={path => this.updateFormData({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
             />
@@ -75,7 +78,7 @@ class CategoryForm extends React.Component {
               imageURL={imageURL}
               key={imageURL}
               disabled={disabled}
-              onChange={image => this.setState({ image })}
+              onChange={image => this.updateFormData({ image })}
               className="flex-100"
             />
           </div>
@@ -83,7 +86,7 @@ class CategoryForm extends React.Component {
             label="Короткий опис"
             value={this.state.description}
             disabled={disabled}
-            onChange={description => this.setState({ description })}
+            onChange={description => this.updateFormData({ description })}
             className="flex-100"
           />
           <div className="flex-100 layout-row layout-align-space-between-center">

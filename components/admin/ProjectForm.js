@@ -11,12 +11,15 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
 
-class ProjectForm extends React.Component {
+import FormWithAutosave from './FormWithAutosave';
+
+class ProjectForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
     this.state = { ...props.project };
     this.state.removePopupVisible = false;
+    this.state.autosaveId = props.project.id || 'new-project';
 
     this.generateProjectLink = this.generateProjectLink.bind(this);
     this.submit = this.submit.bind(this);
@@ -54,7 +57,7 @@ class ProjectForm extends React.Component {
             label="Назва"
             value={this.state.title}
             disabled={disabled}
-            onChange={title => this.setState({ title })}
+            onChange={title => this.updateFormData({ title })}
             className="flex-100"
           />
           <div className="layout-row layout-align-start-center flex-100">
@@ -63,7 +66,7 @@ class ProjectForm extends React.Component {
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
               disabled={disabled}
-              onChange={path => this.setState({ path })}
+              onChange={path => this.updateFormData({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
             />
@@ -77,7 +80,7 @@ class ProjectForm extends React.Component {
               imageURL={imageURL}
               key={imageURL}
               disabled={disabled}
-              onChange={image => this.setState({ image })}
+              onChange={image => this.updateFormData({ image })}
               className="flex-100"
             />
           </div>
@@ -85,12 +88,12 @@ class ProjectForm extends React.Component {
             label="Короткий опис"
             value={this.state.description}
             disabled={disabled}
-            onChange={description => this.setState({ description })}
+            onChange={description => this.updateFormData({ description })}
             className="flex-100"
           />
           <div className="flex-100">
             <div className="margin-bottom-small">Довгий опис</div>
-            <Editor disabled={disabled} html={this.state.body} onChange={body => this.setState({ body })} />
+            <Editor disabled={disabled} html={this.state.body} onChange={body => this.updateFormData({ body })} />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
             <div className="flex-15">
@@ -106,7 +109,7 @@ class ProjectForm extends React.Component {
                 label="Заховати"
                 checked={this.state.private}
                 disabled={disabled}
-                onChange={hidden => this.setState({ private: hidden })}
+                onChange={hidden => this.updateFormData({ private: hidden })}
               />
               <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>

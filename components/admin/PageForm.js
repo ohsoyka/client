@@ -10,12 +10,15 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
 
-class PageForm extends React.Component {
+import FormWithAutosave from './FormWithAutosave';
+
+class PageForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
     this.state = { ...props.page };
     this.state.removePopupVisible = false;
+    this.state.autosaveId = props.page.id || 'new-page';
 
     this.generatePageLink = this.generatePageLink.bind(this);
     this.submit = this.submit.bind(this);
@@ -52,7 +55,7 @@ class PageForm extends React.Component {
             label="Назва"
             value={this.state.title}
             disabled={disabled}
-            onChange={title => this.setState({ title })}
+            onChange={title => this.updateFormData({ title })}
             className="flex-100"
           />
           <div className="layout-row layout-align-start-center flex-100">
@@ -61,7 +64,7 @@ class PageForm extends React.Component {
               label="Адреса (латинські букви, цифри, дефіси)"
               value={this.state.path}
               disabled={disabled}
-              onChange={path => this.setState({ path })}
+              onChange={path => this.updateFormData({ path })}
               pattern="^[a-z0-9][a-z0-9-]*[a-z0-9]$"
               className="flex-50"
             />
@@ -71,7 +74,7 @@ class PageForm extends React.Component {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Текст</div>
-            <Editor disabled={disabled} html={this.state.body} onChange={body => this.setState({ body })} />
+            <Editor disabled={disabled} html={this.state.body} onChange={body => this.updateFormData({ body })} />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
             <div className="flex-15">
@@ -87,7 +90,7 @@ class PageForm extends React.Component {
                 label="Заховати"
                 checked={this.state.private}
                 disabled={disabled}
-                onChange={hidden => this.setState({ private: hidden })}
+                onChange={hidden => this.updateFormData({ private: hidden })}
               />
               <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
             </div>
