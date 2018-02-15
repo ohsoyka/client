@@ -37,14 +37,12 @@ $.FroalaEditor.RegisterCommand('imageFullWidth', {
   callback() {
     const $image = this.image.get();
 
-    console.log($image);
-
     if ($image.hasClass(FULL_WIDTH_IMAGE_CLASS)) {
       $image.removeClass(FULL_WIDTH_IMAGE_CLASS);
     } else {
       $image.addClass(FULL_WIDTH_IMAGE_CLASS);
     }
-  }
+  },
 });
 
 const buttons = [

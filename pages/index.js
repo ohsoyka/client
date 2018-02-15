@@ -109,7 +109,13 @@ class IndexPage extends AuthenticatablePage {
         <Content>
           <Carousel fullScreen autoplaySpeed={10000} pauseOnHover={false}>
             {
-              lastArticles.slice(0, 5).map((article, index) => <div data-index={index}><ArticlePreview key={article.id} {...article} fullScreen /></div>)
+              lastArticles
+                .slice(0, 5)
+                .map((article, index) => (
+                  <div data-index={index}>
+                    <ArticlePreview key={article.id} {...article} fullScreen />
+                  </div>
+                ))
             }
           </Carousel>
           <div className="container">

@@ -23,6 +23,10 @@ app.prepare()
       res.header({ 'Content-Type': 'application/rss+xml' }).send(xml);
     });
 
+    server.get('/search', (req, res) => {
+      app.render(req, res, '/search', req.query);
+    });
+
     server.get('/projects', (req, res) => {
       app.render(req, res, '/projects', req.query);
     });

@@ -1,66 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = (props) => {
-  const {
-    label,
-    compact,
-    lite,
-    multiline,
-    disabled,
-    rows,
-    type,
-    value,
-    pattern,
-    className,
-    nativeElementClassName,
-    onChange,
-  } = props;
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const classList = ['input', className];
-  const placeholder = compact ? label : props.placeholder;
-
-  if (lite) {
-    classList.push('input-lite');
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  if (disabled) {
-    classList.push('input-disabled');
+  handleKeyPress(event) {
+    if (event.which === 13 && this.props.onEnter) {
+      this.props.onEnter();
+    }
   }
 
-  if (multiline) {
-    classList.push('input-multiline');
+  render() {
+    const {
+      label,
+      compact,
+      lite,
+      multiline,
+      disabled,
+      rows,
+      type,
+      value,
+      pattern,
+      className,
+      nativeElementClassName,
+      onChange,
+    } = this.props;
+
+    const classList = ['input', className];
+    const placeholder = compact ? label : this.props.placeholder;
+
+    if (lite) {
+      classList.push('input-lite');
+    }
+
+    if (disabled) {
+      classList.push('input-disabled');
+    }
+
+    if (multiline) {
+      classList.push('input-multiline');
+
+      return (
+        <div className={classList.join(' ')}>
+          {!compact && <span className="input-label">{label}</span>}
+          <textarea
+            placeholder={placeholder}
+            disabled={disabled}
+            value={value}
+            rows={rows}
+            onChange={event => onChange(event.target.value)}
+            className={`input-element ${nativeElementClassName}`}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className={classList.join(' ')}>
         {!compact && <span className="input-label">{label}</span>}
-        <textarea
-          placeholder={placeholder}
+        <input
+          type={type}
           disabled={disabled}
+          placeholder={placeholder}
           value={value}
-          rows={rows}
+          pattern={pattern}
           onChange={event => onChange(event.target.value)}
+          onKeyPress={this.handleKeyPress}
           className={`input-element ${nativeElementClassName}`}
         />
       </div>
     );
   }
-
-  return (
-    <div className={classList.join(' ')}>
-      {!compact && <span className="input-label">{label}</span>}
-      <input
-        type={type}
-        disabled={disabled}
-        placeholder={placeholder}
-        value={value}
-        pattern={pattern}
-        onChange={event => onChange(event.target.value)}
-        className={`input-element ${nativeElementClassName}`}
-      />
-    </div>
-  );
-};
+}
 
 Input.propTypes = {
   type: PropTypes.string,
@@ -69,6 +84,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   pattern: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onEnter: PropTypes.func,
   className: PropTypes.string,
   nativeElementClassName: PropTypes.string,
   compact: PropTypes.bool,
@@ -91,6 +107,7 @@ Input.defaultProps = {
   multiline: false,
   disabled: false,
   rows: 3,
+  onEnter: null,
 };
 
 export default Input;

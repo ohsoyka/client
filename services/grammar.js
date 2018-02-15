@@ -7,7 +7,7 @@ export function describeWordCount(count, [one, twoToFour, rest]) {
   }
 
   if (count === 1) {
-    return `Один ${one}`;
+    return `1 ${one}`;
   }
 
   const lastTwoDigits = count > 9 ? count % 100 : null;

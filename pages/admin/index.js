@@ -86,19 +86,19 @@ class IndexPage extends ProtectedPage {
           </div>
           <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding">
             <PanelSection title="Опубліковані статті" href="articles?private=false" className="flex-100 flex-gt-xs-50">
-              {lastPublishedArticles.map(article => <PanelSectionItem {...article} type="article" />)}
+              {lastPublishedArticles.map(article => <PanelSectionItem key={article.id} {...article} type="article" />)}
             </PanelSection>
             <PanelSection title="Чернетки" href="articles?private=true" className="flex-100 flex-gt-xs-50">
-              {lastDrafts.map(draft => <PanelSectionItem hideBadges {...draft} type="article" />)}
+              {lastDrafts.map(draft => <PanelSectionItem key={draft.id} hideBadges {...draft} type="article" />)}
             </PanelSection>
             <PanelSection title="Проекти" href="projects" className="flex-100 flex-gt-xs-50">
-              {lastProjects.map(project => <PanelSectionItem {...project} type="project" />)}
+              {lastProjects.map(project => <PanelSectionItem key={project.id} {...project} type="project" />)}
             </PanelSection>
             <PanelSection title="Категорії" href="categories" className="flex-100 flex-gt-xs-50">
-              {lastCategories.map(category => <PanelSectionItem {...category} type="category" />)}
+              {lastCategories.map(category => <PanelSectionItem key={category.id} {...category} type="category" />)}
             </PanelSection>
             <PanelSection title="Сторінки" href="pages" className="flex-100 flex-gt-xs-50">
-              {lastPages.map(page => <PanelSectionItem {...page} type="page" />)}
+              {lastPages.map(page => <PanelSectionItem key={page.id} {...page} type="page" />)}
             </PanelSection>
           </div>
         </Content>

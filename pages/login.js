@@ -68,6 +68,7 @@ class LoginPage extends React.Component {
               value={this.state.login}
               label="Лоґін"
               onChange={login => this.setState({ login })}
+              onEnter={this.authenticate}
               className="flex-100"
             />
             <Input
@@ -77,6 +78,7 @@ class LoginPage extends React.Component {
               type="password"
               label="Пароль"
               onChange={password => this.setState({ password })}
+              onEnter={this.authenticate}
               className="flex-100"
             />
             <Button onClick={this.authenticate}>Увійти</Button>

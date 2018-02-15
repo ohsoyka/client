@@ -43,8 +43,12 @@
 @import 'components/category';
 @import 'components/category-preview';
 
+@import 'components/search-result';
+
 @import 'components/admin/editor';
 @import 'components/admin/panel-section';
 @import 'components/admin/panel-section-item';
 @import 'components/admin/article-form';
 @import 'components/admin/project-form';
+
+@import 'search';

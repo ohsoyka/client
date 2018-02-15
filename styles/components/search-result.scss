@@ -1,0 +1,32 @@
+.search-result {
+  margin: 1.5em 0;
+  padding-bottom: 1em;
+  border-bottom: 1px solid $extra-light-grey;
+
+  .search-result-title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .search-result-type {
+    color: $light-grey;
+  }
+
+  .search-result-description {
+    margin-top: 1em;
+  }
+
+  .search-result-tags {
+    margin-top: 1em;
+    font-family: $font-family-header;
+    font-weight: 600;
+
+    > * {
+      margin-left: 1em;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

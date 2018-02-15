@@ -29,7 +29,6 @@ class ArticleForm extends FormWithAutosave {
     this.state.autosaveId = props.article.id || 'new-article';
 
     this.generateArticleLink = this.generateArticleLink.bind(this);
-    this.updateFormData = this.updateFormData.bind(this);
     this.submit = this.submit.bind(this);
   }
 
