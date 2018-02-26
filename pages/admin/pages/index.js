@@ -21,6 +21,7 @@ class PagesPage extends ProtectedPage {
     const pages = await API.pages.find(Object.assign({
       sort: '-createdAt',
     }, query), getAllCookies(req));
+
     return {
       ...parentProps,
       pages: pages.docs,
