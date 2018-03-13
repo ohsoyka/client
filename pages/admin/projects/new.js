@@ -41,7 +41,7 @@ class NewProjectPage extends ProtectedPage {
 
       if (imageFile) {
         const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-        const projectWithImage = Object.assign({}, project, { image: uploadedImage.id });
+        const projectWithImage = { ...project, image: uploadedImage.id };
 
         savedProject = await API.projects.create(projectWithImage, getAllCookies());
       } else {

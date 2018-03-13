@@ -48,7 +48,7 @@ class EditProjectPage extends ProtectedPage {
         image = uploadedImage.id;
       }
 
-      const projectWithImage = Object.assign({}, project, { image });
+      const projectWithImage = { ...project, image };
       const savedProject = await API.projects.update(this.props.project.path, projectWithImage, getAllCookies());
 
       this.setState({ formDisabled: false });

@@ -41,7 +41,7 @@ class NewCategoryPage extends ProtectedPage {
 
       if (imageFile) {
         const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-        const categoryWithImage = Object.assign({}, category, { image: uploadedImage.id });
+        const categoryWithImage = { ...category, image: uploadedImage.id };
 
         savedCategory = await API.categories.create(categoryWithImage, getAllCookies());
       } else {

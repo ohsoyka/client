@@ -18,9 +18,7 @@ import { getAllCookies } from '../../../services/cookies';
 class ProjectsPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
     const parentProps = await super.getInitialProps({ req, res });
-    const projects = await API.projects.find(Object.assign({
-      sort: '-createdAt',
-    }, query), getAllCookies(req));
+    const projects = await API.projects.find({ sort: '-createdAt', ...query }, getAllCookies(req));
     return {
       ...parentProps,
       projects: projects.docs,

@@ -45,7 +45,7 @@ class NewArticlePage extends ProtectedPage {
 
       if (imageFile) {
         const [uploadedImage] = await API.upload(imageFile, getAllCookies());
-        const articleWithImage = Object.assign({}, article, { image: uploadedImage.id });
+        const articleWithImage = { ...article, image: uploadedImage.id };
 
         savedArticle = await API.articles.create(articleWithImage, getAllCookies());
       } else {

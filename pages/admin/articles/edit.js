@@ -52,7 +52,7 @@ class EditArticlePage extends ProtectedPage {
         image = uploadedImage.id;
       }
 
-      const articleWithImage = Object.assign({}, article, { image });
+      const articleWithImage = { ...article, image };
       const savedArticle = await API.articles.update(this.props.article.path, articleWithImage, getAllCookies());
 
       this.setState({ formDisabled: false });

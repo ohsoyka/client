@@ -37,7 +37,7 @@ class Carousel extends React.Component {
   }
 
   render() {
-    const settings = Object.assign({}, defaultSettings, this.props);
+    const settings = { ...defaultSettings, ...this.props };
 
     return (
       <Slider {...settings} className={`carousel ${this.props.fullScreen ? 'carousel-fullscreen' : ''}`}>

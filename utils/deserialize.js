@@ -18,7 +18,7 @@ const deserializeOne = (data, schema) => Object.keys(data).reduce((result, field
     deserializedValue = deserialize(fieldValue);
   }
 
-  return Object.assign({ }, result, { [fieldName]: deserializedValue });
+  return { ...result, [fieldName]: deserializedValue };
 }, {});
 
 export default (data, schema) => {

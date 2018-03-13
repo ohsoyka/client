@@ -32,7 +32,7 @@ app.prepare()
     });
 
     server.get('/projects/:project_path', (req, res) => {
-      app.render(req, res, '/project', Object.assign({}, req.query, { path: req.params.project_path }));
+      app.render(req, res, '/project', { ...req.query, path: req.params.project_path });
     });
 
     server.get('/categories', (req, res) => {
@@ -40,11 +40,11 @@ app.prepare()
     });
 
     server.get('/categories/:category_path', (req, res) => {
-      app.render(req, res, '/category', Object.assign({}, req.query, { path: req.params.category_path }));
+      app.render(req, res, '/category', { ...req.query, path: req.params.category_path });
     });
 
     server.get('/tag/:tag', (req, res) => {
-      app.render(req, res, '/tag', Object.assign({}, req.query, { tag: req.params.tag }));
+      app.render(req, res, '/tag', { ...req.query, tag: req.params.tag });
     });
 
     server.get('/articles', (req, res) => {
@@ -52,7 +52,7 @@ app.prepare()
     });
 
     server.get('/pages/:page_path', (req, res) => {
-      app.render(req, res, '/page', Object.assign({}, req.query, { path: req.params.page_path }));
+      app.render(req, res, '/page', { ...req.query, path: req.params.page_path });
     });
 
     server.get('/login', (req, res) => {
@@ -64,23 +64,23 @@ app.prepare()
     });
 
     server.get('/admin/articles/:article_path/edit', (req, res) => {
-      app.render(req, res, '/admin/articles/edit', Object.assign({}, req.query, { path: req.params.article_path }));
+      app.render(req, res, '/admin/articles/edit', { ...req.query, path: req.params.article_path });
     });
 
     server.get('/admin/pages/:page_path/edit', (req, res) => {
-      app.render(req, res, '/admin/pages/edit', Object.assign({}, req.query, { path: req.params.page_path }));
+      app.render(req, res, '/admin/pages/edit', { ...req.query, path: req.params.page_path });
     });
 
     server.get('/admin/projects/:project_path/edit', (req, res) => {
-      app.render(req, res, '/admin/projects/edit', Object.assign({}, req.query, { path: req.params.project_path }));
+      app.render(req, res, '/admin/projects/edit', { ...req.query, path: req.params.project_path });
     });
 
     server.get('/admin/categories/:category_path/edit', (req, res) => {
-      app.render(req, res, '/admin/categories/edit', Object.assign({}, req.query, { path: req.params.category_path }));
+      app.render(req, res, '/admin/categories/edit', { ...req.query, path: req.params.category_path });
     });
 
     server.get('/:article_path', (req, res) => {
-      app.render(req, res, '/article', Object.assign({}, req.query, { path: req.params.article_path }));
+      app.render(req, res, '/article', { ...req.query, path: req.params.article_path });
     });
 
     server.get('*', (req, res) => handle(req, res));

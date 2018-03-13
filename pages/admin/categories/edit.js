@@ -48,7 +48,7 @@ class EditCategoryPage extends ProtectedPage {
         image = uploadedImage.id;
       }
 
-      const categoryWithImage = Object.assign({}, category, { image });
+      const categoryWithImage = { ...category, image };
       const savedCategory = await API.categories.update(this.props.category.path, categoryWithImage, getAllCookies());
 
       this.setState({ formDisabled: false });

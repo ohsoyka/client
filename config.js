@@ -22,16 +22,19 @@ const shared = {
 };
 
 const config = {
-  development: Object.assign({}, shared, {
+  development: {
+    ...shared,
     port: 7200,
     clientURL: 'http://localhost:7200',
     apiURL: 'http://localhost:3200',
     cookiesDomain: 'localhost',
 
     google: {},
-  }),
+  },
 
-  production: Object.assign({}, shared, {
+  production:
+  {
+    ...shared,
     port: 4300,
     clientURL: 'https://ohsoyka.com',
     apiURL: 'https://api.ohsoyka.com',
@@ -53,11 +56,15 @@ const config = {
     },
 
     google: {},
-  }),
+  },
 };
 
 const environment = process.env.NODE_ENV;
 
-module.exports = Object.assign({}, config, {
-  current: Object.assign({ environment }, config[environment]),
-});
+module.exports = {
+  ...config,
+  current: {
+    environment,
+    ...config[environment],
+  },
+};
