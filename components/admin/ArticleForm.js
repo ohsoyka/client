@@ -93,7 +93,7 @@ class ArticleForm extends FormWithAutosave {
               imageURL={imageURL}
               key={imageURL}
               disabled={disabled}
-              onChange={image => this.updateFormData({ image })}
+              onChange={image => this.setState({ image })}
               className="flex-100"
             />
           </div>
