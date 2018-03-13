@@ -29,7 +29,13 @@
   }
 
   .article-preview-image-wrapper {
+    display: block;
     overflow: hidden;
+    position: relative;
+
+    .article-preview-image-inner {
+      overflow: hidden;
+    }
 
     .article-preview-image {
       background-size: cover;
@@ -42,6 +48,10 @@
       opacity: 1;
       transition: opacity 800ms linear;
     }
+  }
+
+  .article-preview-hidden-badge {
+    @include hidden-item-badge;
   }
 
   .article-preview-footer {

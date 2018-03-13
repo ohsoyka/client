@@ -25,28 +25,24 @@ class IndexPage extends AuthenticatablePage {
     try {
       const parentProps = await super.getInitialProps({ req });
       const lastArticles = await API.articles.find({
-        private: false,
         page: 1,
         limit: 7,
         include: 'image',
         sort: '-publishedAt',
       }, getAllCookies(req));
       const mostPopularArticles = await API.articles.find({
-        private: false,
         page: 1,
         limit: 7,
         sort: '-views',
         include: 'image',
       }, getAllCookies(req));
       const projects = await API.projects.find({
-        private: false,
         include: 'image',
         page: 1,
         limit: 3,
         sort: '-createdAt',
       }, getAllCookies(req));
       const categories = await API.categories.find({
-        private: false,
         include: 'image',
         page: 1,
         limit: 4,

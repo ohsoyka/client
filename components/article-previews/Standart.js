@@ -32,9 +32,12 @@ const ArticlePreviewStandart = (props) => {
   return (
     <div className={classList.join(' ')}>
       <Link href={`/article?path=${props.path}`} as={`/${props.path}`}>
-        <a className="article-preview-image-wrapper aspect-ratio-16-10">
-          <div className="article-preview-image" style={style} />
-          <div className="article-preview-image-shadow" />
+        <a className="article-preview-image-wrapper">
+          <div className="article-preview-image-inner aspect-ratio-16-10">
+            <div className="article-preview-image" style={style} />
+            <div className="article-preview-image-shadow" />
+          </div>
+          {props.private && <div className="article-preview-hidden-badge" />}
         </a>
       </Link>
       <div className="article-preview-text">
@@ -73,6 +76,7 @@ ArticlePreviewStandart.propTypes = {
   brief: PropTypes.string.isRequired,
   publishedAt: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
+  private: PropTypes.bool,
   className: PropTypes.string,
   large: PropTypes.bool,
   horizontal: PropTypes.bool,
@@ -84,6 +88,7 @@ ArticlePreviewStandart.defaultProps = {
   large: false,
   horizontal: false,
   withFooter: false,
+  private: false,
   tags: [],
   image: {},
 };

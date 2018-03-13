@@ -19,7 +19,7 @@ class ArticlesPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
       const parentProps = await super.getInitialProps({ req });
-      const { docs } = await API.articles.find({ include: 'image', sort: '-publishedAt', private: false }, getAllCookies(req));
+      const { docs } = await API.articles.find({ include: 'image', sort: '-publishedAt' }, getAllCookies(req));
 
       return { ...parentProps, articles: docs };
     } catch (error) {

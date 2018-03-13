@@ -1,0 +1,16 @@
+@mixin hidden-item-badge {
+  color: $white;
+  background-color: transparentize($black, 0.5);
+  font-weight: $font-weight-extralight;
+
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  &:before {
+    display: block;
+    content: 'заховано';
+  }
+}
