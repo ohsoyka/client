@@ -30,7 +30,7 @@ class ProjectForm extends FormWithAutosave {
     const path = this.state.path || '';
     const fullLink = `${prefix}/${path}`;
 
-    return <Link as={`/projects/${path}`} href={`/projects?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/projects/${path}`} href={`/project?path=${path}`}><a>{fullLink}</a></Link>;
   }
 
   async submit() {

@@ -28,7 +28,7 @@ class CategoryForm extends FormWithAutosave {
     const path = this.state.path || '';
     const fullLink = `${prefix}/${path}`;
 
-    return <Link as={`/categories/${path}`} href={`/categories?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/categories/${path}`} href={`/category?path=${path}`}><a>{fullLink}</a></Link>;
   }
 
   async submit() {

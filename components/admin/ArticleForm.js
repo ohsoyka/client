@@ -37,7 +37,7 @@ class ArticleForm extends FormWithAutosave {
     const path = this.state.path || '';
     const fullLink = `${prefix}/${path}`;
 
-    return <Link as={`/${path}`} href={`/articles?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/${path}`} href={`/article?path=${path}`}><a>{fullLink}</a></Link>;
   }
 
   async submit() {
@@ -53,7 +53,7 @@ class ArticleForm extends FormWithAutosave {
       .filter((tag, index, collection) => collection.indexOf(tag) === index);
     const publishedAt = this.state.dateString ? moment(this.state.dateString, DATE_FORMAT).toDate() : new Date();
 
-    this.props.onSubmit(Object.assign({}, this.state, { tags, publishedAt }));
+    this.props.onSubmit({ ...this.state, tags, publishedAt });
   }
 
   render() {

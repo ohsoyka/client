@@ -29,7 +29,7 @@ class PageForm extends FormWithAutosave {
     const path = this.state.path || '';
     const fullLink = `${prefix}/${path}`;
 
-    return <Link as={`/pages/${path}`} href={`/pages?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/pages/${path}`} href={`/page?path=${path}`}><a>{fullLink}</a></Link>;
   }
 
   async submit() {
