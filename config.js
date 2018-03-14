@@ -40,7 +40,7 @@ const config = {
     cookiesDomain: '.ohsoyka.com',
 
     git: {
-      repo: 'git@bitbucket.org:soyka/client.git',
+      repo: 'git@github.com:ohsoyka/client.git',
       branch: 'stable',
     },
 
