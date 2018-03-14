@@ -43,6 +43,14 @@ class ProjectForm extends FormWithAutosave {
     this.props.onSubmit(this.state);
   }
 
+  componentWillReceiveProps({ project }) {
+    const { image } = project;
+
+    if (this.state.image instanceof global.File && image && image.id) {
+      this.setState({ image });
+    }
+  }
+
   render() {
     const { project, disabled } = this.props;
     const formTitle = project.path ? 'Редагувати проект' : 'Новий проект';

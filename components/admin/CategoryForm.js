@@ -41,6 +41,14 @@ class CategoryForm extends FormWithAutosave {
     this.props.onSubmit(this.state);
   }
 
+  componentWillReceiveProps({ category }) {
+    const { image } = category;
+
+    if (this.state.image instanceof global.File && image && image.id) {
+      this.setState({ image });
+    }
+  }
+
   render() {
     const { category, disabled } = this.props;
     const formTitle = category.path ? 'Редагувати категорію' : 'Нова категорія';

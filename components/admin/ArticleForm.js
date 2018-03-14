@@ -56,6 +56,14 @@ class ArticleForm extends FormWithAutosave {
     this.props.onSubmit({ ...this.state, tags, publishedAt });
   }
 
+  componentWillReceiveProps({ article }) {
+    const { image } = article;
+
+    if (this.state.image instanceof global.File && image && image.id) {
+      this.setState({ image });
+    }
+  }
+
   render() {
     const formTitle = this.props.article.path ? 'Редагувати статтю' : 'Нова стаття';
     const link = this.generateArticleLink();

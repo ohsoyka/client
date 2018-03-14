@@ -14,12 +14,18 @@ class Article extends React.Component {
     const intro = (this.props.projectDescriptionAsIntro && this.props.project
       ? this.props.project.description
       : null) || this.props.intro;
+    const introClassNames = ['article-intro'];
+
+    if (intro.length < 300) {
+      introClassNames.push('text-center', 'balance-text');
+    }
+
     const body = prepareHTMLBeforePresenting(this.props.body);
 
     return (
       <article className="article">
         <Header image={this.props.image} title={this.props.title} />
-        {intro && <div className="article-intro balance-text">{intro}</div>}
+        {intro && <div className={introClassNames.join(' ')}>{intro}</div>}
         <div className="article-body" dangerouslySetInnerHTML={{ __html: body }} />
         <Footer date={this.props.publishedAt} tags={this.props.tags} project={this.props.project} />
       </article>

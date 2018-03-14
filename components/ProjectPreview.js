@@ -40,7 +40,7 @@ const ProjectPreview = (props) => {
     <Link href={`/project?path=${props.path}`} as={`/projects/${props.path}`}>
       <a className={classList.join(' ')} style={style}>
         <div className="project-preview-content layout-row layout-align-start-center">
-          {props.private && <div className="project-preview-hidden-badge"/>}
+          {props.private && <div className="project-preview-hidden-badge" />}
           <div className="project-preview-text layout-row layout-align-start-center layout-wrap flex-100">
             {title}
             {props.description && <div className="project-preview-description flex-100">{props.description}</div>}
