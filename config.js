@@ -32,8 +32,7 @@ const config = {
     google: {},
   },
 
-  production:
-  {
+  production: {
     ...shared,
     port: 4300,
     clientURL: 'https://ohsoyka.com',
@@ -55,7 +54,9 @@ const config = {
       appName: 'ohsoyka-client',
     },
 
-    google: {},
+    google: {
+      analyticsTrackingId: 'UA-10797087-20',
+    },
   },
 };
 

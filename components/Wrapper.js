@@ -3,18 +3,38 @@ import PropTypes from 'prop-types';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 
+import * as GoogleAnalytics from '../utils/analytics';
+
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 class Wrapper extends React.Component {
-  componentDidMount() {
+  static balanceText() {
     window.balanceText('.balance-text');
   }
 
+  componentDidMount() {
+    this.logPageView();
+    Wrapper.balanceText();
+  }
+
   componentDidUpdate() {
-    window.balanceText('.balance-text');
+    Wrapper.balanceText();
+  }
+
+  logPageView() {
+    if (this.context.isAuthenticated) {
+      return;
+    }
+
+    if (!global.GA_INITIALIZED) {
+      GoogleAnalytics.init();
+      global.GA_INITIALIZED = true;
+    }
+
+    GoogleAnalytics.logPageView();
   }
 
   render() {
@@ -28,6 +48,10 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+Wrapper.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default Wrapper;
