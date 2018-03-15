@@ -30,7 +30,7 @@ class MyDocument extends Document {
           <link rel="icon" href="/static/icons/favicon-black.ico" type="image/x-icon" />
           <link rel="alternate" type="application/rss+xml" title="RSS сайту" href={`${current.clientURL}/rss`} />
 
-          <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+          <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet" />
 
           <script src="/static/libs/headroom/headroom.js" />
           <script src="/static/libs/masonry/masonry.min.js" />

@@ -6,6 +6,7 @@ import { current } from '../../config';
 
 import Editor from '../../utils/editor';
 import Popup from '../Popup';
+import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
@@ -51,7 +52,7 @@ class PageForm extends FormWithAutosave {
       <div className="page-form">
         <h2>{formTitle}</h2>
         <div className="children-vertical-padding layout-row layout-wrap">
-          <Input
+          <PrettifyableInput
             label="Назва"
             value={this.state.title}
             disabled={disabled}

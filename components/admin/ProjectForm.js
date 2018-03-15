@@ -7,6 +7,7 @@ import { current } from '../../config';
 import Editor from '../../utils/editor';
 import ImageDropzone from '../ImageDropzone';
 import Popup from '../Popup';
+import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
@@ -61,7 +62,7 @@ class ProjectForm extends FormWithAutosave {
       <div className="project-form">
         <h2>{formTitle}</h2>
         <div className="children-vertical-padding layout-row layout-wrap">
-          <Input
+          <PrettifyableInput
             label="Назва"
             value={this.state.title}
             disabled={disabled}
@@ -92,7 +93,7 @@ class ProjectForm extends FormWithAutosave {
               className="flex-100"
             />
           </div>
-          <Input
+          <PrettifyableInput
             label="Короткий опис"
             value={this.state.description}
             disabled={disabled}

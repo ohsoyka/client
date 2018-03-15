@@ -14,7 +14,7 @@ import theme from '../../static/libs/froala/themes/custom.css';
 
 const FULL_WIDTH_IMAGE_CLASS = 'image-full-width';
 
-$.FroalaEditor.DefineIcon('prettify', { NAME: 'heart' });
+$.FroalaEditor.DefineIcon('prettify', { NAME: 'wrench' });
 $.FroalaEditor.RegisterCommand('prettify', {
   title: 'Відтипографити',
   focus: true,
