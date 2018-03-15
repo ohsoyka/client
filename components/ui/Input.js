@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { S_IFLNK } from 'constants';
 
 class Input extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Input extends React.Component {
       className,
       nativeElementClassName,
       onChange,
+      children,
     } = this.props;
 
     const classList = ['input', className];
@@ -47,14 +49,17 @@ class Input extends React.Component {
       return (
         <div className={classList.join(' ')}>
           {!compact && <span className="input-label">{label}</span>}
-          <textarea
-            placeholder={placeholder}
-            disabled={disabled}
-            value={value}
-            rows={rows}
-            onChange={event => onChange(event.target.value)}
-            className={`input-element ${nativeElementClassName}`}
-          />
+          <div className="input-element-container">
+            <textarea
+              placeholder={placeholder}
+              disabled={disabled}
+              value={value}
+              rows={rows}
+              onChange={event => onChange(event.target.value)}
+              className={`input-element ${nativeElementClassName}`}
+            />
+          </div>
+          {children}
         </div>
       );
     }
@@ -62,16 +67,19 @@ class Input extends React.Component {
     return (
       <div className={classList.join(' ')}>
         {!compact && <span className="input-label">{label}</span>}
-        <input
-          type={type}
-          disabled={disabled}
-          placeholder={placeholder}
-          value={value}
-          pattern={pattern}
-          onChange={event => onChange(event.target.value)}
-          onKeyPress={this.handleKeyPress}
-          className={`input-element ${nativeElementClassName}`}
-        />
+        <div className="input-element-container">
+          <input
+            type={type}
+            disabled={disabled}
+            placeholder={placeholder}
+            value={value}
+            pattern={pattern}
+            onChange={event => onChange(event.target.value)}
+            onKeyPress={this.handleKeyPress}
+            className={`input-element ${nativeElementClassName}`}
+          />
+          {children}
+        </div>
       </div>
     );
   }
@@ -92,6 +100,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   multiline: PropTypes.bool,
   rows: PropTypes.number,
+  children: PropTypes.node,
 };
 
 Input.defaultProps = {
@@ -108,6 +117,7 @@ Input.defaultProps = {
   disabled: false,
   rows: 3,
   onEnter: null,
+  children: null,
 };
 
 export default Input;

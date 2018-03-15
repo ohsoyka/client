@@ -1,0 +1,34 @@
+$button-width: 3em;
+
+.prettifyable-input {
+  position: relative;
+
+  .input-element-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .input-element {
+    padding-right: 2em;
+  }
+
+  .prettifyable-input-prettify-button {
+    color: $light-grey;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: color 100ms linear;
+
+    display: flex;
+    justify-content: center;
+
+    position: absolute;
+    top: 0.95em;
+    right: 0;
+    width: 2.5em;
+    height: 100%;
+
+    &:hover {
+      color: $black;
+    }
+  }
+}
