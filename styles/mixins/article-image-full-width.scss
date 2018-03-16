@@ -3,7 +3,7 @@
     max-width: 100vw;
     max-height: 100vh;
     object-fit: cover;
-    margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding}) !important;
+    margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding});// !important;
 
     @media (max-width: $breakpoint-middle) {
       margin-left: -$container-padding-middle;
