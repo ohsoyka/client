@@ -70,7 +70,8 @@ function RGBToHEX(r, g, b) {
 
 function stringToHEX(string) {
   const asciiCodes = string.split('').map(char => char.charCodeAt());
-  const hue = (Math.cos(asciiCodes.reduce((prevCode, code) => prevCode + code)) + 1) / 2;
+  const sum = asciiCodes.reduce((prevCode, code) => prevCode + code, 0);
+  const hue = (Math.cos(sum) + 1) / 2;
   const { r, g, b } = HSLToRGB(hue, 0.5, 1);
 
   return RGBToHEX(r, g, b);
@@ -78,7 +79,7 @@ function stringToHEX(string) {
 
 function stringToHEXGradient(string = '', { saturation = 0.7, luminosity = 1 } = {}) {
   const asciiCodes = string.split('').map(char => char.charCodeAt());
-  const sum = asciiCodes.reduce((accumulator, code) => accumulator + code, 0);
+  const sum = asciiCodes.reduce((prevCode, code) => prevCode + code, 0);
   const hue = (Math.cos(sum) + 1) / 2;
   const fromRGB = HSLToRGB(hue, Math.max(saturation - 0.1, 0), luminosity);
   const toRGB = HSLToRGB(hue + 0.1, Math.min(saturation + 0.1, 1), luminosity);
