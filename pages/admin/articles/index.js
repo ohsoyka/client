@@ -30,7 +30,7 @@ class ArticlesPage extends ProtectedPage {
     const { articles, error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     return (

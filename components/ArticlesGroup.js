@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArticlePreview from './ArticlePreview';
 
-class RelatedArticles extends React.Component {
+class ArticlesGroup extends React.Component {
   constructor(props) {
     super(props);
 
@@ -63,7 +63,7 @@ class RelatedArticles extends React.Component {
   }
 }
 
-RelatedArticles.propTypes = {
+ArticlesGroup.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.object),
   articlesCount: PropTypes.shape({
     xs: PropTypes.number,
@@ -73,9 +73,9 @@ RelatedArticles.propTypes = {
   }),
 };
 
-RelatedArticles.defaultProps = {
+ArticlesGroup.defaultProps = {
   articles: [],
   articlesCount: {},
 };
 
-export default RelatedArticles;
+export default ArticlesGroup;
