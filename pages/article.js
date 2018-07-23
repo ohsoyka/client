@@ -65,7 +65,7 @@ class ArticlePage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {

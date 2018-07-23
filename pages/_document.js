@@ -1,5 +1,6 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
+
 import { current } from '../config';
 import styles from '../styles/main.scss';
 
