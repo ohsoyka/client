@@ -8,6 +8,7 @@ import Article from '../models/article';
 import Category from '../models/category';
 import Project from '../models/project';
 import Page from '../models/page';
+import PhotoAlbum from '../models/photo-album';
 
 const API_URL = current.apiURL;
 const INLINE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg'];
@@ -172,6 +173,14 @@ const tags = {
   },
 };
 
+const photoAlbums = {
+  find: (query, cookies) => find({ model: PhotoAlbum, query }, cookies),
+  findOne: (path, query, cookies) => findOne({ model: PhotoAlbum, param: path, query }, cookies),
+  update: (path, body, cookies) => update({ model: PhotoAlbum, param: path, body }, cookies),
+  create: (body, cookies) => create({ model: PhotoAlbum, body }, cookies),
+  remove: (path, cookies) => remove({ model: PhotoAlbum, param: path }, cookies),
+};
+
 const API = {
   articles,
   pages,
@@ -179,6 +188,7 @@ const API = {
   categories,
   search,
   tags,
+  photoAlbums,
   upload,
 };
 

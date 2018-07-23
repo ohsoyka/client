@@ -5,6 +5,7 @@ export default {
     large: String,
     medium: String,
     small: String,
-    fallbackColor: [Number],
+    averageColor: [Number],
+    aspectRatio: Number,
   },
 };

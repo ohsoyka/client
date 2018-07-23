@@ -8,7 +8,7 @@ import Session from '../services/session';
 const menuItems = [
   {
     id: 5,
-    markup: <Link href="/admin/index" as="/admin"><a>Панель керування</a></Link>,
+    markup: <Link href="/admin/index" as="/admin"><a><i className="fas fa-lock" />Панель керування</a></Link>,
     loggedInOnly: true,
   },
   {
@@ -17,7 +17,7 @@ const menuItems = [
   },
   {
     id: 2,
-    markup: <a>Ниття</a>,
+    markup: <Link href="/photography"><a><i className="fas fa-camera" />Фотопортфоліо</a></Link>,
   },
   {
     id: 3,
@@ -76,13 +76,18 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    Header.initHeadroom();
+    if (this.props.fixed) {
+      Header.initHeadroom();
+    }
     Header.initHamburgerButton();
   }
 
   render() {
     const isLoggedIn = this.context.isAuthenticated;
     const isInAdminPanel = this.props.admin;
+    const isDark = this.props.dark;
+    const isSpecial = this.props.special;
+    const isFixed = this.props.fixed;
 
     const menu = (isInAdminPanel
       ? adminPanelMenuItems
@@ -91,10 +96,24 @@ class Header extends React.Component {
 
     const logoHref = this.props.admin ? '/admin' : '/';
 
+    const classList = ['header'];
+
+    if (isDark) {
+      classList.push('header-dark');
+    }
+
+    if (isSpecial) {
+      classList.push('header-special');
+    }
+
+    if (isFixed) {
+      classList.push('header-fixed');
+    }
+
     return (
-      <section className="header">
-        <Link href={logoHref}><a><Logo /></a></Link>
-        <nav className="layout-row layout-align-start-center">
+      <section className={classList.join(' ')}>
+        <Link href={logoHref}><a><Logo light={isDark} /></a></Link>
+        <nav className="header-nav layout-row layout-align-start-center">
           <div className="search-button">
             <Link href="/search">
               <a>
@@ -114,10 +133,16 @@ class Header extends React.Component {
 
 Header.propTypes = {
   admin: PropTypes.bool,
+  dark: PropTypes.bool,
+  special: PropTypes.bool,
+  fixed: PropTypes.bool,
 };
 
 Header.defaultProps = {
   admin: false,
+  dark: false,
+  special: false,
+  fixed: true,
 };
 
 Header.contextTypes = {

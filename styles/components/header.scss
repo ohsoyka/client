@@ -8,15 +8,38 @@ $border-bottom: 1px solid $extra-light-grey;
   height: $header-height;
 
   box-sizing: border-box;
-  padding: 0 2em;
+  padding: 2em;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  position: fixed;
-
   z-index: 100;
+
+  &.header-fixed {
+    position: fixed;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &.header-dark {
+    background-color: $extra-dark-grey;
+    color: $light-grey;
+    border-bottom-color: $transparent;
+  }
+
+  &.header-special {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 5em;
+    font-size: 1.4em;
+
+    .header-nav {
+      display: none;
+    }
+  }
 
   a {
     text-decoration: none;
@@ -37,6 +60,16 @@ $border-bottom: 1px solid $extra-light-grey;
       text-transform: lowercase;
       display: inline;
       margin-left: 1.5em;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 0.7em;
+        margin-right: 0.5em;
+      }
     }
   }
 

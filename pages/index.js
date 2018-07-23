@@ -14,6 +14,8 @@ import Footer from '../components/Footer';
 import ArticlePreview from '../components/ArticlePreview';
 import ProjectPreview from '../components/ProjectPreview';
 import CategoryPreview from '../components/CategoryPreview';
+import AlbumPreview from '../components/photography/AlbumPreview';
+
 import Carousel from '../components/Carousel';
 import ArticlesGroup from '../components/ArticlesGroup';
 
@@ -47,6 +49,11 @@ class IndexPage extends AuthenticatablePage {
         page: 1,
         limit: 4,
       }, getAllCookies(req));
+      const photoAlbums = await API.photoAlbums.find({
+        include: 'cover',
+        page: 1,
+        limit: 4,
+      });
 
       return {
         ...parentProps,
@@ -54,6 +61,7 @@ class IndexPage extends AuthenticatablePage {
         mostPopularArticles: mostPopularArticles.docs,
         projects: projects.docs,
         categories: categories.docs,
+        photoAlbums: photoAlbums.docs,
       };
     } catch (error) {
       return { error };
@@ -62,7 +70,7 @@ class IndexPage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {
@@ -73,12 +81,12 @@ class IndexPage extends AuthenticatablePage {
       social,
     } = current.meta;
 
-
     const {
       lastArticles,
       mostPopularArticles,
       projects,
       categories,
+      photoAlbums,
     } = this.props;
 
     return (
@@ -108,8 +116,8 @@ class IndexPage extends AuthenticatablePage {
               lastArticles
                 .slice(0, 5)
                 .map((article, index) => (
-                  <div data-index={index}>
-                    <ArticlePreview key={article.id} {...article} fullScreen />
+                  <div data-index={index} key={article.id}>
+                    <ArticlePreview {...article} fullScreen />
                   </div>
                 ))
             }
@@ -156,6 +164,28 @@ class IndexPage extends AuthenticatablePage {
               <ArticlesGroup articles={lastArticles} articlesCount={{ xs: 5 }} />
               <p className="text-right larger"><Link href="/articles"><a>Всі статті &rarr;</a></Link></p>
             </div>
+
+            <div className="photo-albums-section">
+              <h2>Фото</h2>
+              <div className="photo-albums-wrapper children-horizontal-padding children-vertical-padding layout-row layout-wrap">
+                {
+                  photoAlbums.map((photoAlbum, index) => {
+                    const classList = ['flex-50'];
+
+                    if (index > 2) {
+                      classList.push('hide-xs');
+                    }
+
+                    if (index > 4) {
+                      classList.push('hide-sm');
+                    }
+
+                    return <AlbumPreview key={photoAlbum.id} {...photoAlbum} className={classList.join(' ')} />;
+                  })
+                }
+              </div>
+              <p className="text-right larger"><Link href="/photography"><a>Фотопортфоліо &rarr;</a></Link></p>
+            </div>
           </div>
         </Content>
         <Footer />
@@ -165,16 +195,20 @@ class IndexPage extends AuthenticatablePage {
 }
 
 IndexPage.propTypes = {
-  lastArticles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  mostPopularArticles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  lastArticles: PropTypes.arrayOf(PropTypes.object),
+  mostPopularArticles: PropTypes.arrayOf(PropTypes.object),
+  projects: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
 };
 
 IndexPage.defaultProps = {
+  lastArticles: [],
+  mostPopularArticles: [],
+  projects: [],
+  categories: [],
   error: null,
 };
 

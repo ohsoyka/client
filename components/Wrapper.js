@@ -39,7 +39,7 @@ class Wrapper extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className={`wrapper ${this.props.className}`}>
         {this.props.children}
       </div>
     );
@@ -48,6 +48,11 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+Wrapper.defaultProps = {
+  className: '',
 };
 
 Wrapper.contextTypes = {

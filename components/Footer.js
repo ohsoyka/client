@@ -9,20 +9,20 @@ const Footer = () => (
       <div className="flex-100">
         <ul className="footer-menu">
           <li><a>Проекти</a></li>
-          <li><a>Ниття</a></li>
+          <li><a>Фотопортфоліо</a></li>
           <li><a>Ше шось</a></li>
           <li><a>Про</a></li>
         </ul>
         <hr className="footer-horizontal-line" />
         <ul className="footer-contacts">
           <li>
-            <a className="fa fa-facebook-f" href={current.meta.social.facebook.link}><span className="sr-only">Facebook</span></a>
+            <a className="fab fa-facebook-f" href={current.meta.social.facebook.link}><span className="sr-only">Facebook</span></a>
           </li>
           <li>
-            <a className="fa fa-twitter" href={current.meta.social.twitter.link}><span className="sr-only">Twitter</span></a>
+            <a className="fab fa-twitter" href={current.meta.social.twitter.link}><span className="sr-only">Twitter</span></a>
           </li>
           <li>
-            <a className="fa fa-instagram" href={current.meta.social.instagram.link}><span className="sr-only">Instagram</span></a>
+            <a className="fab fa-instagram" href={current.meta.social.instagram.link}><span className="sr-only">Instagram</span></a>
           </li>
           <li>
             <a className="fa fa-rss" href={`${current.clientURL}/rss`}><span className="sr-only">RSS</span></a>

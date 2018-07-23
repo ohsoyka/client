@@ -59,7 +59,7 @@ class IndexPage extends ProtectedPage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {
@@ -83,6 +83,7 @@ class IndexPage extends ProtectedPage {
             <Button color="black" href="/admin/pages/new">Нова сторінка</Button>
             <Button color="black" href="/admin/projects/new">Новий проект</Button>
             <Button color="black" href="/admin/categories/new">Нова категорія</Button>
+            <Button color="black" href="/admin/photo-albums/new">Новий альбом</Button>
           </div>
           <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding">
             <PanelSection title="Опубліковані статті" href="articles?private=false" className="flex-100 flex-gt-xs-50">

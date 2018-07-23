@@ -29,7 +29,7 @@ class CategoriesPage extends ProtectedPage {
     const { categories, error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     return (
