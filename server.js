@@ -9,6 +9,14 @@ const dev = config.environment !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const articlesRouter = require('./routes/articles');
+const projectsRouter = require('./routes/projects');
+const pagesRouter = require('./routes/pages');
+const categoriesRouter = require('./routes/categories');
+const tagsRouter = require('./routes/tags');
+const photographyRouter = require('./routes/photography');
+const adminRouter = require('./routes/admin');
+
 app.prepare()
   .then(() => {
     const server = express();
@@ -27,61 +35,17 @@ app.prepare()
       app.render(req, res, '/search', req.query);
     });
 
-    server.get('/projects', (req, res) => {
-      app.render(req, res, '/projects', req.query);
-    });
-
-    server.get('/projects/:project_path', (req, res) => {
-      app.render(req, res, '/project', { ...req.query, path: req.params.project_path });
-    });
-
-    server.get('/categories', (req, res) => {
-      app.render(req, res, '/categories', req.query);
-    });
-
-    server.get('/categories/:category_path', (req, res) => {
-      app.render(req, res, '/category', { ...req.query, path: req.params.category_path });
-    });
-
-    server.get('/tag/:tag', (req, res) => {
-      app.render(req, res, '/tag', { ...req.query, tag: req.params.tag });
-    });
-
-    server.get('/articles', (req, res) => {
-      app.render(req, res, '/articles', req.query);
-    });
-
-    server.get('/pages/:page_path', (req, res) => {
-      app.render(req, res, '/page', { ...req.query, path: req.params.page_path });
-    });
-
     server.get('/login', (req, res) => {
       app.render(req, res, '/login', req.query);
     });
 
-    server.get('/admin', (req, res) => {
-      app.render(req, res, '/admin', req.query);
-    });
-
-    server.get('/admin/articles/:article_path/edit', (req, res) => {
-      app.render(req, res, '/admin/articles/edit', { ...req.query, path: req.params.article_path });
-    });
-
-    server.get('/admin/pages/:page_path/edit', (req, res) => {
-      app.render(req, res, '/admin/pages/edit', { ...req.query, path: req.params.page_path });
-    });
-
-    server.get('/admin/projects/:project_path/edit', (req, res) => {
-      app.render(req, res, '/admin/projects/edit', { ...req.query, path: req.params.project_path });
-    });
-
-    server.get('/admin/categories/:category_path/edit', (req, res) => {
-      app.render(req, res, '/admin/categories/edit', { ...req.query, path: req.params.category_path });
-    });
-
-    server.get('/:article_path', (req, res) => {
-      app.render(req, res, '/article', { ...req.query, path: req.params.article_path });
-    });
+    server.use(categoriesRouter(app));
+    server.use(pagesRouter(app));
+    server.use(tagsRouter(app));
+    server.use(projectsRouter(app));
+    server.use(photographyRouter(app));
+    server.use(adminRouter(app));
+    server.use(articlesRouter(app)); // Have to be last
 
     server.get('*', (req, res) => handle(req, res));
 
