@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import preloadImages from '../../utils/preload-images';
 import ControlButtons from './photo-viewer/ControlButtons';
 import LoaderIcon from '../../static/icons/oval.svg';
 
@@ -16,6 +17,8 @@ const nextPhotoKeyCodes = [KEY_CODES.ARROW_RIGHT, KEY_CODES.ARROW_DOWN];
 
 const HIDE_CONTROLS_TIMEOUT = 1500;
 
+const PHOTO_SIZE = 'large';
+
 class PhotoViewer extends React.Component {
   constructor(props) {
     super(props);
@@ -29,40 +32,32 @@ class PhotoViewer extends React.Component {
     };
 
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+
+    this.enableNavigation = this.enableNavigation.bind(this);
+    this.disableNavigation = this.disableNavigation.bind(this);
+
     this.switchToPreviousPhoto = this.switchToPreviousPhoto.bind(this);
     this.switchToNextPhoto = this.switchToNextPhoto.bind(this);
+
+    this.preloadPhotos = this.preloadPhotos.bind(this);
+
     this.close = this.close.bind(this);
   }
 
   componentDidMount() {
-    $(document).on('keypress.navigation', (event) => {
-      const { keyCode } = event;
+    this.enableNavigation();
 
-      if (previousPhotoKeyCodes.includes(keyCode)) {
-        event.preventDefault();
-        this.switchToPreviousPhoto();
-      } else if (nextPhotoKeyCodes.includes(keyCode)) {
-        event.preventDefault();
-        this.switchToNextPhoto();
-      }
-    });
-
-    $(document).on('mousemove.navigation', () => {
-      const oldTimeout = this.state.hideControlsTimeout;
-
-      clearTimeout(oldTimeout);
-
-      const hideControlsTimeout = setTimeout(() => this.setState({ controlsVisible: false }), HIDE_CONTROLS_TIMEOUT);
-
-      this.setState({
-        controlsVisible: true,
-        hideControlsTimeout,
+    if (document.readyState === 'complete') {
+      this.preloadPhotos();
+    } else {
+      $(window).on('load', () => {
+        this.preloadPhotos();
       });
-    });
+    }
   }
 
   componentWillUnmount() {
-    $(document).off('keypress.navigation').off('mousemove.navigation');
+    this.disableNavigation();
   }
 
   getSiblingPhotos() {
@@ -80,6 +75,59 @@ class PhotoViewer extends React.Component {
     const nextPhoto = photos[nextPhotoIndex];
 
     return [previousPhoto, nextPhoto];
+  }
+
+  enableNavigation() {
+    const $document = $(document);
+
+    $document.on('keypress.navigation', (event) => {
+      const { keyCode } = event;
+
+      if (previousPhotoKeyCodes.includes(keyCode)) {
+        event.preventDefault();
+        this.switchToPreviousPhoto();
+      } else if (nextPhotoKeyCodes.includes(keyCode)) {
+        event.preventDefault();
+        this.switchToNextPhoto();
+      }
+    });
+
+    $document.on('mousemove.navigation', () => {
+      const oldTimeout = this.state.hideControlsTimeout;
+
+      clearTimeout(oldTimeout);
+
+      const hideControlsTimeout = setTimeout(() => this.setState({ controlsVisible: false }), HIDE_CONTROLS_TIMEOUT);
+
+      this.setState({
+        controlsVisible: true,
+        hideControlsTimeout,
+      });
+    });
+  }
+
+  disableNavigation() {
+    const $document = $(document);
+
+    $document.off('keypress.navigation').off('mousemove.navigation');
+
+    const { hideControlsTimeout } = this.state;
+
+    clearTimeout(hideControlsTimeout);
+  }
+
+  preloadPhotos() {
+    const { photos } = this.props.album;
+    const photoIds = photos.map(photo => photo.id);
+    const photoURLs = photos.map(photo => photo.image[PHOTO_SIZE]);
+
+    const currentPhoto = this.props.photo;
+    const currentPhotoIndex = photoIds.indexOf(currentPhoto.id);
+
+    const photoURLsInOrderOfPreload = photoURLs.slice(currentPhotoIndex + 1)
+      .concat(photoURLs.slice(0, currentPhotoIndex));
+
+    return preloadImages(photoURLsInOrderOfPreload);
   }
 
   calculateContainerDimensions() {
@@ -138,7 +186,7 @@ class PhotoViewer extends React.Component {
       <div className="photo-viewer">
         <div className="photo-viewer-container" onClick={this.handleOutsideClick}>
           <div className="photo-viewer-container-inner" style={{ width: containerDimensions.width, height: containerDimensions.height }}>
-            <div className="photo-viewer-image" style={{ backgroundImage: `url('${currentPhoto.image.large}')` }} />
+            <div className="photo-viewer-image" style={{ backgroundImage: `url('${currentPhoto.image[PHOTO_SIZE]}')` }} />
             <LoaderIcon className="photo-viewer-loader" />
             {
               currentPhoto.description &&

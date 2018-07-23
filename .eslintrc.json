@@ -20,6 +20,7 @@
     "document": false,
     "$": false,
     "jQuery": false,
-    "FormData": false
+    "FormData": false,
+    "Image": false
   }
 }
