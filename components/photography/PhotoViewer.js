@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Hammer from 'hammerjs';
 import Router from 'next/router';
 import preloadImages from '../../utils/preload-images';
 import ControlButtons from './photo-viewer/ControlButtons';
@@ -104,6 +105,20 @@ class PhotoViewer extends React.Component {
         hideControlsTimeout,
       });
     });
+
+    const touchEventsListener = new Hammer(document);
+
+    this.setState({ touchEventsListener });
+
+    touchEventsListener.on('swipe', (event) => {
+      const { direction } = event;
+
+      if (direction === Hammer.DIRECTION_LEFT || direction === Hammer.DIRECTION_UP) {
+        this.switchToNextPhoto();
+      } else if (direction === Hammer.DIRECTION_RIGHT || direction === Hammer.DIRECTION_DOWN) {
+        this.switchToPreviousPhoto();
+      }
+    });
   }
 
   disableNavigation() {
@@ -111,9 +126,10 @@ class PhotoViewer extends React.Component {
 
     $document.off('keypress.navigation').off('mousemove.navigation');
 
-    const { hideControlsTimeout } = this.state;
+    const { hideControlsTimeout, touchEventsListener } = this.state;
 
     clearTimeout(hideControlsTimeout);
+    touchEventsListener.off('swipe');
   }
 
   preloadPhotos() {

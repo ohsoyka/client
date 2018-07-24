@@ -17,8 +17,9 @@ import { getAllCookies } from '../../../services/cookies';
 
 class EditCategoryPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const category = await API.categories.findOne(query.path, { include: 'image' }, getAllCookies(req));
+    const category = await API.categories.findOne(query.path, { include: 'image' }, cookies);
 
     return {
       ...parentProps,
@@ -36,6 +37,8 @@ class EditCategoryPage extends ProtectedPage {
   }
 
   async update(category) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -43,13 +46,13 @@ class EditCategoryPage extends ProtectedPage {
       let image = (category.image && category.image.id) || category.image;
 
       if (shouldUploadImage) {
-        const [uploadedImage] = await API.upload(category.image, getAllCookies());
+        const [uploadedImage] = await API.upload(category.image, cookies);
 
         image = uploadedImage.id;
       }
 
       const categoryWithImage = { ...category, image };
-      const savedCategory = await API.categories.update(this.props.category.path, categoryWithImage, getAllCookies());
+      const savedCategory = await API.categories.update(this.props.category.path, categoryWithImage, cookies);
 
       this.setState({ formDisabled: false });
 

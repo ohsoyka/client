@@ -33,6 +33,8 @@ class NewProjectPage extends ProtectedPage {
   }
 
   async submit(project) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -40,12 +42,12 @@ class NewProjectPage extends ProtectedPage {
       let savedProject;
 
       if (imageFile) {
-        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const [uploadedImage] = await API.upload(imageFile, cookies);
         const projectWithImage = { ...project, image: uploadedImage.id };
 
-        savedProject = await API.projects.create(projectWithImage, getAllCookies());
+        savedProject = await API.projects.create(projectWithImage, cookies);
       } else {
-        savedProject = await API.projects.create(project, getAllCookies());
+        savedProject = await API.projects.create(project, cookies);
       }
 
       this.setState({ formDisabled: false });

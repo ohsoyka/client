@@ -41,14 +41,30 @@ const adminPanelMenuItems = [
 ];
 
 class Header extends React.Component {
-  static initHeadroom() {
+  constructor(props) {
+    super(props);
+
+    this.header = React.createRef();
+    this.menu = React.createRef();
+    this.hamburgerButton = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.props.fixed) {
+      this.initHeadroom();
+    }
+
+    this.initHamburgerButton();
+  }
+
+  initHeadroom() {
     const { Headroom } = window;
 
     if (!Headroom) {
       return;
     }
 
-    const element = document.querySelector('.header');
+    const element = this.header.current;
     const headroom = new Headroom(element, {
       offset: 100,
       tolerance: 5,
@@ -57,10 +73,10 @@ class Header extends React.Component {
     headroom.init();
   }
 
-  static initHamburgerButton() {
-    const $menu = $('.header .menu');
+  initHamburgerButton() {
+    const $menu = $(this.menu.current);
 
-    $('.header .menu-hamburger').on('click', (event) => {
+    $(this.hamburgerButton.current).on('click', (event) => {
       event.stopPropagation();
 
       if ($menu.hasClass('menu-visible')) {
@@ -73,13 +89,6 @@ class Header extends React.Component {
     $('body').on('click', () => {
       $menu.removeClass('menu-visible');
     });
-  }
-
-  componentDidMount() {
-    if (this.props.fixed) {
-      Header.initHeadroom();
-    }
-    Header.initHamburgerButton();
   }
 
   render() {
@@ -111,8 +120,12 @@ class Header extends React.Component {
     }
 
     return (
-      <section className={classList.join(' ')}>
-        <Link href={logoHref}><a><Logo light={isDark} /></a></Link>
+      <section className={classList.join(' ')} ref={this.header}>
+        <Link href={logoHref}>
+          <a>
+            <Logo light={isDark} text={isInAdminPanel ? 'Панель керування' : 'Сойка'} />
+          </a>
+        </Link>
         <nav className="header-nav layout-row layout-align-start-center">
           <div className="search-button">
             <Link href="/search">
@@ -121,10 +134,10 @@ class Header extends React.Component {
               </a>
             </Link>
           </div>
-          <ul className="menu">
+          <ul className="menu" ref={this.menu}>
             {menu}
           </ul>
-          <i className="menu-hamburger fa fa-bars" />
+          <i className="menu-hamburger fa fa-bars" ref={this.hamburgerButton} />
         </nav>
       </section>
     );

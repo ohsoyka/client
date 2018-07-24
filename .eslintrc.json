@@ -21,6 +21,7 @@
     "$": false,
     "jQuery": false,
     "FormData": false,
-    "Image": false
+    "Image": false,
+    "File": false
   }
 }

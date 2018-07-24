@@ -10,12 +10,13 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 
-import CategoryForm from '../../../components/admin/CategoryForm';
+import PhotoAlbumForm from '../../../components/admin/PhotoAlbumForm';
 
 import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
+import PhotoUploader from '../../../services/photo-uploader';
 
-class NewCategoryPage extends ProtectedPage {
+class NewPhotoAlbumPage extends ProtectedPage {
   static async getInitialProps({ req, res }) {
     const parentProps = await super.getInitialProps({ req, res });
 
@@ -32,27 +33,28 @@ class NewCategoryPage extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
-  async submit(category) {
+  async submit(photoAlbum) {
     const cookies = getAllCookies();
 
     this.setState({ formDisabled: true });
 
     try {
-      const imageFile = category.image;
-      let savedCategory;
+      const coverFile = photoAlbum.cover;
+      const [uploadedCover] = await API.upload(coverFile, cookies);
+      const AlbumUploader = PhotoUploader.create(photoAlbum.photos);
+      const uploadedPhotos = await AlbumUploader.upload();
 
-      if (imageFile) {
-        const [uploadedImage] = await API.upload(imageFile, cookies);
-        const categoryWithImage = { ...category, image: uploadedImage.id };
+      const photoAlbumWithCoverAndPhotos = {
+        ...photoAlbum,
+        cover: uploadedCover.id,
+        photos: uploadedPhotos.map(photo => photo.id),
+      };
 
-        savedCategory = await API.categories.create(categoryWithImage, cookies);
-      } else {
-        savedCategory = await API.categories.create(category, cookies);
-      }
+      const savedPhotoAlbum = await API.photoAlbums.create(photoAlbumWithCoverAndPhotos, cookies);
 
       this.setState({ formDisabled: false });
 
-      Router.push(`/admin/categories/edit?path=${savedCategory.path}`, `/admin/categories/${savedCategory.path}/edit`);
+      Router.push(`/admin/photo-albums/edit?path=${savedPhotoAlbum.path}`, `/admin/photo-albums/${savedPhotoAlbum.path}/edit`);
     } catch (error) {
       this.setState({ formDisabled: false });
     }
@@ -68,11 +70,15 @@ class NewCategoryPage extends ProtectedPage {
     return (
       <Wrapper>
         <Head>
-          <title>Нова категорія / Панель керування</title>
+          <title>Новий фотоальбом / Панель керування</title>
         </Head>
         <Header admin />
         <Content className="container">
-          <CategoryForm disabled={this.state.formDisabled} onSubmit={this.submit} />
+          <PhotoAlbumForm
+            disabled={this.state.formDisabled}
+            loading={this.state.formDisabled}
+            onSubmit={this.submit}
+          />
         </Content>
         <Footer />
       </Wrapper>
@@ -80,4 +86,4 @@ class NewCategoryPage extends ProtectedPage {
   }
 }
 
-export default NewCategoryPage;
+export default NewPhotoAlbumPage;

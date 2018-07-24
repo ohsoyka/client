@@ -8,6 +8,7 @@ import Article from '../models/article';
 import Category from '../models/category';
 import Project from '../models/project';
 import Page from '../models/page';
+import Photo from '../models/photo';
 import PhotoAlbum from '../models/photo-album';
 
 const API_URL = current.apiURL;
@@ -173,12 +174,20 @@ const tags = {
   },
 };
 
+const photos = {
+  find: (query, cookies) => find({ model: Photo, query }, cookies),
+  findOne: (path, query, cookies) => findOne({ model: Photo, param: path, query }, cookies),
+  update: (path, body, cookies) => update({ model: Photo, param: path, body }, cookies),
+  create: (body, cookies) => create({ model: Photo, body }, cookies),
+  remove: (path, cookies) => remove({ model: Photo, param: path }, cookies),
+};
+
 const photoAlbums = {
   find: (query, cookies) => find({ model: PhotoAlbum, query }, cookies),
-  findOne: (path, query, cookies) => findOne({ model: PhotoAlbum, param: path, query }, cookies),
-  update: (path, body, cookies) => update({ model: PhotoAlbum, param: path, body }, cookies),
+  findOne: (id, query, cookies) => findOne({ model: PhotoAlbum, param: id, query }, cookies),
+  update: (id, body, cookies) => update({ model: PhotoAlbum, param: id, body }, cookies),
   create: (body, cookies) => create({ model: PhotoAlbum, body }, cookies),
-  remove: (path, cookies) => remove({ model: PhotoAlbum, param: path }, cookies),
+  remove: (id, cookies) => remove({ model: PhotoAlbum, param: id }, cookies),
 };
 
 const API = {
@@ -188,6 +197,7 @@ const API = {
   categories,
   search,
   tags,
+  photos,
   photoAlbums,
   upload,
 };

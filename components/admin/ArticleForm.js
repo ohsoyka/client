@@ -16,6 +16,7 @@ import Select from '../ui/Select';
 
 import FormWithAutosave from './FormWithAutosave';
 
+const ImageDropzoneWithPreview = ImageDropzone();
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm';
 
 class ArticleForm extends FormWithAutosave {
@@ -68,8 +69,7 @@ class ArticleForm extends FormWithAutosave {
   render() {
     const formTitle = this.props.article.path ? 'Редагувати статтю' : 'Нова стаття';
     const link = this.generateArticleLink();
-    const { disabled, article } = this.props;
-    const imageURL = article.image ? article.image.small : null;
+    const { disabled } = this.props;
 
     return (
       <div className="article-form">
@@ -98,12 +98,11 @@ class ArticleForm extends FormWithAutosave {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Головне зображення</div>
-            <ImageDropzone
-              imageURL={imageURL}
-              key={imageURL}
+            <ImageDropzoneWithPreview
+              images={[this.state.image]}
+              limit={1}
               disabled={disabled}
-              onChange={image => this.setState({ image })}
-              className="flex-100"
+              onChange={([image]) => this.setState({ image })}
             />
           </div>
           <div className="layout-row flex-100">

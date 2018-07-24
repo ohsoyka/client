@@ -10,20 +10,21 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 
-import ProjectForm from '../../../components/admin/ProjectForm';
+import PhotoAlbumForm from '../../../components/admin/PhotoAlbumForm';
 
 import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
+import PhotoUploader from '../../../services/photo-uploader';
 
-class EditProjectPage extends ProtectedPage {
+class EditPhotoAlbumPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const project = await API.projects.findOne(query.path, { include: 'image' }, cookies);
+    const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'cover, photos, photos.image' }, cookies);
 
     return {
       ...parentProps,
-      project,
+      photoAlbum,
     };
   }
 
@@ -36,40 +37,48 @@ class EditProjectPage extends ProtectedPage {
     this.remove = this.remove.bind(this);
   }
 
-  async update(project) {
+  async update(photoAlbum) {
     const cookies = getAllCookies();
 
     this.setState({ formDisabled: true });
 
     try {
-      const shouldUploadImage = project.image instanceof window.File;
-      let image = (project.image && project.image.id) || project.image;
+      const shouldUploadCover = photoAlbum.cover instanceof window.File;
+      let cover = (photoAlbum.cover && photoAlbum.cover.id) || photoAlbum.cover;
 
-      if (shouldUploadImage) {
-        const [uploadedImage] = await API.upload(project.image, cookies);
+      if (shouldUploadCover) {
+        const [uploadedCover] = await API.upload(photoAlbum.cover, cookies);
 
-        image = uploadedImage.id;
+        cover = uploadedCover.id;
       }
 
-      const projectWithImage = { ...project, image };
-      const savedProject = await API.projects.update(this.props.project.path, projectWithImage, cookies);
+      const AlbumUploader = PhotoUploader.create(photoAlbum.photos);
+      const uploadedPhotos = await AlbumUploader.upload();
+
+      const photoAlbumWithCoverAndPhotos = {
+        ...photoAlbum,
+        cover,
+        photos: uploadedPhotos.map(photo => photo.id),
+      };
+      const savedPhotoAlbum = await API.photoAlbums
+        .update(this.props.photoAlbum.path, photoAlbumWithCoverAndPhotos, cookies);
 
       this.setState({ formDisabled: false });
 
-      Router.push(`/admin/projects/edit?path=${savedProject.path}`, `/admin/projects/${savedProject.path}/edit`);
+      Router.push(`/admin/photo-albums/edit?path=${savedPhotoAlbum.path}`, `/admin/photo-albums/${savedPhotoAlbum.path}/edit`);
     } catch (error) {
       this.setState({ formDisabled: false });
     }
   }
 
   async remove() {
-    API.projects.remove(this.props.project.path, getAllCookies())
+    API.photoAlbums.remove(this.props.photoAlbum.path, getAllCookies())
       .then(() => Router.push('/admin/'));
   }
 
   render() {
     const {
-      project,
+      photoAlbum,
       error,
     } = this.props;
 
@@ -80,14 +89,15 @@ class EditProjectPage extends ProtectedPage {
     return (
       <Wrapper>
         <Head>
-          <title>Редагувати проект / Панель керування</title>
+          <title>Редагувати фотоальбом / Панель керування</title>
         </Head>
         <Header admin />
         <Content className="container">
-          <ProjectForm
-            project={project}
-            key={project.path}
+          <PhotoAlbumForm
+            photoAlbum={photoAlbum}
+            key={photoAlbum.path}
             disabled={this.state.formDisabled}
+            loading={this.state.formDisabled}
             onSubmit={this.update}
             onRemove={this.remove}
           />
@@ -98,4 +108,4 @@ class EditProjectPage extends ProtectedPage {
   }
 }
 
-export default EditProjectPage;
+export default EditPhotoAlbumPage;

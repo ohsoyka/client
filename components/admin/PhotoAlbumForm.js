@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { current } from '../../config';
 
-import Editor from '../../utils/editor';
 import ImageDropzone from '../ImageDropzone';
 import Popup from '../Popup';
 import PrettifyableInput from '../PrettifyableInput';
@@ -15,24 +14,40 @@ import FormWithAutosave from './FormWithAutosave';
 
 const ImageDropzoneWithPreview = ImageDropzone();
 
-class ProjectForm extends FormWithAutosave {
+class PhotoAlbumForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
-    this.state = { ...props.project };
+    this.state = { ...props.photoAlbum };
     this.state.removePopupVisible = false;
-    this.state.autosaveId = props.project.id || 'new-project';
+    this.state.autosaveId = props.photoAlbum.id || 'new-photo-album';
 
-    this.generateProjectLink = this.generateProjectLink.bind(this);
+    this.generatePhotoAlbumLink = this.generatePhotoAlbumLink.bind(this);
+    this.updatePhotos = this.updatePhotos.bind(this);
     this.submit = this.submit.bind(this);
   }
 
-  generateProjectLink() {
-    const prefix = `${current.clientURL}/projects`;
+  generatePhotoAlbumLink() {
+    const prefix = `${current.clientURL}/photography`;
     const path = this.state.path || '';
     const fullLink = `${prefix}/${path}`;
 
-    return <Link as={`/projects/${path}`} href={`/project?path=${path}`}><a>{fullLink}</a></Link>;
+    return <Link as={`/photography/${path}`} href={`/photo-album?path=${path}`}><a>{fullLink}</a></Link>;
+  }
+
+  updatePhotos(images) {
+    const currentPhotos = this.props.photoAlbum.photos || [];
+    const currentImageIds = currentPhotos.map(photo => photo.image.id);
+
+    const newPhotos = images.map((image) => {
+      if (currentImageIds.includes(image.id)) {
+        return currentPhotos.find(photo => photo.image.id === image.id);
+      }
+
+      return { image };
+    });
+
+    this.setState({ photos: newPhotos });
   }
 
   async submit() {
@@ -45,21 +60,22 @@ class ProjectForm extends FormWithAutosave {
     this.props.onSubmit(this.state);
   }
 
-  componentWillReceiveProps({ project }) {
-    const { image } = project;
+  componentWillReceiveProps({ photoAlbum }) {
+    const { cover } = photoAlbum;
 
-    if (this.state.image instanceof global.File && image && image.id) {
-      this.setState({ image });
+    if (this.state.cover instanceof global.File && cover && cover.id) {
+      this.setState({ cover });
     }
   }
 
   render() {
-    const { project, disabled } = this.props;
-    const formTitle = project.path ? 'Редагувати проект' : 'Новий проект';
-    const link = this.generateProjectLink();
+    const { photoAlbum, disabled, loading } = this.props;
+    const { photos = [] } = photoAlbum;
+    const formTitle = photoAlbum.path ? 'Редагувати фотоальбом' : 'Новий фотоальбом';
+    const link = this.generatePhotoAlbumLink();
 
     return (
-      <div className="project-form">
+      <div className="photo-album-form">
         <h2>{formTitle}</h2>
         <div className="children-vertical-padding layout-row layout-wrap">
           <PrettifyableInput
@@ -83,16 +99,6 @@ class ProjectForm extends FormWithAutosave {
               {link}
             </div>
           </div>
-          <div className="flex-100">
-            <div className="margin-bottom-small">Зображення</div>
-            <ImageDropzoneWithPreview
-              images={[this.state.image]}
-              limit={1}
-              disabled={disabled}
-              onChange={image => this.setState({ image })}
-              className="flex-100"
-            />
-          </div>
           <PrettifyableInput
             label="Короткий опис"
             value={this.state.description}
@@ -101,13 +107,31 @@ class ProjectForm extends FormWithAutosave {
             className="flex-100"
           />
           <div className="flex-100">
-            <div className="margin-bottom-small">Довгий опис</div>
-            <Editor disabled={disabled} html={this.state.body} onChange={body => this.updateFormData({ body })} />
+            <div className="margin-bottom-small">Обкладинка</div>
+            <ImageDropzoneWithPreview
+              images={[photoAlbum.cover]}
+              limit={1}
+              loading={loading}
+              disabled={disabled}
+              onChange={([cover]) => this.setState({ cover })}
+              className="flex-100"
+            />
+          </div>
+          <div className="flex-100">
+            <div className="margin-bottom-small">Фотографії</div>
+            <ImageDropzoneWithPreview
+              images={photos.map(photo => photo.image)}
+              sortable
+              loading={loading}
+              disabled={disabled}
+              onChange={images => this.updatePhotos(images)}
+              className="flex-100"
+            />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
             <div className="flex-15">
               {
-                this.props.project.id &&
+                this.props.photoAlbum.id &&
                 <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
                   Видалити
                 </Button>
@@ -125,7 +149,7 @@ class ProjectForm extends FormWithAutosave {
           </div>
         </div>
         <Popup visible={this.state.removePopupVisible}>
-          <p>Точно видалити цей проект?</p>
+          <p>Точно видалити цей фотоальбом?</p>
           <div className="layout-row">
             <Button onClick={() => this.setState({ removePopupVisible: false })} color="black">Скасувати</Button>
             <Button onClick={this.props.onRemove} color="red" className="margin-left">Видалити</Button>
@@ -136,21 +160,24 @@ class ProjectForm extends FormWithAutosave {
   }
 }
 
-ProjectForm.propTypes = {
-  project: PropTypes.shape({
+PhotoAlbumForm.propTypes = {
+  photoAlbum: PropTypes.shape({
     id: PropTypes.string,
     path: PropTypes.string,
-    image: PropTypes.object,
+    cover: PropTypes.object,
+    photos: PropTypes.arrayOf(PropTypes.object),
   }),
   disabled: PropTypes.bool,
+  loading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
 };
 
-ProjectForm.defaultProps = {
-  project: {},
+PhotoAlbumForm.defaultProps = {
+  photoAlbum: {},
   disabled: false,
+  loading: false,
   onRemove: null,
 };
 
-export default ProjectForm;
+export default PhotoAlbumForm;

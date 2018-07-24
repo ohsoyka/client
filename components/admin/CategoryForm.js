@@ -9,8 +9,9 @@ import Popup from '../Popup';
 import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
-
 import FormWithAutosave from './FormWithAutosave';
+
+const ImageDropzoneWithPreview = ImageDropzone();
 
 class CategoryForm extends FormWithAutosave {
   constructor(props) {
@@ -54,7 +55,6 @@ class CategoryForm extends FormWithAutosave {
     const { category, disabled } = this.props;
     const formTitle = category.path ? 'Редагувати категорію' : 'Нова категорія';
     const link = this.generateCategoryLink();
-    const imageURL = category.image ? category.image.small : null;
 
     return (
       <div className="category-form">
@@ -83,11 +83,11 @@ class CategoryForm extends FormWithAutosave {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Зображення</div>
-            <ImageDropzone
-              imageURL={imageURL}
-              key={imageURL}
+            <ImageDropzoneWithPreview
+              images={[this.state.image]}
+              limit={1}
               disabled={disabled}
-              onChange={image => this.updateFormData({ image })}
+              onChange={image => this.setState({ image })}
               className="flex-100"
             />
           </div>

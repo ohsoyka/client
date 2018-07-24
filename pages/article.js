@@ -20,8 +20,9 @@ import * as Text from '../services/text';
 class ArticlePage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const article = await API.articles.findOne(query.path, { include: 'image, project, project.image, category' }, getAllCookies(req));
+      const article = await API.articles.findOne(query.path, { include: 'image, project, project.image, category' }, cookies);
       let relatedArticles = [];
 
       if (article.project) {
@@ -31,7 +32,7 @@ class ArticlePage extends AuthenticatablePage {
             include: 'image, project.image',
             page: 1,
             limit: 3,
-          }, getAllCookies(req));
+          }, cookies);
 
         relatedArticles = docs;
       } else if (article.category) {
@@ -41,12 +42,12 @@ class ArticlePage extends AuthenticatablePage {
             include: 'image',
             page: 1,
             limit: 3,
-          }, getAllCookies(req));
+          }, cookies);
 
         relatedArticles = docs;
       } else {
         const searchQuery = [article.title, article.brief, ...article.tags].join(' ');
-        const { docs } = await API.search({ query: searchQuery, include: 'image' }, getAllCookies(req));
+        const { docs } = await API.search({ query: searchQuery, include: 'image' }, cookies);
 
         relatedArticles = docs.filter(searchResult => searchResult.searchResultType === 'article');
       }

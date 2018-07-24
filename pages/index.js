@@ -25,30 +25,31 @@ import { getAllCookies } from '../services/cookies';
 class IndexPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const lastArticles = await API.articles.find({
         page: 1,
         limit: 7,
         include: 'image',
         sort: '-publishedAt',
-      }, getAllCookies(req));
+      }, cookies);
       const mostPopularArticles = await API.articles.find({
         page: 1,
         limit: 7,
         sort: '-views',
         include: 'image',
-      }, getAllCookies(req));
+      }, cookies);
       const projects = await API.projects.find({
         include: 'image',
         page: 1,
         limit: 3,
         sort: '-createdAt',
-      }, getAllCookies(req));
+      }, cookies);
       const categories = await API.categories.find({
         include: 'image',
         page: 1,
         limit: 4,
-      }, getAllCookies(req));
+      }, cookies);
       const photoAlbums = await API.photoAlbums.find({
         include: 'cover',
         page: 1,

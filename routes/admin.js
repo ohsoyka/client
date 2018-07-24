@@ -23,5 +23,9 @@ module.exports = (app) => {
     app.render(req, res, '/admin/categories/edit', { ...req.query, path: req.params.category_path });
   });
 
+  router.get('/admin/photo-albums/:photo_album_path/edit', (req, res) => {
+    app.render(req, res, '/admin/photo-albums/edit', { ...req.query, path: req.params.photo_album_path });
+  });
+
   return router;
 };

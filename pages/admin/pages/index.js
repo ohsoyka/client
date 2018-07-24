@@ -17,8 +17,9 @@ import { getAllCookies } from '../../../services/cookies';
 
 class PagesPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const pages = await API.pages.find({ sort: '-createdAt', ...query }, getAllCookies(req));
+    const pages = await API.pages.find({ sort: '-createdAt', ...query }, cookies);
 
     return {
       ...parentProps,
@@ -41,8 +42,8 @@ class PagesPage extends ProtectedPage {
         <Header admin />
         <Content className="container">
           <h2>Сторінки</h2>
-          <PanelSection type="pages" className="flex-100">
-            {pages.map(article => <PanelSectionItem {...article} type="article" />)}
+          <PanelSection className="flex-100">
+            {pages.map(page => <PanelSectionItem {...page} type="page" />)}
           </PanelSection>
         </Content>
         <Footer />

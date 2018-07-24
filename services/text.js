@@ -93,6 +93,19 @@ export function getImageLinksFromHTML(html) {
   return images;
 }
 
+export function prettifyBytes(bytes) {
+  const units = ['Б', 'кБ', 'МБ', 'ГБ', 'ТБ', 'ПБ', 'ЕБ', 'ЗБ', 'ЙБ'];
+  let currentUnitIndex = 0;
+  let value = bytes;
+
+  while (value > 1000) {
+    value /= 1000;
+    currentUnitIndex += 1;
+  }
+
+  return `${Math.round(value)} ${units[currentUnitIndex]}`;
+}
+
 export default {
   stripHTML,
   getImageLinksFromHTML,

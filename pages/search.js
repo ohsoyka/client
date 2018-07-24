@@ -23,12 +23,13 @@ const SEARCH_DELAY = 700;
 class SearchPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const searchQuery = query.query;
       let searchResults = [];
 
       if (searchQuery) {
-        const { docs } = await API.search({ query: searchQuery }, getAllCookies(req));
+        const { docs } = await API.search({ query: searchQuery }, cookies);
 
         searchResults = docs;
       }

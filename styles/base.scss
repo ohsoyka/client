@@ -158,6 +158,10 @@ hr {
   @include aspect-ratio(4, 3);
 }
 
+.aspect-ratio-1-1 {
+  @include aspect-ratio(1, 1);
+}
+
 .children-horizontal-padding-1 {
   @include children-horizontal-padding(1em);
 }

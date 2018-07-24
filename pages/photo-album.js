@@ -24,8 +24,9 @@ const PhotoViewer = dynamic(import('../components/photography/PhotoViewer'), {
 class PhotoAlbumPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'photos, photos.image' }, getAllCookies(req));
+      const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'photos, photos.image' }, cookies);
       const currentPhoto = query.photo ? photoAlbum.photos.find(photo => photo.id === query.photo) : null;
 
       return { ...parentProps, photoAlbum, currentPhoto };

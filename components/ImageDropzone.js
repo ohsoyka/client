@@ -1,79 +1,133 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Sortable from 'sortablejs';
 import Dropzone from './Dropzone';
-import Button from './ui/Button';
+import SingleFilePreview from './image-dropzones/SingleFilePreview';
+import MultipleFilesPreview from './image-dropzones/MultipleFilesPreview';
 
-class ImageDropzone extends React.Component {
-  constructor(props) {
-    super(props);
+export default function (FilePreview) {
+  class ImageDropzone extends React.Component {
+    constructor(props) {
+      super(props);
 
-    this.state = { image: null, imageURL: props.imageURL };
+      const PreviewComponent = FilePreview || (props.limit === 1 ? SingleFilePreview : MultipleFilesPreview);
+      const DropzoneWithPreview = Dropzone(PreviewComponent);
 
-    this.setImage = this.setImage.bind(this);
-  }
+      const files = props.images
+        .filter(image => image)
+        .map((image) => {
+          if (global.File && image instanceof File) {
+            return image;
+          }
 
-  setImage(image) {
-    const newState = { image };
+          return {
+            preview: image.small,
+            name: image.small,
+            id: image.id,
+          };
+        });
 
-    if (!image) {
-      newState.imageURL = null;
+      this.state = {
+        files,
+        DropzoneWithPreview,
+      };
+
+      this.updateFiles = this.updateFiles.bind(this);
+      this.initSortable = this.initSortable.bind(this);
+
+      this.wrapperElement = React.createRef();
     }
 
-    this.setState(newState);
-
-    this.props.onChange(image);
-  }
-
-  render() {
-    const {
-      disabled,
-      className,
-    } = this.props;
-    const { imageURL } = this.state;
-    const classList = ['image-dropzone', className];
-
-    if (disabled) {
-      classList.push('image-dropzone-disabled');
+    componentDidMount() {
+      if (this.props.limit > 1 && this.props.sortable) {
+        this.initSortable();
+      }
     }
 
-    const preview = (
-      <div className="image-dropzone-preview">
-        <img alt="" src={imageURL} />
-        <div className="image-dropzone-preview-mask">
-          <Button color="red" onClick={() => this.setImage(null)} className="image-dropzone-preview-remove-button">
-            Видалити
-          </Button>
-          <div className="image-dropzone-preview-mask-background" />
+    initSortable() {
+      const wrapperElement = this.wrapperElement.current;
+      const sortableElement = wrapperElement.querySelector('.dropzone-filelist');
+
+      Sortable.create(sortableElement, {
+        forceFallback: true,
+
+        onUpdate: (event) => {
+          const { oldIndex, newIndex } = event;
+          const currentFiles = [...this.state.files];
+          const movedItem = currentFiles.splice(oldIndex, 1);
+          const reorderedFiles = currentFiles
+            .slice(0, newIndex)
+            .concat(movedItem)
+            .concat(currentFiles.slice(newIndex));
+
+          this.updateFiles(reorderedFiles);
+        },
+      });
+    }
+
+    updateFiles(files) {
+      let updatedFilesList = files;
+
+      if (!files.length && this.props.limit === 1) {
+        updatedFilesList = [null];
+      }
+
+      this.setState({ files: updatedFilesList });
+      this.props.onChange(updatedFilesList);
+    }
+
+    render() {
+      const {
+        limit,
+        disabled,
+        loading,
+        placeholder,
+        className,
+      } = this.props;
+      const { DropzoneWithPreview, files } = this.state;
+
+      const classList = ['image-dropzone', className];
+
+      if (disabled) {
+        classList.push('image-dropzone-disabled');
+      }
+
+      return (
+        <div className={classList.join(' ')} ref={this.wrapperElement}>
+          <DropzoneWithPreview
+            limit={limit}
+            files={files}
+            placeholder={placeholder}
+            disabled={disabled}
+            loading={loading}
+            onChange={newFiles => this.updateFiles(newFiles)}
+            className="image-dropzone-element"
+          />
         </div>
-      </div>
-    );
-
-    return (
-      <div className={classList.join(' ')}>
-        <Dropzone
-          limit={1}
-          files={[this.state.image]}
-          disabled={disabled}
-          onDrop={([image]) => this.setImage(image)}
-          className="image-dropzone-element"
-        />
-        {imageURL && preview}
-      </div>
-    );
+      );
+    }
   }
+
+  ImageDropzone.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.object),
+    limit: PropTypes.number,
+    disabled: PropTypes.bool,
+    loading: PropTypes.bool,
+    sortable: PropTypes.bool,
+    placeholder: PropTypes.string,
+    className: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+  };
+
+  ImageDropzone.defaultProps = {
+    images: [],
+    limit: Number.POSITIVE_INFINITY,
+    disabled: false,
+    loading: false,
+    sortable: false,
+    placeholder: 'Клацни або перетягни сюди зображення',
+    className: '',
+  };
+
+  return ImageDropzone;
 }
-
-ImageDropzone.propTypes = {
-  disabled: PropTypes.bool,
-  imageURL: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  className: PropTypes.string,
-};
-
-ImageDropzone.defaultProps = {
-  disabled: false,
-  imageURL: '',
-  className: '',
-};
-
-export default ImageDropzone;

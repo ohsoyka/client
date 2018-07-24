@@ -17,9 +17,10 @@ import { getAllCookies } from '../services/cookies';
 class TagPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const { tag } = query;
-      const { docs } = await API.articles.find({ tag, include: 'image' }, getAllCookies(req));
+      const { docs } = await API.articles.find({ tag, include: 'image' }, cookies);
 
       return { ...parentProps, tag, articles: docs };
     } catch (error) {

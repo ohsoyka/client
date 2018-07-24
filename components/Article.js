@@ -16,7 +16,7 @@ class Article extends React.Component {
       : null) || this.props.intro;
     const introClassNames = ['article-intro'];
 
-    if (intro.length < 300) {
+    if (intro && intro.length < 300) {
       introClassNames.push('text-center', 'balance-text');
     }
 

@@ -17,8 +17,9 @@ import { getAllCookies } from '../services/cookies';
 class PhotographyPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const { docs } = await API.photoAlbums.find({ include: 'cover' }, getAllCookies(req));
+      const { docs } = await API.photoAlbums.find({ include: 'cover' }, cookies);
 
       return { ...parentProps, photoAlbums: docs };
     } catch (error) {

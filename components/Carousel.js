@@ -23,8 +23,13 @@ const defaultSettings = {
 };
 
 class Carousel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.carouselElement = React.createRef();
+  }
   componentDidMount() {
-    const $carousel = $('.carousel');
+    const $carousel = $(this.carouselElement.current.props.className);
     const $arrows = $carousel.find('.slick-arrow');
 
     let timeout;
@@ -40,7 +45,7 @@ class Carousel extends React.Component {
     const settings = { ...defaultSettings, ...this.props };
 
     return (
-      <Slider {...settings} className={`carousel ${this.props.fullScreen ? 'carousel-fullscreen' : ''}`}>
+      <Slider {...settings} className={`carousel ${this.props.fullScreen ? 'carousel-fullscreen' : ''}`} ref={this.carouselElement}>
         {this.props.children}
       </Slider>
     );

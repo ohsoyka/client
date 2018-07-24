@@ -17,9 +17,10 @@ import { getAllCookies } from '../../../services/cookies';
 
 class NewArticlePage extends ProtectedPage {
   static async getInitialProps({ req, res }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const projects = await API.projects.find({}, getAllCookies(req));
-    const categories = await API.categories.find({}, getAllCookies(req));
+    const projects = await API.projects.find({}, cookies);
+    const categories = await API.categories.find({}, cookies);
 
     return {
       ...parentProps,
@@ -37,6 +38,8 @@ class NewArticlePage extends ProtectedPage {
   }
 
   async submit(article) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -44,12 +47,12 @@ class NewArticlePage extends ProtectedPage {
       let savedArticle;
 
       if (imageFile) {
-        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const [uploadedImage] = await API.upload(imageFile, cookies);
         const articleWithImage = { ...article, image: uploadedImage.id };
 
-        savedArticle = await API.articles.create(articleWithImage, getAllCookies());
+        savedArticle = await API.articles.create(articleWithImage, cookies);
       } else {
-        savedArticle = await API.articles.create(article, getAllCookies());
+        savedArticle = await API.articles.create(article, cookies);
       }
 
       this.setState({ formDisabled: false });

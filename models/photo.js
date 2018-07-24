@@ -1,5 +1,5 @@
 export default {
-  name: 'photo-album',
+  name: 'photo',
   schema: {
     description: String,
     exif: Object,

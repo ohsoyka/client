@@ -7,15 +7,15 @@ import Colors from '../../services/colors';
 const ArticlePreviewStandart = (props) => {
   const classList = ['article-preview', props.className];
   const style = {};
-  const { averageColor } = props.image;
+  const averageColor = props.image && props.image.averageColor;
   const { from, to } = averageColor
     ? Colors.RGBToGradient(...averageColor)
     : Colors.stringToHEXGradient(props.title);
 
-  let backgroundImageURL = props.image.medium;
+  let backgroundImageURL = props.image && props.image.medium;
 
   if (!props.large) {
-    backgroundImageURL = props.image.small;
+    backgroundImageURL = props.image && props.image.small;
     classList.push('article-preview-small');
   }
 

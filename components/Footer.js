@@ -5,7 +5,7 @@ import Logo from './ui/Logo';
 const Footer = () => (
   <div className="footer">
     <div className="container layout-row layout-align-center-center">
-      <Logo className="footer-logo" text={false} />
+      <Logo className="footer-logo" text="" />
       <div className="flex-100">
         <ul className="footer-menu">
           <li><a>Проекти</a></li>

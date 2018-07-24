@@ -5,17 +5,6 @@ import Link from 'next/link';
 const Button = (props) => {
   let buttonElement;
 
-  if (props.onClick) {
-    buttonElement = (
-      <button
-        onClick={props.onClick}
-        className="button-element"
-      >
-        {props.children}
-      </button>
-    );
-  }
-
   if (props.href) {
     buttonElement = (
       <Link href={props.href} as={props.as}>
@@ -23,6 +12,15 @@ const Button = (props) => {
           {props.children}
         </a>
       </Link>
+    );
+  } else {
+    buttonElement = (
+      <button
+        onClick={props.onClick}
+        className="button-element"
+      >
+        {props.children}
+      </button>
     );
   }
 
