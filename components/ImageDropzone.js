@@ -97,6 +97,7 @@ export default function (FilePreview) {
           <DropzoneWithPreview
             limit={limit}
             files={files}
+            accept="image/*"
             placeholder={placeholder}
             disabled={disabled}
             loading={loading}

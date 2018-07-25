@@ -40,7 +40,12 @@ class PageForm extends FormWithAutosave {
       return;
     }
 
-    this.props.onSubmit(this.state);
+    try {
+      await this.props.onSubmit(this.state);
+      this.clearAutosavedData();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {

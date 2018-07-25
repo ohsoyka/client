@@ -43,6 +43,20 @@ class EditPhotoAlbumPage extends ProtectedPage {
     this.setState({ formDisabled: true });
 
     try {
+      const AlbumUploader = PhotoUploader.create(photoAlbum.photos);
+
+      AlbumUploader.on('progress', ({ percent, uploaded, total }) => {
+        this.setState({
+          uploadProgress: {
+            percent,
+            processedItems: uploaded,
+            totalItems: total,
+          },
+        });
+      });
+
+      AlbumUploader.on('end', () => this.setState({ uploadProgress: null }));
+
       const shouldUploadCover = photoAlbum.cover instanceof window.File;
       let cover = (photoAlbum.cover && photoAlbum.cover.id) || photoAlbum.cover;
 
@@ -52,9 +66,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
         cover = uploadedCover.id;
       }
 
-      const AlbumUploader = PhotoUploader.create(photoAlbum.photos);
       const uploadedPhotos = await AlbumUploader.upload();
-
       const photoAlbumWithCoverAndPhotos = {
         ...photoAlbum,
         cover,
@@ -98,6 +110,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
             key={photoAlbum.path}
             disabled={this.state.formDisabled}
             loading={this.state.formDisabled}
+            uploadProgress={this.state.uploadProgress}
             onSubmit={this.update}
             onRemove={this.remove}
           />

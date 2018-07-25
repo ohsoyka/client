@@ -10,6 +10,7 @@ import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
+import ProgressBar from '../ui/ProgressBar';
 import FormWithAutosave from './FormWithAutosave';
 
 const ImageDropzoneWithPreview = ImageDropzone();
@@ -57,7 +58,12 @@ class PhotoAlbumForm extends FormWithAutosave {
       return;
     }
 
-    this.props.onSubmit(this.state);
+    try {
+      await this.props.onSubmit(this.state);
+      this.clearAutosavedData();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   componentWillReceiveProps({ photoAlbum }) {
@@ -69,7 +75,12 @@ class PhotoAlbumForm extends FormWithAutosave {
   }
 
   render() {
-    const { photoAlbum, disabled, loading } = this.props;
+    const {
+      photoAlbum,
+      disabled,
+      loading,
+      uploadProgress,
+    } = this.props;
     const { photos = [] } = photoAlbum;
     const formTitle = photoAlbum.path ? 'Редагувати фотоальбом' : 'Новий фотоальбом';
     const link = this.generatePhotoAlbumLink();
@@ -129,15 +140,19 @@ class PhotoAlbumForm extends FormWithAutosave {
             />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
-            <div className="flex-15">
+            <div className="flex-70 layout-row layout-align-start-center">
               {
                 this.props.photoAlbum.id &&
-                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
+                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red" className="margin-right">
                   Видалити
                 </Button>
               }
+              {
+                uploadProgress &&
+                <ProgressBar {...uploadProgress} className="flex-100" />
+              }
             </div>
-            <div className="layout-row layout-align-start-center flex-30">
+            <div className="layout-row layout-align-start-center flex-30 margin-left">
               <Checkbox
                 label="Заховати"
                 checked={this.state.private}
@@ -166,6 +181,11 @@ PhotoAlbumForm.propTypes = {
     path: PropTypes.string,
     cover: PropTypes.object,
     photos: PropTypes.arrayOf(PropTypes.object),
+  }),
+  uploadProgress: PropTypes.shape({
+    percent: PropTypes.number,
+    processedItems: PropTypes.number,
+    totalItems: PropTypes.number,
   }),
   disabled: PropTypes.bool,
   loading: PropTypes.bool,

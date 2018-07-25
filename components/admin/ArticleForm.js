@@ -55,7 +55,12 @@ class ArticleForm extends FormWithAutosave {
       .filter((tag, index, collection) => collection.indexOf(tag) === index);
     const publishedAt = this.state.dateString ? moment(this.state.dateString, DATE_FORMAT).toDate() : new Date();
 
-    this.props.onSubmit({ ...this.state, tags, publishedAt });
+    try {
+      await this.props.onSubmit({ ...this.state, tags, publishedAt });
+      this.clearAutosavedData();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   componentWillReceiveProps({ article }) {

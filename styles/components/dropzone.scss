@@ -6,6 +6,7 @@
 
   &:hover {
     border-color: $green;
+    background-color: transparentize($green, 0.95);
   }
 
   .dropzone-content {
@@ -44,7 +45,7 @@
   }
 
   .dropzone-loader {
-    background-color: transparentize($white, 0.7);
+    background-color: transparentize($white, 0.2);
     cursor: default;
 
     display: flex;
@@ -58,8 +59,8 @@
 
     .dropzone-loader-icon {
       width: 2em;
-      fill: $green;
-      stroke: $green;
+      fill: $black;
+      stroke: $black;
     }
 
     &.visible {

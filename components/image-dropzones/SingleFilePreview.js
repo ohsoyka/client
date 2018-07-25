@@ -12,7 +12,6 @@ class SingleFilePreview extends React.Component {
 
   remove(event) {
     event.stopPropagation();
-
     this.props.onRemove(this.props.file);
   }
 

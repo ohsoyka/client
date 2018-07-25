@@ -38,8 +38,10 @@ class Wrapper extends React.Component {
   }
 
   render() {
+    const classList = ['wrapper', this.props.className];
+
     return (
-      <div className={`wrapper ${this.props.className}`}>
+      <div className={classList.join(' ')}>
         {this.props.children}
       </div>
     );

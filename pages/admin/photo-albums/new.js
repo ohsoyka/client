@@ -40,8 +40,21 @@ class NewPhotoAlbumPage extends ProtectedPage {
 
     try {
       const coverFile = photoAlbum.cover;
-      const [uploadedCover] = await API.upload(coverFile, cookies);
       const AlbumUploader = PhotoUploader.create(photoAlbum.photos);
+
+      AlbumUploader.on('progress', ({ percent, uploaded, total }) => {
+        this.setState({
+          uploadProgress: {
+            percent,
+            processedItems: uploaded,
+            totalItems: total,
+          },
+        });
+      });
+
+      AlbumUploader.on('end', () => this.setState({ uploadProgress: null }));
+
+      const [uploadedCover] = await API.upload(coverFile, cookies);
       const uploadedPhotos = await AlbumUploader.upload();
 
       const photoAlbumWithCoverAndPhotos = {
@@ -77,6 +90,7 @@ class NewPhotoAlbumPage extends ProtectedPage {
           <PhotoAlbumForm
             disabled={this.state.formDisabled}
             loading={this.state.formDisabled}
+            uploadProgress={this.state.uploadProgress}
             onSubmit={this.submit}
           />
         </Content>

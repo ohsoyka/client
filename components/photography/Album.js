@@ -7,9 +7,7 @@ class Album extends React.Component {
   constructor(props) {
     super(props);
 
-    const id = props.photos.map(article => article.id).join('');
-
-    this.state = { id };
+    this.albumLayoutElement = React.createRef();
   }
 
   componentDidMount() {
@@ -17,7 +15,7 @@ class Album extends React.Component {
   }
 
   initMasonry() {
-    new window.Masonry(`.photo-album-layout[data-id="${this.state.id}"]`, { // eslint-disable-line
+    new window.Masonry(this.albumLayoutElement.current, { // eslint-disable-line
       itemSelector: '.photo',
       percentPosition: true,
       columnWidth: '.grid-sizer',
@@ -65,7 +63,7 @@ class Album extends React.Component {
           description && <div className="photo-album-description">{description}</div>
         }
 
-        <div data-id={this.state.id} className="photo-album-layout children-horizontal-padding children-vertical-padding">
+        <div className="photo-album-layout children-horizontal-padding children-vertical-padding" ref={this.albumLayoutElement}>
           <div className="grid-sizer grid-item-width-sm" />
           {
             previews
