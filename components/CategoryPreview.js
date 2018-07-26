@@ -22,7 +22,7 @@ const CategoryPreview = (props) => {
     <Link href={`/category?path=${props.path}`} as={`/categories/${props.path}`}>
       <a className={classList.join(' ')}>
         <div className="category-preview-inner" style={style}>
-          <div className="category-preview-content ">
+          <div className="category-preview-content">
             <div className="category-preview-text layout-row layout-align-start-center layout-wrap">
               <h3 className="category-preview-title">{props.title}</h3>
               <div className="category-preview-description flex-100">{props.description}</div>

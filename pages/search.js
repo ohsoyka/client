@@ -23,12 +23,13 @@ const SEARCH_DELAY = 700;
 class SearchPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const searchQuery = query.query;
       let searchResults = [];
 
       if (searchQuery) {
-        const { docs } = await API.search({ query: searchQuery }, getAllCookies(req));
+        const { docs } = await API.search({ query: searchQuery }, cookies);
 
         searchResults = docs;
       }
@@ -95,12 +96,16 @@ class SearchPage extends AuthenticatablePage {
     const pagesFound = searchResults.filter(searchResult => searchResult.searchResultType === 'page');
     const projectsFound = searchResults.filter(searchResult => searchResult.searchResultType === 'project');
     const categoriesFound = searchResults.filter(searchResult => searchResult.searchResultType === 'category');
+    const photoAlbumsFound = searchResults.filter(searchResult => searchResult.searchResultType === 'photo-album');
+
+    console.log(photoAlbumsFound);
 
     const itemsFound = [
       { words: ['статтю', 'статті', 'статей'], count: articlesFound.length },
       { words: ['сторінку', 'сторінки', 'сторінок'], count: pagesFound.length },
       { words: ['проект', 'проекти', 'проектів'], count: projectsFound.length },
       { words: ['категорію', 'категорії', 'категорій'], count: categoriesFound.length },
+      { words: ['фотоальбом', 'фотоальбоми', 'фотоальбомів'], count: photoAlbumsFound.length },
     ]
       .filter(item => item.count);
 
@@ -125,7 +130,7 @@ class SearchPage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const { searchResults } = this.props;

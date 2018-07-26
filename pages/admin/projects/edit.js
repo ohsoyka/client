@@ -17,8 +17,9 @@ import { getAllCookies } from '../../../services/cookies';
 
 class EditProjectPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
+    const project = await API.projects.findOne(query.path, { include: 'image' }, cookies);
 
     return {
       ...parentProps,
@@ -36,6 +37,8 @@ class EditProjectPage extends ProtectedPage {
   }
 
   async update(project) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -43,13 +46,13 @@ class EditProjectPage extends ProtectedPage {
       let image = (project.image && project.image.id) || project.image;
 
       if (shouldUploadImage) {
-        const [uploadedImage] = await API.upload(project.image, getAllCookies());
+        const [uploadedImage] = await API.upload(project.image, cookies);
 
         image = uploadedImage.id;
       }
 
       const projectWithImage = { ...project, image };
-      const savedProject = await API.projects.update(this.props.project.path, projectWithImage, getAllCookies());
+      const savedProject = await API.projects.update(this.props.project.path, projectWithImage, cookies);
 
       this.setState({ formDisabled: false });
 

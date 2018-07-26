@@ -1,0 +1,36 @@
+.photo-album {
+  .photo-album-title {
+    margin: 0;
+  }
+
+  .photo-album-description {
+    color: $extra-light-grey;
+    margin-top: 1em;
+    white-space: pre-wrap;
+  }
+
+  .photo-album-layout {
+    margin-top: 2em;
+  }
+
+  .photo {
+    cursor: pointer;
+
+    .photo-inner {
+      background-position: center center;
+      background-size: 100%;
+      transition: background-size 4s ease-out, outline 250ms linear;
+      outline: 0.5em solid transparent;
+
+      &:hover {
+        background-size: 104%;
+        outline-color: $grey;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+  }
+}

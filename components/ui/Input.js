@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { S_IFLNK } from 'constants';
 
 class Input extends React.Component {
   constructor(props) {

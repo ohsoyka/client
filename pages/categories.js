@@ -17,8 +17,9 @@ import { getAllCookies } from '../services/cookies';
 class CategoriesPage extends AuthenticatablePage {
   static async getInitialProps({ req }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const { docs } = await API.categories.find({ include: 'image' }, getAllCookies(req));
+      const { docs } = await API.categories.find({ include: 'image' }, cookies);
 
       return { ...parentProps, categories: docs };
     } catch (error) {
@@ -28,7 +29,7 @@ class CategoriesPage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const { categories } = this.props;

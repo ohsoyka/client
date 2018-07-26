@@ -8,7 +8,7 @@ import Session from '../services/session';
 const menuItems = [
   {
     id: 5,
-    markup: <Link href="/admin/index" as="/admin"><a>Панель керування</a></Link>,
+    markup: <Link href="/admin/index" as="/admin"><a><i className="fas fa-lock" />Панель керування</a></Link>,
     loggedInOnly: true,
   },
   {
@@ -17,7 +17,7 @@ const menuItems = [
   },
   {
     id: 2,
-    markup: <a>Ниття</a>,
+    markup: <Link href="/photography"><a><i className="fas fa-camera" />Фотопортфоліо</a></Link>,
   },
   {
     id: 3,
@@ -41,14 +41,30 @@ const adminPanelMenuItems = [
 ];
 
 class Header extends React.Component {
-  static initHeadroom() {
+  constructor(props) {
+    super(props);
+
+    this.header = React.createRef();
+    this.menu = React.createRef();
+    this.hamburgerButton = React.createRef();
+  }
+
+  componentDidMount() {
+    if (this.props.fixed) {
+      this.initHeadroom();
+    }
+
+    this.initHamburgerButton();
+  }
+
+  initHeadroom() {
     const { Headroom } = window;
 
     if (!Headroom) {
       return;
     }
 
-    const element = document.querySelector('.header');
+    const element = this.header.current;
     const headroom = new Headroom(element, {
       offset: 100,
       tolerance: 5,
@@ -57,10 +73,10 @@ class Header extends React.Component {
     headroom.init();
   }
 
-  static initHamburgerButton() {
-    const $menu = $('.header .menu');
+  initHamburgerButton() {
+    const $menu = $(this.menu.current);
 
-    $('.header .menu-hamburger').on('click', (event) => {
+    $(this.hamburgerButton.current).on('click', (event) => {
       event.stopPropagation();
 
       if ($menu.hasClass('menu-visible')) {
@@ -75,14 +91,12 @@ class Header extends React.Component {
     });
   }
 
-  componentDidMount() {
-    Header.initHeadroom();
-    Header.initHamburgerButton();
-  }
-
   render() {
     const isLoggedIn = this.context.isAuthenticated;
     const isInAdminPanel = this.props.admin;
+    const isDark = this.props.dark;
+    const isSpecial = this.props.special;
+    const isFixed = this.props.fixed;
 
     const menu = (isInAdminPanel
       ? adminPanelMenuItems
@@ -91,10 +105,28 @@ class Header extends React.Component {
 
     const logoHref = this.props.admin ? '/admin' : '/';
 
+    const classList = ['header'];
+
+    if (isDark) {
+      classList.push('header-dark');
+    }
+
+    if (isSpecial) {
+      classList.push('header-special');
+    }
+
+    if (isFixed) {
+      classList.push('header-fixed');
+    }
+
     return (
-      <section className="header">
-        <Link href={logoHref}><a><Logo /></a></Link>
-        <nav className="layout-row layout-align-start-center">
+      <section className={classList.join(' ')} ref={this.header}>
+        <Link href={logoHref}>
+          <a>
+            <Logo light={isDark} text={isInAdminPanel ? 'Панель керування' : 'Сойка'} />
+          </a>
+        </Link>
+        <nav className="header-nav layout-row layout-align-start-center">
           <div className="search-button">
             <Link href="/search">
               <a>
@@ -102,10 +134,10 @@ class Header extends React.Component {
               </a>
             </Link>
           </div>
-          <ul className="menu">
+          <ul className="menu" ref={this.menu}>
             {menu}
           </ul>
-          <i className="menu-hamburger fa fa-bars" />
+          <i className="menu-hamburger fa fa-bars" ref={this.hamburgerButton} />
         </nav>
       </section>
     );
@@ -114,10 +146,16 @@ class Header extends React.Component {
 
 Header.propTypes = {
   admin: PropTypes.bool,
+  dark: PropTypes.bool,
+  special: PropTypes.bool,
+  fixed: PropTypes.bool,
 };
 
 Header.defaultProps = {
   admin: false,
+  dark: false,
+  special: false,
+  fixed: true,
 };
 
 Header.contextTypes = {

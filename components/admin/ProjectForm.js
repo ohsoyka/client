@@ -11,8 +11,9 @@ import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
-
 import FormWithAutosave from './FormWithAutosave';
+
+const ImageDropzoneWithPreview = ImageDropzone();
 
 class ProjectForm extends FormWithAutosave {
   constructor(props) {
@@ -41,7 +42,12 @@ class ProjectForm extends FormWithAutosave {
       return;
     }
 
-    this.props.onSubmit(this.state);
+    try {
+      await this.props.onSubmit(this.state);
+      this.clearAutosavedData();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   componentWillReceiveProps({ project }) {
@@ -56,7 +62,6 @@ class ProjectForm extends FormWithAutosave {
     const { project, disabled } = this.props;
     const formTitle = project.path ? 'Редагувати проект' : 'Новий проект';
     const link = this.generateProjectLink();
-    const imageURL = project.image ? project.image.small : null;
 
     return (
       <div className="project-form">
@@ -85,11 +90,11 @@ class ProjectForm extends FormWithAutosave {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Зображення</div>
-            <ImageDropzone
-              imageURL={imageURL}
-              key={imageURL}
+            <ImageDropzoneWithPreview
+              images={[this.state.image]}
+              limit={1}
               disabled={disabled}
-              onChange={image => this.updateFormData({ image })}
+              onChange={image => this.setState({ image })}
               className="flex-100"
             />
           </div>

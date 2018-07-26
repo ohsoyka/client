@@ -18,8 +18,9 @@ import { getAllCookies } from '../services/cookies';
 class PagePage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const page = await API.pages.findOne(query.path, {}, getAllCookies(req));
+      const page = await API.pages.findOne(query.path, {}, cookies);
 
       return { ...parentProps, page };
     } catch (error) {
@@ -29,7 +30,7 @@ class PagePage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {

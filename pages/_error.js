@@ -11,14 +11,25 @@ class Error extends React.Component {
   static getInitialProps({ res, error }) {
     const statusCode = (res && res.statusCode) || (error && error.statusCode);
 
-    if (current.environment !== 'production') {
-      console.error(error);
-    }
-
     return { statusCode };
   }
 
   render() {
+    const { statusCode, error } = this.props;
+
+    if (current.environment !== 'production' && error && error.message) {
+      console.error(error);
+    }
+
+    const details = current.environment === 'production'
+      ? null
+      : (
+        <div>
+          <p>{error.message}</p>
+          <p>{error.stack}</p>
+        </div>
+      );
+
     return (
       <Wrapper>
         <Head>
@@ -27,7 +38,8 @@ class Error extends React.Component {
         <Header />
         <Content className="container">
           <h1>Шось пішло не так</h1>
-          <p className="larger text-center">{this.props.statusCode}</p>
+          <p className="larger text-center">{statusCode}</p>
+          {details}
         </Content>
         <Footer />
       </Wrapper>
@@ -37,10 +49,14 @@ class Error extends React.Component {
 
 Error.propTypes = {
   statusCode: PropTypes.number,
+  error: PropTypes.shape({
+    message: PropTypes.string,
+  }),
 };
 
 Error.defaultProps = {
   statusCode: null,
+  error: {},
 };
 
 export default Error;

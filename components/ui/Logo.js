@@ -2,22 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BirdIcon from '../../static/icons/logo.svg';
 
-const Logo = props => (
-  <div className={`logo layout-row layout-align-center-center ${props.className}`}>
-    <BirdIcon className="logo-icon" />
-    {
-      props.text && <span className="logo-text">Сойка</span>
-    }
-  </div>
-);
+const Logo = (props) => {
+  const { text, light, className } = props;
+  const classList = ['logo', 'layout-row', 'layout-align-center-center', className];
+
+  if (light) {
+    classList.push('logo-light');
+  }
+
+  return (
+    <div className={classList.join(' ')}>
+      <BirdIcon className="logo-icon" />
+      {
+        text && <span className="logo-text">{text}</span>
+      }
+    </div>
+  );
+};
 
 Logo.propTypes = {
-  text: PropTypes.bool,
+  text: PropTypes.string,
+  light: PropTypes.bool,
   className: PropTypes.string,
 };
 
 Logo.defaultProps = {
-  text: true,
+  text: 'Сойка',
+  light: false,
   className: '',
 };
 

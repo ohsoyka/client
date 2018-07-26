@@ -7,6 +7,7 @@ const types = {
   page: 'Сторінка',
   project: 'Проект',
   category: 'Категорія',
+  'photo-album': 'Фотоальбом',
 };
 
 class SearchResult extends React.Component {
@@ -41,6 +42,11 @@ class SearchResult extends React.Component {
       case 'category': {
         href = `/category?path=${path}`;
         as = `/categories/${path}`;
+        break;
+      }
+      case 'photo-album': {
+        href = `/photo-album?path=${path}`;
+        as = `/photography/${path}`;
         break;
       }
       default: break;
@@ -89,7 +95,7 @@ SearchResult.propTypes = {
   brief: PropTypes.string,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
-  searchResultType: PropTypes.oneOf(['article', 'page', 'project', 'category']).isRequired,
+  searchResultType: PropTypes.oneOf(['article', 'page', 'project', 'photo-album']).isRequired,
   className: PropTypes.string,
 };
 

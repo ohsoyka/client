@@ -17,10 +17,11 @@ import { getAllCookies } from '../../../services/cookies';
 
 class EditArticlePage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const article = await API.articles.findOne(query.path, { include: 'image' }, getAllCookies(req));
-    const projects = await API.projects.find({}, getAllCookies(req));
-    const categories = await API.categories.find({}, getAllCookies(req));
+    const article = await API.articles.findOne(query.path, { include: 'image' }, cookies);
+    const projects = await API.projects.find({}, cookies);
+    const categories = await API.categories.find({}, cookies);
 
     return {
       ...parentProps,
@@ -40,6 +41,8 @@ class EditArticlePage extends ProtectedPage {
   }
 
   async update(article) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -47,13 +50,13 @@ class EditArticlePage extends ProtectedPage {
       let image = (article.image && article.image.id) || article.image;
 
       if (shouldUploadImage) {
-        const [uploadedImage] = await API.upload(article.image, getAllCookies());
+        const [uploadedImage] = await API.upload(article.image, cookies);
 
         image = uploadedImage.id;
       }
 
       const articleWithImage = { ...article, image };
-      const savedArticle = await API.articles.update(this.props.article.path, articleWithImage, getAllCookies());
+      const savedArticle = await API.articles.update(this.props.article.path, articleWithImage, cookies);
 
       this.setState({ formDisabled: false });
 

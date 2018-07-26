@@ -38,7 +38,7 @@ const PrettifyableInput = (props) => {
         onEnter={onEnter}
       >
         <div
-          title="Відтипографити"
+          title="Зробити гарно"
           className="prettifyable-input-prettify-button fa fa-wrench"
           onClick={() => PrettifyableInput.prettify(props)}
         />

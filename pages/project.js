@@ -19,9 +19,10 @@ import { getAllCookies } from '../services/cookies';
 class ProjectPage extends AuthenticatablePage {
   static async getInitialProps({ req, query }) {
     try {
+      const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const project = await API.projects.findOne(query.path, { include: 'image' }, getAllCookies(req));
-      const { docs } = await API.articles.find({ project: project.id, include: 'image' }, getAllCookies(req));
+      const project = await API.projects.findOne(query.path, { include: 'image' }, cookies);
+      const { docs } = await API.articles.find({ project: project.id, include: 'image' }, cookies);
 
       return {
         ...parentProps,
@@ -35,7 +36,7 @@ class ProjectPage extends AuthenticatablePage {
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {

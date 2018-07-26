@@ -1,0 +1,140 @@
+.photo-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+
+  .photo-viewer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: transparentize($dark-grey, 0.3);
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+
+    z-index: 50;
+
+    .photo-viewer-container-inner {
+      background-color: $extra-dark-grey;
+      border: 1em solid $extra-dark-grey;
+      margin: 1em;
+      position: relative;
+      transition: width 150ms linear, height 150ms linear;
+
+      &:hover {
+        .photo-viewer-info {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .photo-viewer-image {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 35;
+  }
+
+  .photo-viewer-info {
+    background: transparentize($extra-dark-grey, 0.3);
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5em;
+
+    opacity: 0;
+    transition: opacity 200ms linear;
+
+    z-index: 55;
+  }
+
+  .photo-viewer-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+  }
+
+  .photo-viewer-buttons {
+    opacity: 0;
+    transition: all 200ms linear;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+
+    &.photo-viewer-buttons-visible {
+      opacity: 1;
+    }
+  }
+
+  .photo-viewer-button {
+    color: $white;
+    background-color: transparentize($extra-dark-grey, 0.3);
+    cursor: pointer;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 200ms linear;
+
+    position: absolute;
+    height: 2.5em;
+    width: 2.5em;
+
+    &:hover {
+      background-color: transparentize($extra-dark-grey, 0.1);
+    }
+
+    i {
+      font-size: 1.3em;
+    }
+  }
+
+  .photo-viewer-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .photo-viewer-arrow-left {
+    left: 0.5em;
+  }
+
+  .photo-viewer-arrow-right {
+    right: 0.5em;
+  }
+
+  .photo-viewer-close {
+    top: 0.5em;
+    right: 0.5em;
+
+    i {
+      font-size: 1em;
+    }
+  }
+}

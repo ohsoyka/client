@@ -28,6 +28,11 @@ class PanelSectionItem extends React.Component {
         as = `/admin/articles/${this.props.path}/edit`;
         break;
       }
+      case 'photo-album': {
+        href = `/admin/photo-albums/edit?path=${this.props.path}`;
+        as = `/admin/photo-albums/${this.props.path}/edit`;
+        break;
+      }
       default: {
         href = '';
         as = '';
@@ -54,7 +59,7 @@ class PanelSectionItem extends React.Component {
 PanelSectionItem.propTypes = {
   title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['article', 'category', 'project', 'page']).isRequired,
+  type: PropTypes.oneOf(['article', 'category', 'project', 'page', 'photo-album']).isRequired,
   private: PropTypes.bool,
   hideBadges: PropTypes.bool,
   className: PropTypes.string,

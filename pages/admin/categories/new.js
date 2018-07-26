@@ -33,6 +33,8 @@ class NewCategoryPage extends ProtectedPage {
   }
 
   async submit(category) {
+    const cookies = getAllCookies();
+
     this.setState({ formDisabled: true });
 
     try {
@@ -40,12 +42,12 @@ class NewCategoryPage extends ProtectedPage {
       let savedCategory;
 
       if (imageFile) {
-        const [uploadedImage] = await API.upload(imageFile, getAllCookies());
+        const [uploadedImage] = await API.upload(imageFile, cookies);
         const categoryWithImage = { ...category, image: uploadedImage.id };
 
-        savedCategory = await API.categories.create(categoryWithImage, getAllCookies());
+        savedCategory = await API.categories.create(categoryWithImage, cookies);
       } else {
-        savedCategory = await API.categories.create(category, getAllCookies());
+        savedCategory = await API.categories.create(category, cookies);
       }
 
       this.setState({ formDisabled: false });

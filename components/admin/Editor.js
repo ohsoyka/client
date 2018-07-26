@@ -16,7 +16,7 @@ const FULL_WIDTH_IMAGE_CLASS = 'image-full-width';
 
 $.FroalaEditor.DefineIcon('prettify', { NAME: 'wrench' });
 $.FroalaEditor.RegisterCommand('prettify', {
-  title: 'Відтипографити',
+  title: 'Зробити гарно',
   focus: true,
   undo: true,
   refreshAfterCallback: true,

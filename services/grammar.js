@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-// e.g.: pluralizeWord(5, ['ровер', 'ровери', 'роверів'])
+// e.g.: describeWordCount(5, ['ровер', 'ровери', 'роверів'])
 export function describeWordCount(count, [one, twoToFour, rest]) {
   if (!count) {
     return `Немає ${rest}`;

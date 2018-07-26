@@ -17,8 +17,9 @@ import { getAllCookies } from '../../../services/cookies';
 
 class EditPagePage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const page = await API.pages.findOne(query.path, {}, getAllCookies(req));
+    const page = await API.pages.findOne(query.path, {}, cookies);
 
     return {
       ...parentProps,

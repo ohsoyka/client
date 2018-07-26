@@ -1,0 +1,36 @@
+.progress-bar {
+  display: flex;
+  align-items: center;
+  height: 1em;
+
+  .progress-bar-container {
+    background-color: $almost-white;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .progress-bar-bar {
+    background-color: $green;
+    height: 100%;
+    transition: width 300ms ease-in;
+  }
+
+  .progress-bar-percent {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .progress-bar-total {
+    color: $dark-grey;
+    margin-left: 1em;
+    white-space: nowrap;
+    width: 3em;
+  }
+}

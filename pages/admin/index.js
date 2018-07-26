@@ -18,34 +18,26 @@ import { getAllCookies } from '../../services/cookies';
 
 class IndexPage extends ProtectedPage {
   static async getInitialProps({ req, res }) {
+    const cookies = getAllCookies(req);
+
     const parentProps = await super.getInitialProps({ req, res });
+    const queryParams = {
+      page: 1,
+      limit: 7,
+      sort: '-createdAt',
+    };
     const lastPublishedArticles = await API.articles.find({
-      page: 1,
-      limit: 7,
-      sort: '-publishedAt',
+      ...queryParams,
       private: false,
-    }, getAllCookies(req));
+    }, cookies);
     const lastDrafts = await API.articles.find({
-      page: 1,
-      limit: 7,
-      sort: '-createdAt',
+      ...queryParams,
       private: true,
-    }, getAllCookies(req));
-    const lastProjects = await API.projects.find({
-      page: 1,
-      limit: 7,
-      sort: '-createdAt',
-    }, getAllCookies(req));
-    const lastCategories = await API.categories.find({
-      page: 1,
-      limit: 7,
-      sort: '-createdAt',
-    }, getAllCookies(req));
-    const lastPages = await API.pages.find({
-      page: 1,
-      limit: 7,
-      sort: '-createdAt',
-    }, getAllCookies(req));
+    }, cookies);
+    const lastProjects = await API.projects.find(queryParams, cookies);
+    const lastCategories = await API.categories.find(queryParams, cookies);
+    const lastPages = await API.pages.find(queryParams, cookies);
+    const lastPhotoAlbums = await API.photoAlbums.find(queryParams, cookies);
 
     return {
       ...parentProps,
@@ -54,12 +46,13 @@ class IndexPage extends ProtectedPage {
       lastProjects: lastProjects.docs,
       lastCategories: lastCategories.docs,
       lastPages: lastPages.docs,
+      lastPhotoAlbums: lastPhotoAlbums.docs,
     };
   }
 
   render() {
     if (this.props.error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     const {
@@ -68,6 +61,7 @@ class IndexPage extends ProtectedPage {
       lastProjects,
       lastCategories,
       lastPages,
+      lastPhotoAlbums,
     } = this.props;
 
     return (
@@ -77,12 +71,12 @@ class IndexPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <h2>Панель керування</h2>
-          <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding margin-bottom">
+          <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding margin-bottom margin-top">
             <Button color="black" href="/admin/articles/new">Нова стаття</Button>
             <Button color="black" href="/admin/pages/new">Нова сторінка</Button>
             <Button color="black" href="/admin/projects/new">Новий проект</Button>
             <Button color="black" href="/admin/categories/new">Нова категорія</Button>
+            <Button color="black" href="/admin/photo-albums/new">Новий альбом</Button>
           </div>
           <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding">
             <PanelSection title="Опубліковані статті" href="articles?private=false" className="flex-100 flex-gt-xs-50">
@@ -99,6 +93,9 @@ class IndexPage extends ProtectedPage {
             </PanelSection>
             <PanelSection title="Сторінки" href="pages" className="flex-100 flex-gt-xs-50">
               {lastPages.map(page => <PanelSectionItem key={page.id} {...page} type="page" />)}
+            </PanelSection>
+            <PanelSection title="Альбоми" href="photo-albums" className="flex-100 flex-gt-xs-50">
+              {lastPhotoAlbums.map(photoAlbum => <PanelSectionItem key={photoAlbum.id} {...photoAlbum} type="photo-album" />)}
             </PanelSection>
           </div>
         </Content>

@@ -17,8 +17,9 @@ import { getAllCookies } from '../../../services/cookies';
 
 class CategoriesPage extends ProtectedPage {
   static async getInitialProps({ req, res, query }) {
+    const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const categories = await API.categories.find({ sort: '-createdAt', ...query }, getAllCookies(req));
+    const categories = await API.categories.find({ sort: '-createdAt', ...query }, cookies);
     return {
       ...parentProps,
       categories: categories.docs,
@@ -29,7 +30,7 @@ class CategoriesPage extends ProtectedPage {
     const { categories, error } = this.props;
 
     if (error) {
-      return <Error statusCode={this.props.error.status} />;
+      return <Error error={this.props.error} />;
     }
 
     return (
@@ -40,7 +41,7 @@ class CategoriesPage extends ProtectedPage {
         <Header admin />
         <Content className="container">
           <h2>Категорії</h2>
-          <PanelSection type="categories" className="flex-100">
+          <PanelSection className="flex-100">
             {categories.map(category => <PanelSectionItem {...category} type="category" />)}
           </PanelSection>
         </Content>

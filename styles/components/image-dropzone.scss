@@ -2,14 +2,17 @@
   display: flex;
   align-items: stretch;
 
-  .image-dropzone-element,
-  .image-dropzone-preview {
-    width: 50%;
+  .image-dropzone-element {
+    width: 100%;
+  }
+
+  .dropzone-filelist {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .image-dropzone-preview {
     position: relative;
-    margin-left: 1em;
 
     .image-dropzone-preview-mask {
       opacity: 0;
@@ -17,6 +20,7 @@
       transition: opacity 200ms ease-in;
 
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
 
@@ -28,7 +32,7 @@
     }
 
     .image-dropzone-preview-mask-background {
-      opacity: 0.5;
+      opacity: 0.7;
       background-color: $white;
       z-index: 2;
 
@@ -39,7 +43,13 @@
       height: 100%;
     }
 
-    .image-dropzone-preview-remove-button {
+    .image-dropzone-preview-content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 1em;
+      width: 100%;
       z-index: 5;
     }
 
@@ -49,17 +59,48 @@
         pointer-events: all;
       }
     }
+
+    &.image-dropzone-preview-single {
+      width: 100%;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &.image-dropzone-preview-multiple {
+      font-size: 0.8em;
+      padding: 0.5em;
+
+      width: 20%;
+      min-width: 3em;
+      max-width: 15em;
+
+      user-select: none;
+
+      .image-dropzone-preview-inner {
+        background-size: cover;
+        background-position: center center;
+        border-radius: 0.5em;
+      }
+
+      .image-dropzone-preview-name {
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+      }
+    }
   }
 
   &.image-dropzone-disabled {
-    .image-dropzone-preview {
-      .image-dropzone-preview-mask {
-        opacity: 1;
-      }
+    pointer-events: none;
 
-      .image-dropzone-preview-remove-button {
-        display: none;
-      }
+    .image-dropzone-preview,
+    .image-dropzone-file-preview-wrapper {
+      filter: grayscale(100%);
+      opacity: 0.5;
     }
   }
 }

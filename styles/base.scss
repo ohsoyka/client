@@ -8,7 +8,7 @@ html, body {
 
 body {
   font-size: 20px;
-  font-family: $font-family-main, Arial, Helvetica, sans-serif;
+  font-family: $font-family-main, Helvetica, sans-serif;
 
   @media (max-width: $breakpoint-middle) {
     font-size: 16px;
@@ -158,6 +158,10 @@ hr {
   @include aspect-ratio(4, 3);
 }
 
+.aspect-ratio-1-1 {
+  @include aspect-ratio(1, 1);
+}
+
 .children-horizontal-padding-1 {
   @include children-horizontal-padding(1em);
 }
@@ -200,6 +204,14 @@ hr {
 
 .margin-left-small {
   margin-left: 0.5em;
+}
+
+.margin-right {
+  margin-right: 1em;
+}
+
+.margin-right-small {
+  margin-right: 0.5em;
 }
 
 .margin-bottom {

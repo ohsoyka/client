@@ -2,17 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArticlePreview from './ArticlePreview';
 
-class RelatedArticles extends React.Component {
+class ArticlesGroup extends React.Component {
   constructor(props) {
     super(props);
 
-    const id = props.articles.map(article => article.id).join('');
-
-    this.state = { id };
+    this.wrapperElement = React.createRef();
   }
 
   componentDidMount() {
-    new window.Masonry(`.articles-group[data-id="${this.state.id}"]`, { // eslint-disable-line
+    new window.Masonry(this.wrapperElement.current, { // eslint-disable-line
       itemSelector: '.article-preview',
       percentPosition: true,
       columnWidth: '.grid-sizer',
@@ -55,7 +53,7 @@ class RelatedArticles extends React.Component {
     });
 
     return (
-      <div data-id={this.state.id} className="articles-group children-horizontal-padding-1">
+      <div className="articles-group children-horizontal-padding-1" ref={this.wrapperElement}>
         <div className="grid-sizer grid-item-width-sm" />
         {previews}
       </div>
@@ -63,7 +61,7 @@ class RelatedArticles extends React.Component {
   }
 }
 
-RelatedArticles.propTypes = {
+ArticlesGroup.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.object),
   articlesCount: PropTypes.shape({
     xs: PropTypes.number,
@@ -73,9 +71,9 @@ RelatedArticles.propTypes = {
   }),
 };
 
-RelatedArticles.defaultProps = {
+ArticlesGroup.defaultProps = {
   articles: [],
   articlesCount: {},
 };
 
-export default RelatedArticles;
+export default ArticlesGroup;
