@@ -79,6 +79,7 @@ async function search(query, cookies) {
     page: Page,
     project: Project,
     category: Category,
+    'photo-album': PhotoAlbum,
   };
 
   const deserialized = docs.map((doc) => {

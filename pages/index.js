@@ -29,13 +29,13 @@ class IndexPage extends AuthenticatablePage {
       const parentProps = await super.getInitialProps({ req });
       const lastArticles = await API.articles.find({
         page: 1,
-        limit: 7,
+        limit: 9,
         include: 'image',
         sort: '-publishedAt',
       }, cookies);
       const mostPopularArticles = await API.articles.find({
         page: 1,
-        limit: 7,
+        limit: 9,
         sort: '-views',
         include: 'image',
       }, cookies);
@@ -130,13 +130,16 @@ class IndexPage extends AuthenticatablePage {
               <p className="text-right larger"><Link href="/articles"><a>Всі статті &rarr;</a></Link></p>
             </div>
 
-            <div className="projects-section">
-              <h2>Проекти</h2>
-              {
-                projects.map(project => <ProjectPreview key={project.id} {...project} />)
-              }
-              <p className="text-right larger"><Link href="/projects"><a>Всі проекти &rarr;</a></Link></p>
-            </div>
+            {
+              projects.length &&
+              <div className="projects-section">
+                <h2>Проекти</h2>
+                {
+                  projects.map(project => <ProjectPreview key={project.id} {...project} />)
+                }
+                <p className="text-right larger"><Link href="/projects"><a>Всі проекти &rarr;</a></Link></p>
+              </div>
+            }
 
             <div className="categories-section">
               <h2>Категорії</h2>

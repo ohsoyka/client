@@ -96,12 +96,16 @@ class SearchPage extends AuthenticatablePage {
     const pagesFound = searchResults.filter(searchResult => searchResult.searchResultType === 'page');
     const projectsFound = searchResults.filter(searchResult => searchResult.searchResultType === 'project');
     const categoriesFound = searchResults.filter(searchResult => searchResult.searchResultType === 'category');
+    const photoAlbumsFound = searchResults.filter(searchResult => searchResult.searchResultType === 'photo-album');
+
+    console.log(photoAlbumsFound);
 
     const itemsFound = [
       { words: ['статтю', 'статті', 'статей'], count: articlesFound.length },
       { words: ['сторінку', 'сторінки', 'сторінок'], count: pagesFound.length },
       { words: ['проект', 'проекти', 'проектів'], count: projectsFound.length },
       { words: ['категорію', 'категорії', 'категорій'], count: categoriesFound.length },
+      { words: ['фотоальбом', 'фотоальбоми', 'фотоальбомів'], count: photoAlbumsFound.length },
     ]
       .filter(item => item.count);
 
