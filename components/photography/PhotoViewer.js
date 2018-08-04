@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Hammer from 'hammerjs';
 import Router from 'next/router';
+import Colors from '../../services/colors';
 import preloadImages from '../../utils/preload-images';
 import ControlButtons from './photo-viewer/ControlButtons';
 import LoaderIcon from '../../static/icons/oval.svg';
@@ -27,7 +28,7 @@ class PhotoViewer extends React.Component {
     const [previousPhoto, nextPhoto] = this.getSiblingPhotos();
 
     this.state = {
-      currentPhoto: props.photo,
+      imageURL: props.photo.image[PHOTO_SIZE],
       nextPhoto,
       previousPhoto,
     };
@@ -55,6 +56,12 @@ class PhotoViewer extends React.Component {
         this.preloadPhotos();
       });
     }
+
+    const { imageURL } = this.state;
+    const image = new Image();
+
+    image.src = imageURL;
+    image.onload = () => this.setState({ imageLoaded: true });
   }
 
   componentWillUnmount() {
@@ -81,7 +88,7 @@ class PhotoViewer extends React.Component {
   enableNavigation() {
     const $document = $(document);
 
-    $document.on('keypress.navigation', (event) => {
+    $document.on('keydown.navigation', (event) => {
       const { keyCode } = event;
 
       if (previousPhotoKeyCodes.includes(keyCode)) {
@@ -124,7 +131,7 @@ class PhotoViewer extends React.Component {
   disableNavigation() {
     const $document = $(document);
 
-    $document.off('keypress.navigation').off('mousemove.navigation');
+    $document.off('keydown.navigation').off('mousemove.navigation');
 
     const { hideControlsTimeout, touchEventsListener } = this.state;
 
@@ -193,21 +200,25 @@ class PhotoViewer extends React.Component {
   }
 
   render() {
-    const { currentPhoto } = this.state;
+    const { photo } = this.props;
+    const { imageURL, imageLoaded, controlsVisible } = this.state;
     const containerDimensions = this.calculateContainerDimensions();
 
-    const { controlsVisible } = this.state;
+    const averageColor = photo.image && photo.image.averageColor;
+    const { from, to } = Colors.RGBToGradient(...averageColor);
 
     return (
       <div className="photo-viewer">
         <div className="photo-viewer-container" onClick={this.handleOutsideClick}>
           <div className="photo-viewer-container-inner" style={{ width: containerDimensions.width, height: containerDimensions.height }}>
-            <div className="photo-viewer-image" style={{ backgroundImage: `url('${currentPhoto.image[PHOTO_SIZE]}')` }} />
-            <LoaderIcon className="photo-viewer-loader" />
+            <div className={`photo-viewer-image ${imageLoaded ? 'photo-viewer-image-loaded' : ''}`} style={{ backgroundImage: `url("${imageURL}")` }} />
+            <div className="photo-viewer-placeholder" style={{ backgroundImage: `linear-gradient(to bottom right, ${from}, ${to})` }}>
+              <LoaderIcon className="photo-viewer-loader" />
+            </div>
             {
-              currentPhoto.description &&
+              photo.description &&
               <div className="photo-viewer-info smaller">
-                <div className="photo-viewer-description">{currentPhoto.description}</div>
+                <div className="photo-viewer-description">{photo.description}</div>
               </div>
             }
             <ControlButtons

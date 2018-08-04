@@ -6,7 +6,7 @@ const ControlButtons = (props) => {
     visible,
     onNext,
     onPrevious,
-    onClose,
+    // onClose,
   } = props;
   const classList = ['photo-viewer-buttons'];
 
@@ -16,15 +16,21 @@ const ControlButtons = (props) => {
 
   return (
     <div className={classList.join(' ')}>
-      <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-left" title="Попереднє фото (&larr; або &uarr;)" onClick={onPrevious}>
-        <i className="fas fa-angle-left" />
+      <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-left">
+        <div className="photo-viewer-button-inner" title="Попереднє фото (&larr; або &uarr;)" onClick={onPrevious}>
+          <i className="fas fa-angle-left" />
+        </div>
       </div>
-      <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-right" title="Наступне фото (&rarr; або &darr;)" onClick={onNext}>
-        <i className="fas fa-angle-right" />
+      <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-right">
+        <div className="photo-viewer-button-inner" title="Наступне фото (&rarr; або &darr;)" onClick={onNext}>
+          <i className="fas fa-angle-right" />
+        </div>
       </div>
-      <div className="photo-viewer-button photo-viewer-close" title="Закрити" onClick={onClose}>
-        <i className="fas fa-times" />
-      </div>
+      {/* <div className="photo-viewer-button photo-viewer-close">
+        <div className="photo-viewer-button-inner" title="Закрити" onClick={onClose}>
+          <i className="fas fa-times" />
+        </div>
+      </div> */}
     </div>
   );
 };

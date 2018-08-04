@@ -1,3 +1,5 @@
+$control-button-size: 2.5em;
+
 .photo-viewer {
   position: fixed;
   top: 0;
@@ -18,6 +20,7 @@
     top: 0;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
 
     z-index: 50;
 
@@ -36,19 +39,32 @@
     }
   }
 
-  .photo-viewer-image {
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-
+  .photo-viewer-image,
+  .photo-viewer-placeholder {
     position: absolute;
     left: 0;
     top: 0;
 
     width: 100%;
     height: 100%;
+  }
 
+  .photo-viewer-placeholder {
+    z-index: 30;
+  }
+
+  .photo-viewer-image {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     z-index: 35;
+
+    opacity: 0;
+    transition: opacity 200ms linear;
+
+    &.photo-viewer-image-loaded {
+      opacity: 1;
+    }
   }
 
   .photo-viewer-info {
@@ -92,10 +108,17 @@
   }
 
   .photo-viewer-button {
+    position: absolute;
+    transition: all 200ms linear;
+  }
+
+  .photo-viewer-button-inner {
     color: $white;
-    background-color: transparentize($extra-dark-grey, 0.3);
+    background-color: transparentize($extra-dark-grey, 0.6);
     cursor: pointer;
     border-radius: 50%;
+    height: $control-button-size;
+    width: $control-button-size;
 
     display: flex;
     justify-content: center;
@@ -103,12 +126,8 @@
 
     transition: background-color 200ms linear;
 
-    position: absolute;
-    height: 2.5em;
-    width: 2.5em;
-
     &:hover {
-      background-color: transparentize($extra-dark-grey, 0.1);
+      background-color: transparentize($extra-dark-grey, 0.2);
     }
 
     i {
@@ -119,19 +138,23 @@
   .photo-viewer-arrow {
     top: 50%;
     transform: translateY(-50%);
+    padding: 30vh 0;
   }
 
   .photo-viewer-arrow-left {
     left: 0.5em;
+    padding-right: calc(50% - #{$control-button-size} - 0.5em);
   }
 
   .photo-viewer-arrow-right {
     right: 0.5em;
+    padding-left: calc(50% - #{$control-button-size} - 0.5em);
   }
 
   .photo-viewer-close {
     top: 0.5em;
     right: 0.5em;
+    padding: 0 0 2em 2em;
 
     i {
       font-size: 1em;
