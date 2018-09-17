@@ -65,6 +65,7 @@ class LoginPage extends React.Component {
             <Input
               lite
               compact
+              autofocus
               value={this.state.login}
               label="Лоґін"
               onChange={login => this.setState({ login })}

@@ -53,7 +53,7 @@ class ArticlesGroup extends React.Component {
     });
 
     return (
-      <div className="articles-group children-horizontal-padding-1" ref={this.wrapperElement}>
+      <div className="articles-group children-horizontal-padding-1 compensate-padding-top" ref={this.wrapperElement}>
         <div className="grid-sizer grid-item-width-sm" />
         {previews}
       </div>

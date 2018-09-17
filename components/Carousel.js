@@ -12,6 +12,7 @@ const PrevArrow = props => (
 
 const defaultSettings = {
   dots: true,
+  fade: true,
   infinite: true,
   autoplay: true,
   autoplaySpeed: 2000,

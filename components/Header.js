@@ -127,13 +127,16 @@ class Header extends React.Component {
           </a>
         </Link>
         <nav className="header-nav layout-row layout-align-start-center">
-          <div className="search-button">
-            <Link href="/search">
-              <a>
-                <i className="fa fa-search" /><span className="sr-only">Facebook</span>
-              </a>
-            </Link>
-          </div>
+          {
+            !isInAdminPanel &&
+            <div className="search-button">
+              <Link href="/search">
+                <a>
+                  <i className="fa fa-search" /><span className="sr-only">Facebook</span>
+                </a>
+              </Link>
+            </div>
+          }
           <ul className="menu" ref={this.menu}>
             {menu}
           </ul>

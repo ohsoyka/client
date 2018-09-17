@@ -25,6 +25,7 @@ class Input extends React.Component {
       type,
       value,
       pattern,
+      autofocus,
       className,
       nativeElementClassName,
       onChange,
@@ -52,6 +53,7 @@ class Input extends React.Component {
             <textarea
               placeholder={placeholder}
               disabled={disabled}
+              autoFocus={autofocus}
               value={value}
               rows={rows}
               onChange={event => onChange(event.target.value)}
@@ -70,6 +72,7 @@ class Input extends React.Component {
           <input
             type={type}
             disabled={disabled}
+            autoFocus={autofocus}
             placeholder={placeholder}
             value={value}
             pattern={pattern}
@@ -90,6 +93,7 @@ Input.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   pattern: PropTypes.string,
+  autofocus: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   className: PropTypes.string,
@@ -108,6 +112,7 @@ Input.defaultProps = {
   label: '',
   placeholder: '',
   pattern: null,
+  autofocus: false,
   className: '',
   nativeElementClassName: '',
   compact: false,

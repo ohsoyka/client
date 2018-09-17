@@ -1,11 +1,16 @@
 .search-result {
-  margin: 1.5em 0;
-  padding-bottom: 1em;
-  border-bottom: 1px solid $extra-light-grey;
+  padding: 1em 1em 0 1em;
+  margin-left: -1em;
+  margin-right: -1em;
+  transition: background-color 200ms linear;
 
   .search-result-title {
     margin-top: 0;
     margin-bottom: 0;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .search-result-type {
@@ -13,7 +18,7 @@
   }
 
   .search-result-description {
-    margin-top: 1em;
+    margin-top: 0.5em;
   }
 
   .search-result-tags {
@@ -28,5 +33,20 @@
         margin-left: 0;
       }
     }
+  }
+
+  .search-result-bottomline {
+    padding-top: 1em;
+    border-bottom: 1px solid $extra-light-grey;
+  }
+
+  &:last-child {
+    .search-result-bottomline {
+      border: none;
+    }
+  }
+
+  &:hover {
+    background-color: $almost-white;
   }
 }

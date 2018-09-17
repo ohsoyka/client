@@ -56,7 +56,7 @@ class ArticlesPage extends AuthenticatablePage {
         <Header />
         <Content className="container">
           <h1>Всі статті</h1>
-          <div className="articles layout-row layout-wrap children-horizontal-padding">
+          <div className="articles layout-row layout-wrap children-horizontal-padding-1 compensate-padding-top">
             {
               articles.map(article => <ArticlePreview large withFooter {...article} key={article.id} className="flex-xs-100 flex-50" />)
             }

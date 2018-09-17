@@ -98,8 +98,6 @@ class SearchPage extends AuthenticatablePage {
     const categoriesFound = searchResults.filter(searchResult => searchResult.searchResultType === 'category');
     const photoAlbumsFound = searchResults.filter(searchResult => searchResult.searchResultType === 'photo-album');
 
-    console.log(photoAlbumsFound);
-
     const itemsFound = [
       { words: ['статтю', 'статті', 'статей'], count: articlesFound.length },
       { words: ['сторінку', 'сторінки', 'сторінок'], count: pagesFound.length },
@@ -159,6 +157,7 @@ class SearchPage extends AuthenticatablePage {
           <Input
             lite
             compact
+            autofocus
             label="Шукайте"
             value={searchQuery}
             onChange={query => this.search(query)}
@@ -178,7 +177,6 @@ class SearchPage extends AuthenticatablePage {
 }
 
 SearchPage.propTypes = {
-  tag: PropTypes.string.isRequired,
   articles: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.shape({
     status: PropTypes.number,

@@ -15,15 +15,18 @@
 
   .photo {
     cursor: pointer;
+    transition: transform 300ms ease-in;
 
     .photo-inner {
       background-position: center center;
       background-size: 100%;
-      transition: background-size 4s ease-out, outline 250ms linear;
+      transition: background-size 300ms ease-out, outline 250ms linear;
       outline: 0.5em solid transparent;
+    }
 
-      &:hover {
-        background-size: 104%;
+    &:hover {
+      .photo-inner {
+        background-size: 101%;
         outline-color: $grey;
       }
     }

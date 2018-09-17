@@ -1,9 +1,12 @@
 .article-preview {
-  cursor: pointer;
-  margin-bottom: 1em;
-  display: block;
-  text-decoration: none;
   color: $black;
+  text-decoration: none;
+
+  display: block;
+  cursor: pointer;
+  padding: 1em;
+
+  transition: background-color 200ms linear;
 
   &:hover {
     color: $black;
@@ -40,7 +43,7 @@
     .article-preview-image {
       background-size: cover;
       background-position: center center;
-      transition: transform 5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .article-preview-image-shadow {
@@ -89,17 +92,18 @@
   }
 
   .article-preview-bottomline {
-    background-color: $green;
-    height: 2px;
     width: 10%;
     min-width: 2em;
-    margin: 1em auto;
-    transition: width 800ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    margin: 1em auto 0 auto;
+    transition: width 1000ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-bottom: 4px dotted $green;
   }
 
   &:hover {
+    background-color: $almost-white;
+
     .article-preview-image {
-      transform: scale(1.1);
+      transform: scale(1.01);
     }
 
     .article-preview-image-shadow {
@@ -107,13 +111,14 @@
     }
 
     .article-preview-bottomline {
-      width: 100%;
+      width: 50%;
     }
   }
 }
 
 .article-preview-small {
   font-size: 0.7em;
+  padding: 1.4em;
 
   p {
     font-size: 1.1em;
@@ -158,6 +163,7 @@
   cursor: auto;
   width: 100vw;
   height: calc(100vh - #{$header-height});
+  padding: 0;
   position: relative;
 
   background-size: cover;
@@ -167,17 +173,21 @@
     $border-width: 0.2em;
 
     display: inline-block;
-    margin-bottom: 0.3em;
     border-left: $border-width solid transparent;
-    padding-left: $border-width;
+    padding: $border-width;
+    padding-right: calc(2 * #{$border-width});
     margin-left: calc(-2 * #{$border-width});
+    margin-bottom: calc(0.5 * #{$border-width});
     transition: all 400ms cubic-bezier(0.77, 0, 0.175, 1);
     word-wrap: break-word;
 
     &:hover {
       opacity: 1;
       border-left-color: $green;
-      padding-left: 0.4em;
+      padding-left: calc(2* #{$border-width});
+
+      background-color: $almost-white;
+      color: $extra-dark-grey;
     }
   }
 
