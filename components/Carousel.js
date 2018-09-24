@@ -30,6 +30,10 @@ class Carousel extends React.Component {
     this.carouselElement = React.createRef();
   }
   componentDidMount() {
+    if (!this.props.children.length) {
+      return;
+    }
+
     const $carousel = $(this.carouselElement.current.props.className);
     const $arrows = $carousel.find('.slick-arrow');
 
@@ -44,10 +48,15 @@ class Carousel extends React.Component {
 
   render() {
     const settings = { ...defaultSettings, ...this.props };
+    const { children, fullScreen } = this.props;
+
+    if (!children.length) {
+      return null;
+    }
 
     return (
-      <Slider {...settings} className={`carousel ${this.props.fullScreen ? 'carousel-fullscreen' : ''}`} ref={this.carouselElement}>
-        {this.props.children}
+      <Slider {...settings} className={`carousel ${fullScreen ? 'carousel-fullscreen' : ''}`} ref={this.carouselElement}>
+        {children}
       </Slider>
     );
   }

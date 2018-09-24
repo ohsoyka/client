@@ -9,6 +9,7 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 
+import Button from '../../../components/ui/Button';
 import PanelSection from '../../../components/admin/PanelSection';
 import PanelSectionItem from '../../../components/admin/PanelSectionItem';
 
@@ -41,7 +42,10 @@ class ArticlesPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <h2>Статті</h2>
+          <div className="layout-row layout-align-space-between-center">
+            <h2>Статті</h2>
+            <Button color="black" href="/admin/articles/new">Нова стаття</Button>
+          </div>
           <PanelSection className="flex-100">
             {articles.map(article => <PanelSectionItem {...article} type="article" />)}
           </PanelSection>

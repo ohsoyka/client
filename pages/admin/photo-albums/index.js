@@ -9,6 +9,7 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 
+import Button from '../../../components/ui/Button';
 import PanelSection from '../../../components/admin/PanelSection';
 import PanelSectionItem from '../../../components/admin/PanelSectionItem';
 
@@ -40,7 +41,10 @@ class PhotoAlbumsPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <h2>Фотоальбоми</h2>
+          <div className="layout-row layout-align-space-between-center">
+            <h2>Фотоальбоми</h2>
+            <Button color="black" href="/admin/photo-albums/new">Новий фотоальбом</Button>
+          </div>
           <PanelSection className="flex-100">
             {photoAlbums.map(photoAlbum => <PanelSectionItem {...photoAlbum} type="photo-album" />)}
           </PanelSection>

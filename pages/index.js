@@ -19,11 +19,16 @@ import AlbumPreview from '../components/photography/AlbumPreview';
 import Carousel from '../components/Carousel';
 import ArticlesGroup from '../components/ArticlesGroup';
 
+import Session from '../services/session';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class IndexPage extends AuthenticatablePage {
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, res }) {
+    if (!Session.isAuthenticated(req)) { // temporary solution while website is empty
+      return res.redirect('/photography');
+    }
+
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
@@ -131,14 +136,15 @@ class IndexPage extends AuthenticatablePage {
             </div>
 
             {
-              projects.length &&
-              <div className="projects-section">
-                <h2>Проекти</h2>
-                {
-                  projects.map(project => <ProjectPreview key={project.id} {...project} />)
-                }
-                <p className="text-right larger"><Link href="/projects"><a>Всі проекти &rarr;</a></Link></p>
-              </div>
+              projects.length ?
+                <div className="projects-section">
+                  <h2>Проекти</h2>
+                  {
+                    projects.map(project => <ProjectPreview key={project.id} {...project} />)
+                  }
+                  <p className="text-right larger"><Link href="/projects"><a>Всі проекти &rarr;</a></Link></p>
+                </div>
+              : null
             }
 
             <div className="categories-section">

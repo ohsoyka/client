@@ -9,6 +9,7 @@ import Header from '../../../components/Header';
 import Content from '../../../components/Content';
 import Footer from '../../../components/Footer';
 
+import Button from '../../../components/ui/Button';
 import PanelSection from '../../../components/admin/PanelSection';
 import PanelSectionItem from '../../../components/admin/PanelSectionItem';
 
@@ -40,7 +41,10 @@ class CategoriesPage extends ProtectedPage {
         </Head>
         <Header admin />
         <Content className="container">
-          <h2>Категорії</h2>
+          <div className="layout-row layout-align-space-between-center">
+            <h2>Категорії</h2>
+            <Button color="black" href="/admin/categories/new">Нова категорія</Button>
+          </div>
           <PanelSection className="flex-100">
             {categories.map(category => <PanelSectionItem {...category} type="category" />)}
           </PanelSection>

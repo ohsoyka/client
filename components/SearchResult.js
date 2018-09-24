@@ -84,7 +84,7 @@ class SearchResult extends React.Component {
             }
           </div>
         }
-        <div className="search-result-bottomline"></div>
+        <div className="search-result-bottomline" />
       </div>
     );
   }
