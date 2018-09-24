@@ -13,7 +13,7 @@ import Session from '../services/session';
 class LoginPage extends React.Component {
   static async getInitialProps({ req, res }) {
     if (Session.isAuthenticated(req)) {
-      res.redirect('/');
+      res.redirect('/admin');
     }
 
     return {};
