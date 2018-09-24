@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Error from './_error';
@@ -26,7 +27,11 @@ import { getAllCookies } from '../services/cookies';
 class IndexPage extends AuthenticatablePage {
   static async getInitialProps({ req, res }) {
     if (!Session.isAuthenticated(req)) { // temporary solution while website is empty
-      return res.redirect('/photography');
+      if (res) {
+        return res.redirect('/photography');
+      }
+
+      return Router.push('/photography');
     }
 
     try {
