@@ -20,10 +20,6 @@ const menuItems = [
     markup: <Link href="/photography"><a><i className="fas fa-camera" />Фотопортфоліо</a></Link>,
   },
   {
-    id: 3,
-    markup: <a>Ше шось</a>,
-  },
-  {
     id: 4,
     markup: <Link href="/page?path=about" as="/pages/about"><a>Про</a></Link>,
   },

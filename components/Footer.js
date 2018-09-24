@@ -1,6 +1,18 @@
 import React from 'react';
+import Link from 'next/link';
+
 import { current } from '../config';
 import Logo from './ui/Logo';
+
+const menuItems = [
+  {
+    markup: <Link href="/photography"><a>Фотопортфоліо</a></Link>,
+  },
+  {
+    markup: <Link href="/page?path=about" as="/pages/about"><a>Про</a></Link>,
+  },
+];
+
 
 const Footer = () => (
   <div className="footer">
@@ -8,10 +20,9 @@ const Footer = () => (
       <Logo className="footer-logo" text="" />
       <div className="flex-100">
         <ul className="footer-menu">
-          <li><a>Проекти</a></li>
-          <li><a>Фотопортфоліо</a></li>
-          <li><a>Ше шось</a></li>
-          <li><a>Про</a></li>
+          {
+            menuItems.map(item => <li key={item.id}>{item.markup}</li>)
+          }
         </ul>
         <hr className="footer-horizontal-line" />
         <ul className="footer-contacts">
