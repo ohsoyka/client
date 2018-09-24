@@ -39,14 +39,14 @@ ControlButtons.propTypes = {
   visible: PropTypes.bool,
   onNext: PropTypes.func,
   onPrevious: PropTypes.func,
-  onClose: PropTypes.func,
+  // onClose: PropTypes.func,
 };
 
 ControlButtons.defaultProps = {
   visible: false,
   onNext: () => {},
   onPrevious: () => {},
-  onClose: () => {},
+  // onClose: () => {},
 };
 
 export default ControlButtons;
