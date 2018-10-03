@@ -6,13 +6,14 @@ import Logo from './ui/Logo';
 
 const menuItems = [
   {
+    id: 1,
     markup: <Link href="/photography"><a>Фотопортфоліо</a></Link>,
   },
   {
+    id: 2,
     markup: <Link href="/page?path=about" as="/pages/about"><a>Про</a></Link>,
   },
 ];
-
 
 const Footer = () => (
   <div className="footer">

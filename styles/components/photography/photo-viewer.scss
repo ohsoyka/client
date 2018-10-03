@@ -13,7 +13,7 @@ $control-button-size: 2.5em;
     justify-content: center;
     align-items: center;
 
-    background: transparentize($dark-grey, 0.3);
+    background-color: transparentize($dark-grey, 0.2);
 
     position: fixed;
     left: 0;
@@ -22,11 +22,12 @@ $control-button-size: 2.5em;
     width: 100vw;
     overflow: hidden;
 
+    transition: background-color 300ms linear;
+
     z-index: 50;
 
     .photo-viewer-container-inner {
       background-color: $extra-dark-grey;
-      margin: 1em;
       position: relative;
       transition: width 150ms linear, height 150ms linear;
 
@@ -59,7 +60,8 @@ $control-button-size: 2.5em;
     z-index: 35;
 
     opacity: 0;
-    transition: opacity 200ms linear;
+
+    animation: fadeIn 500ms;
 
     &.photo-viewer-image-loaded {
       opacity: 1;
@@ -87,6 +89,12 @@ $control-button-size: 2.5em;
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 30;
+
+    opacity: 0;
+
+    animation: fadeIn 500ms;
+    animation-delay: 1000ms;
+    animation-fill-mode: forwards;
   }
 
   .photo-viewer-buttons {
@@ -97,8 +105,8 @@ $control-button-size: 2.5em;
     top: 0;
     bottom: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 0;
     z-index: 50;
 
     &.photo-viewer-buttons-visible {
@@ -107,7 +115,7 @@ $control-button-size: 2.5em;
   }
 
   .photo-viewer-button {
-    position: absolute;
+    position: fixed;
     transition: all 200ms linear;
 
     .photo-viewer-button-inner {
@@ -142,12 +150,10 @@ $control-button-size: 2.5em;
 
   .photo-viewer-arrow-left {
     left: 0.5em;
-    padding-right: calc(50% - #{$control-button-size} - 0.5em);
   }
 
   .photo-viewer-arrow-right {
     right: 0.5em;
-    padding-left: calc(50% - #{$control-button-size} - 0.5em);
   }
 
   .photo-viewer-button-close {
@@ -161,5 +167,15 @@ $control-button-size: 2.5em;
       width: auto;
       padding: 0.5em 1em;
     }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

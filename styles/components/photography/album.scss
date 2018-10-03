@@ -20,8 +20,8 @@
     .photo-inner {
       background-position: center center;
       background-size: 100%;
-      transition: background-size 300ms ease-out, outline 250ms linear;
-      outline: 0.5em solid transparent;
+      transition: background-size 300ms ease-out, outline-width 150ms linear, outline-color 350ms linear;
+      outline: 0em solid transparent;
     }
 
     &:not(:hover) {
@@ -32,7 +32,8 @@
 
     &:hover {
       .photo-inner {
-        background-size: 101%;
+        background-size: 102%;
+        outline-width: 0.5em;
       }
     }
 

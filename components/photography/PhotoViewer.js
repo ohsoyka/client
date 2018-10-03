@@ -25,7 +25,7 @@ const PHOTO_SIZE = 'large';
 
 class PhotoViewer extends React.Component {
   static blurBackground() {
-    $('.container, .photo-viewer').siblings().css('filter', 'blur(5px)');
+    $('.container, .photo-viewer').siblings().css('filter', 'blur(6px)');
   }
 
   static unblurBackground() {
@@ -188,10 +188,10 @@ class PhotoViewer extends React.Component {
     let height;
 
     if (viewportAspectRatio >= photoAspectRatio) {
-      height = `calc(${viewportHeight}px)`;
+      height = `${viewportHeight}px`;
       width = `calc((${viewportHeight}px) * ${photoAspectRatio})`;
     } else {
-      width = `calc(${viewportWidth}px)`;
+      width = `${viewportWidth}px`;
       height = `calc((${viewportWidth}px) / ${photoAspectRatio})`;
     }
 
@@ -219,7 +219,9 @@ class PhotoViewer extends React.Component {
   }
 
   handleOutsideClick(event) {
-    if (event.target.className === 'photo-viewer-container') {
+    const classList = Array.from(event.target.classList);
+
+    if (classList.includes('photo-viewer-container')) {
       this.close();
     }
   }
@@ -227,14 +229,16 @@ class PhotoViewer extends React.Component {
   render() {
     const { photo } = this.props;
     const { imageURL, imageLoaded, controlsVisible } = this.state;
+
     const containerDimensions = this.calculateContainerDimensions();
 
     const averageColor = photo.image && photo.image.averageColor;
+    const [r, g, b] = averageColor;
     const { from, to } = Colors.RGBToGradient(...averageColor);
 
     return (
       <div className="photo-viewer">
-        <div className="photo-viewer-container" onClick={this.handleOutsideClick}>
+        <div className="photo-viewer-container" style={{ backgroundColor: `rgba(${r}, ${g}, ${b}, 0.7)` }} onClick={this.handleOutsideClick}>
           <div className="photo-viewer-container-inner" style={{ width: containerDimensions.width, height: containerDimensions.height }}>
             <div className={`photo-viewer-image ${imageLoaded ? 'photo-viewer-image-loaded' : ''}`} style={{ backgroundImage: `url("${imageURL}")` }} />
             <div className="photo-viewer-placeholder" style={{ backgroundImage: `linear-gradient(to bottom right, ${from}, ${to})` }}>
