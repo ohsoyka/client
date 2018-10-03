@@ -261,6 +261,10 @@ hr {
   text-wrap: balance;
 }
 
+.noscroll {
+  overflow: hidden;
+}
+
 @media (max-width: $breakpoint-middle) {
   .grid-item-width-sm {
     width: calc(100% / 3);

@@ -12,10 +12,12 @@ const KEY_CODES = {
   ARROW_UP: 38,
   ARROW_RIGHT: 39,
   ARROW_DOWN: 40,
+  ESCAPE: 27,
 };
 
 const previousPhotoKeyCodes = [KEY_CODES.ARROW_LEFT, KEY_CODES.ARROW_UP];
 const nextPhotoKeyCodes = [KEY_CODES.ARROW_RIGHT, KEY_CODES.ARROW_DOWN];
+const closeKeyCodes = [KEY_CODES.ESCAPE];
 
 const HIDE_CONTROLS_TIMEOUT = 1500;
 
@@ -28,6 +30,14 @@ class PhotoViewer extends React.Component {
 
   static unblurBackground() {
     $('.container, .photo-viewer').siblings().css('filter', '');
+  }
+
+  static disableScroll() {
+    $('body').addClass('noscroll');
+  }
+
+  static enableScroll() {
+    $('body').removeClass('noscroll');
   }
 
   constructor(props) {
@@ -57,6 +67,7 @@ class PhotoViewer extends React.Component {
   componentDidMount() {
     this.enableNavigation();
     PhotoViewer.blurBackground();
+    PhotoViewer.disableScroll();
 
     if (document.readyState === 'complete') {
       this.preloadPhotos();
@@ -76,6 +87,7 @@ class PhotoViewer extends React.Component {
   componentWillUnmount() {
     this.disableNavigation();
     PhotoViewer.unblurBackground();
+    PhotoViewer.enableScroll();
   }
 
   getSiblingPhotos() {
@@ -107,6 +119,9 @@ class PhotoViewer extends React.Component {
       } else if (nextPhotoKeyCodes.includes(keyCode)) {
         event.preventDefault();
         this.switchToNextPhoto();
+      } else if (closeKeyCodes.includes(keyCode)) {
+        event.preventDefault();
+        this.close();
       }
     });
 
@@ -173,11 +188,11 @@ class PhotoViewer extends React.Component {
     let height;
 
     if (viewportAspectRatio >= photoAspectRatio) {
-      height = `calc(${viewportHeight}px - 1em)`;
-      width = `calc((${viewportHeight}px - 1em) * ${photoAspectRatio})`;
+      height = `calc(${viewportHeight}px)`;
+      width = `calc((${viewportHeight}px) * ${photoAspectRatio})`;
     } else {
-      width = `calc(${viewportWidth}px - 1em)`;
-      height = `calc((${viewportWidth}px - 1em) / ${photoAspectRatio})`;
+      width = `calc(${viewportWidth}px)`;
+      height = `calc((${viewportWidth}px) / ${photoAspectRatio})`;
     }
 
     return { width, height };

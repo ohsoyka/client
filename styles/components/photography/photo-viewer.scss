@@ -26,7 +26,6 @@ $control-button-size: 2.5em;
 
     .photo-viewer-container-inner {
       background-color: $extra-dark-grey;
-      border: 1em solid $extra-dark-grey;
       margin: 1em;
       position: relative;
       transition: width 150ms linear, height 150ms linear;
@@ -110,28 +109,28 @@ $control-button-size: 2.5em;
   .photo-viewer-button {
     position: absolute;
     transition: all 200ms linear;
-  }
 
-  .photo-viewer-button-inner {
-    color: $white;
-    background-color: transparentize($extra-dark-grey, 0.6);
-    cursor: pointer;
-    border-radius: 50%;
-    height: $control-button-size;
-    width: $control-button-size;
+    .photo-viewer-button-inner {
+      color: $white;
+      background-color: transparentize($extra-dark-grey, 0.6);
+      cursor: pointer;
+      border-radius: 50%;
+      height: $control-button-size;
+      width: $control-button-size;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    transition: background-color 200ms linear;
+      transition: background-color 200ms linear;
 
-    &:hover {
-      background-color: transparentize($extra-dark-grey, 0.2);
-    }
+      &:hover {
+        background-color: transparentize($extra-dark-grey, 0.2);
+      }
 
-    i {
-      font-size: 1.3em;
+      i {
+        font-size: 1.3em;
+      }
     }
   }
 
@@ -151,13 +150,16 @@ $control-button-size: 2.5em;
     padding-left: calc(50% - #{$control-button-size} - 0.5em);
   }
 
-  .photo-viewer-close {
+  .photo-viewer-button-close {
+    font-size: 0.6em;
     top: 0.5em;
-    right: 0.5em;
-    padding: 0 0 2em 2em;
+    left: 50%;
+    transform: translateX(-50%);
 
-    i {
-      font-size: 1em;
+    .photo-viewer-button-inner {
+      border-radius: 1.25em;
+      width: auto;
+      padding: 0.5em 1em;
     }
   }
 }
