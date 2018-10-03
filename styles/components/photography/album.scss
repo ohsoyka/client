@@ -24,10 +24,15 @@
       outline: 0.5em solid transparent;
     }
 
+    &:not(:hover) {
+      .photo-inner {
+        outline-color: transparent !important;
+      }
+    }
+
     &:hover {
       .photo-inner {
         background-size: 101%;
-        outline-color: $grey;
       }
     }
 

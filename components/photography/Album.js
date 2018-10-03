@@ -32,8 +32,10 @@ class Album extends React.Component {
       const classList = ['photo'];
       const averagePhotoColor = photo.image.averageColor;
       const preloadGradient = Colors.RGBToGradient(...averagePhotoColor);
+      const [r, g, b] = averagePhotoColor;
       const style = {
         backgroundImage: `url("${photo.image.small}"), linear-gradient(to bottom right, ${preloadGradient.from}, ${preloadGradient.to})`,
+        outlineColor: `rgb(${r}, ${g}, ${b})`,
         paddingTop: `calc(100% / ${photo.image.aspectRatio})`,
       };
 

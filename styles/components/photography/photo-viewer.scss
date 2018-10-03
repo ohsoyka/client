@@ -1,7 +1,7 @@
 $control-button-size: 2.5em;
 
 .photo-viewer {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -15,7 +15,7 @@ $control-button-size: 2.5em;
 
     background: transparentize($dark-grey, 0.3);
 
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     height: 100vh;

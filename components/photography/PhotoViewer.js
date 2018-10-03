@@ -22,6 +22,14 @@ const HIDE_CONTROLS_TIMEOUT = 1500;
 const PHOTO_SIZE = 'large';
 
 class PhotoViewer extends React.Component {
+  static blurBackground() {
+    $('.container, .photo-viewer').siblings().css('filter', 'blur(5px)');
+  }
+
+  static unblurBackground() {
+    $('.container, .photo-viewer').siblings().css('filter', '');
+  }
+
   constructor(props) {
     super(props);
 
@@ -48,6 +56,7 @@ class PhotoViewer extends React.Component {
 
   componentDidMount() {
     this.enableNavigation();
+    PhotoViewer.blurBackground();
 
     if (document.readyState === 'complete') {
       this.preloadPhotos();
@@ -66,6 +75,7 @@ class PhotoViewer extends React.Component {
 
   componentWillUnmount() {
     this.disableNavigation();
+    PhotoViewer.unblurBackground();
   }
 
   getSiblingPhotos() {
