@@ -8,3 +8,15 @@
 
   color: $white;
 }
+
+@media (max-width: $breakpoint-middle) {
+  .photos-container {
+    padding: 0 2em 2em;
+  }
+}
+
+@media (max-width: $breakpoint-tiny) {
+  .photos-container {
+    padding: 0 1em 1em;
+  }
+}

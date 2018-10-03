@@ -179,7 +179,7 @@ hr {
 }
 
 .grid-item-width-sm {
-  width: 25%;
+  width: calc(100% / 3);
 }
 
 .grid-item-width-md {
@@ -282,7 +282,8 @@ hr {
 }
 
 @media (max-width: $breakpoint-tiny) {
-  .grid-item-width-sm {
+  .grid-item-width-sm,
+  .grid-item-width-md {
     width: 100%;
   }
 }
