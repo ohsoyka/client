@@ -16,11 +16,12 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class NewPagePage extends ProtectedPage {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     const parentProps = await super.getInitialProps({ req, res });
 
     return {
       ...parentProps,
+      pathname,
     };
   }
 
@@ -47,14 +48,14 @@ class NewPagePage extends ProtectedPage {
   }
 
   render() {
-    const { error } = this.props;
+    const { error, pathname } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Нова сторінка / Панель керування</title>
         </Head>

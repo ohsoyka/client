@@ -17,7 +17,7 @@ import { getAllCookies } from '../../../services/cookies';
 import PhotoUploader from '../../../services/photo-uploader';
 
 class EditPhotoAlbumPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'cover, photos, photos.image' }, cookies);
@@ -25,6 +25,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
     return {
       ...parentProps,
       photoAlbum,
+      pathname,
     };
   }
 
@@ -92,6 +93,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
     const {
       photoAlbum,
       error,
+      pathname,
     } = this.props;
 
     if (error) {
@@ -99,7 +101,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Редагувати фотоальбом / Панель керування</title>
         </Head>

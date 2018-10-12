@@ -16,7 +16,7 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class EditCategoryPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const category = await API.categories.findOne(query.path, { include: 'image' }, cookies);
@@ -24,6 +24,7 @@ class EditCategoryPage extends ProtectedPage {
     return {
       ...parentProps,
       category,
+      pathname,
     };
   }
 
@@ -71,6 +72,7 @@ class EditCategoryPage extends ProtectedPage {
     const {
       category,
       error,
+      pathname,
     } = this.props;
 
     if (error) {
@@ -78,7 +80,7 @@ class EditCategoryPage extends ProtectedPage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Редагувати категорію / Панель керування</title>
         </Head>

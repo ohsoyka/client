@@ -17,7 +17,7 @@ import API from '../../services/api';
 import { getAllCookies } from '../../services/cookies';
 
 class IndexPage extends ProtectedPage {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     const cookies = getAllCookies(req);
 
     const parentProps = await super.getInitialProps({ req, res });
@@ -47,6 +47,7 @@ class IndexPage extends ProtectedPage {
       lastCategories: lastCategories.docs,
       lastPages: lastPages.docs,
       lastPhotoAlbums: lastPhotoAlbums.docs,
+      pathname,
     };
   }
 
@@ -62,10 +63,11 @@ class IndexPage extends ProtectedPage {
       lastCategories,
       lastPages,
       lastPhotoAlbums,
+      pathname,
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Панель керування</title>
         </Head>

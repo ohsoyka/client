@@ -22,14 +22,19 @@ const PhotoViewer = dynamic(import('../components/photography/PhotoViewer'), {
 });
 
 class PhotoAlbumPage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, pathname, query }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'photos, photos.image' }, cookies);
       const currentPhoto = query.photo ? photoAlbum.photos.find(photo => photo.id === query.photo) : null;
 
-      return { ...parentProps, photoAlbum, currentPhoto };
+      return {
+        ...parentProps,
+        photoAlbum,
+        currentPhoto,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -54,7 +59,7 @@ class PhotoAlbumPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { photoAlbum } = this.props;
+    const { photoAlbum, pathname } = this.props;
     const { currentPhoto } = this.state;
     const title = `${photoAlbum.title} / Фотопортфоліо / ${current.meta.title}`;
     const breadcrumbs = [
@@ -65,7 +70,7 @@ class PhotoAlbumPage extends AuthenticatablePage {
     ];
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={current.meta.description} key="description" />

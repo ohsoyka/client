@@ -8,14 +8,14 @@ import Content from '../components/Content';
 import Footer from '../components/Footer';
 
 class Error extends React.Component {
-  static getInitialProps({ res, error }) {
+  static getInitialProps({ res, error, pathname }) {
     const statusCode = (res && res.statusCode) || (error && error.statusCode);
 
-    return { statusCode };
+    return { statusCode, pathname };
   }
 
   render() {
-    const { statusCode, error } = this.props;
+    const { statusCode, error, pathname } = this.props;
 
     if (current.environment !== 'production' && error && error.message) {
       console.error(error);
@@ -31,7 +31,7 @@ class Error extends React.Component {
       );
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Шось пішло не так / {current.meta.title}</title>
         </Head>
@@ -52,6 +52,7 @@ Error.propTypes = {
   error: PropTypes.shape({
     message: PropTypes.string,
   }),
+  pathname: PropTypes.string.isRequired,
 };
 
 Error.defaultProps = {

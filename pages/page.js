@@ -16,13 +16,13 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class PagePage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, pathname, query }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const page = await API.pages.findOne(query.path, {}, cookies);
 
-      return { ...parentProps, page };
+      return { ...parentProps, page, pathname };
     } catch (error) {
       return { error };
     }
@@ -35,13 +35,14 @@ class PagePage extends AuthenticatablePage {
 
     const {
       page,
+      pathname,
     } = this.props;
     const title = `${page.title} / ${current.meta.title}`;
     const { description, image } = page;
     const url = `${current.clientURL}/pages/${page.path}`;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />

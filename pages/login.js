@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 
@@ -11,12 +12,12 @@ import Button from '../components/ui/Button';
 import Session from '../services/session';
 
 class LoginPage extends React.Component {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     if (Session.isAuthenticated(req)) {
       res.redirect('/admin');
     }
 
-    return {};
+    return { pathname };
   }
 
   constructor(props) {
@@ -54,8 +55,10 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    const { pathname } = this.props;
+
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Вхід</title>
         </Head>
@@ -90,5 +93,9 @@ class LoginPage extends React.Component {
     );
   }
 }
+
+LoginPage.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
 
 export default LoginPage;

@@ -38,7 +38,8 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const classList = ['wrapper', this.props.className];
+    const pathTokens = this.props.pathname.slice(1).split('/');
+    const classList = ['wrapper', this.props.className, ...pathTokens];
 
     return (
       <div className={classList.join(' ')}>
@@ -50,11 +51,13 @@ class Wrapper extends React.Component {
 
 Wrapper.propTypes = {
   children: PropTypes.node.isRequired,
+  pathname: PropTypes.string,
   className: PropTypes.string,
 };
 
 Wrapper.defaultProps = {
   className: '',
+  pathname: '',
 };
 
 Wrapper.contextTypes = {

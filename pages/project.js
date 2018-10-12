@@ -17,7 +17,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class ProjectPage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, pathname, query }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
@@ -28,6 +28,7 @@ class ProjectPage extends AuthenticatablePage {
         ...parentProps,
         project,
         articles: docs,
+        pathname,
       };
     } catch (error) {
       return { error };
@@ -42,6 +43,7 @@ class ProjectPage extends AuthenticatablePage {
     const {
       project,
       articles,
+      pathname,
     } = this.props;
     const title = `Проект «${project.title}» / ${current.meta.title}`;
     const { description, image } = project;
@@ -50,7 +52,7 @@ class ProjectPage extends AuthenticatablePage {
     const articlesSectionTitle = articles.length ? <h2>У цьому проекті:</h2> : <h2 className="text-center">Поки що тут порожньо</h2>;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />

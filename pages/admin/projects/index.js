@@ -17,25 +17,26 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class ProjectsPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const projects = await API.projects.find({ sort: '-createdAt', ...query }, cookies);
     return {
       ...parentProps,
       projects: projects.docs,
+      pathname,
     };
   }
 
   render() {
-    const { projects, error } = this.props;
+    const { projects, error, pathname } = this.props;
 
     if (error) {
       return <Error error={this.props.error} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Проекти / Панель керування</title>
         </Head>

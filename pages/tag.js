@@ -15,14 +15,19 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class TagPage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, pathname, query }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const { tag } = query;
       const { docs } = await API.articles.find({ tag, include: 'image' }, cookies);
 
-      return { ...parentProps, tag, articles: docs };
+      return {
+        ...parentProps,
+        tag,
+        articles: docs,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -33,7 +38,7 @@ class TagPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { tag, articles } = this.props;
+    const { tag, articles, pathname } = this.props;
     const title = `#${tag} / ${current.meta.title}`;
     const url = `${current.clientURL}/tag/${tag}`;
 
@@ -46,7 +51,7 @@ class TagPage extends AuthenticatablePage {
       : <h2 className="text-center">Поки що тут порожньо</h2>;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
 

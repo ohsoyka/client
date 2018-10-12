@@ -17,7 +17,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class CategoryPage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, query, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
@@ -28,6 +28,7 @@ class CategoryPage extends AuthenticatablePage {
         ...parentProps,
         category,
         articles: docs,
+        pathname,
       };
     } catch (error) {
       return { error };
@@ -42,7 +43,9 @@ class CategoryPage extends AuthenticatablePage {
     const {
       category,
       articles,
+      pathname,
     } = this.props;
+
     const title = `Категорія «${category.title}» / ${current.meta.title}`;
     const { description, image } = category;
     const url = `${current.clientURL}/categories/${category.path}`;
@@ -50,7 +53,7 @@ class CategoryPage extends AuthenticatablePage {
     const articlesSectionTitle = articles.length ? <h2>У цій категорії:</h2> : <h2 className="text-center">Поки що тут порожньо</h2>;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
@@ -93,6 +96,7 @@ CategoryPage.propTypes = {
   error: PropTypes.shape({
     status: PropTypes.number,
   }),
+  pathname: PropTypes.string.isRequired,
 };
 
 CategoryPage.defaultProps = {

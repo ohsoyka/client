@@ -25,7 +25,7 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class IndexPage extends AuthenticatablePage {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     if (!Session.isAuthenticated(req)) { // temporary solution while website is empty
       if (res) {
         return res.redirect('/photography');
@@ -73,6 +73,7 @@ class IndexPage extends AuthenticatablePage {
         projects: projects.docs,
         categories: categories.docs,
         photoAlbums: photoAlbums.docs,
+        pathname,
       };
     } catch (error) {
       return { error };
@@ -98,10 +99,11 @@ class IndexPage extends AuthenticatablePage {
       projects,
       categories,
       photoAlbums,
+      pathname,
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />

@@ -15,13 +15,13 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class PhotographyPage extends AuthenticatablePage {
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const { docs } = await API.photoAlbums.find({ include: 'cover' }, cookies);
 
-      return { ...parentProps, photoAlbums: docs };
+      return { ...parentProps, photoAlbums: docs, pathname };
     } catch (error) {
       return { error };
     }
@@ -32,11 +32,11 @@ class PhotographyPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { photoAlbums } = this.props;
+    const { photoAlbums, pathname } = this.props;
     const title = `Фотопортфоліо / ${current.meta.title}`;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={current.meta.description} key="description" />

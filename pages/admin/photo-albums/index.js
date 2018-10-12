@@ -17,25 +17,26 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class PhotoAlbumsPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const photoAlbums = await API.photoAlbums.find({ sort: '-createdAt', ...query }, cookies);
     return {
       ...parentProps,
       photoAlbums: photoAlbums.docs,
+      pathname,
     };
   }
 
   render() {
-    const { photoAlbums, error } = this.props;
+    const { photoAlbums, error, pathname } = this.props;
 
     if (error) {
       return <Error error={this.props.error} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Фотоальбоми / Панель керування</title>
         </Head>

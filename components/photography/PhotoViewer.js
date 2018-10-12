@@ -242,7 +242,7 @@ class PhotoViewer extends React.Component {
           <div className="photo-viewer-container-inner" style={{ width: containerDimensions.width, height: containerDimensions.height }}>
             <div className={`photo-viewer-image ${imageLoaded ? 'photo-viewer-image-loaded' : ''}`} style={{ backgroundImage: `url("${imageURL}")` }} />
             <div className="photo-viewer-placeholder" style={{ backgroundImage: `linear-gradient(to bottom right, ${from}, ${to})` }}>
-              <LoaderIcon className="photo-viewer-loader" />
+              { !imageLoaded && <LoaderIcon className="photo-viewer-loader" /> }
             </div>
             {
               photo.description &&

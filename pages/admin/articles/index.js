@@ -17,7 +17,7 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class ArticlesPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const articles = await API.articles.find({ sort: '-publishedAt', ...query }, cookies);
@@ -25,18 +25,19 @@ class ArticlesPage extends ProtectedPage {
     return {
       ...parentProps,
       articles: articles.docs,
+      pathname,
     };
   }
 
   render() {
-    const { articles, error } = this.props;
+    const { articles, error, pathname } = this.props;
 
     if (error) {
       return <Error error={this.props.error} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Статті / Панель керування</title>
         </Head>

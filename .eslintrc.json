@@ -15,7 +15,8 @@
     "jsx-a11y/click-events-have-key-events": [1],
     "jsx-a11y/no-autofocus": [1],
     "global-require": [1],
-    "no-shadow": [1]
+    "no-shadow": [1],
+    "object-curly-newline": ["error", { "minProperties": 5, "consistent": true }]
   },
   "globals": {
     "window": false,

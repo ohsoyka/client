@@ -16,13 +16,17 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class ArticlesPage extends AuthenticatablePage {
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const { docs } = await API.articles.find({ include: 'image', sort: '-publishedAt' }, cookies);
 
-      return { ...parentProps, articles: docs };
+      return {
+        ...parentProps,
+        articles: docs,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -33,12 +37,12 @@ class ArticlesPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { articles } = this.props;
+    const { articles, pathname } = this.props;
     const title = `Всі статті / ${current.meta.title}`;
     const url = `${current.clientURL}/articles`;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
 

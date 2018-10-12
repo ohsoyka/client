@@ -16,7 +16,7 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class EditArticlePage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const article = await API.articles.findOne(query.path, { include: 'image' }, cookies);
@@ -28,6 +28,7 @@ class EditArticlePage extends ProtectedPage {
       article,
       projects,
       categories,
+      pathname,
     };
   }
 
@@ -77,6 +78,7 @@ class EditArticlePage extends ProtectedPage {
       projects,
       categories,
       error,
+      pathname,
     } = this.props;
 
     if (error) {
@@ -84,7 +86,7 @@ class EditArticlePage extends ProtectedPage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Редагувати статтю / Панель керування</title>
         </Head>

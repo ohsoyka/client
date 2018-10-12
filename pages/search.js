@@ -21,7 +21,7 @@ import { getAllCookies } from '../services/cookies';
 const SEARCH_DELAY = 700;
 
 class SearchPage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, pathname, query }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
@@ -39,6 +39,7 @@ class SearchPage extends AuthenticatablePage {
         searchResults,
         searchQuery,
         loading: false,
+        pathname,
       };
     } catch (error) {
       return { error };
@@ -131,7 +132,7 @@ class SearchPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { searchResults } = this.props;
+    const { searchResults, pathname } = this.props;
     const { searchQuery, loading } = this.state;
 
     const title = `Пошук / ${current.meta.title}`;
@@ -146,7 +147,7 @@ class SearchPage extends AuthenticatablePage {
     const loader = <p className="text-center"><LoaderIcon className="search-loader" /></p>;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
         </Head>

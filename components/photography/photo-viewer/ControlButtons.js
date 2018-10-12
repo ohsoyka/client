@@ -17,12 +17,12 @@ const ControlButtons = (props) => {
   return (
     <div className={classList.join(' ')}>
       <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-left">
-        <div className="photo-viewer-button-inner" title="Попереднє фото (&larr;, &uarr; або свайп ліворуч)" onClick={onPrevious}>
+        <div className="photo-viewer-button-inner" title="Попереднє фото (&larr;, &uarr; або свайп)" onClick={onPrevious}>
           <i className="fas fa-angle-left" />
         </div>
       </div>
       <div className="photo-viewer-button photo-viewer-arrow photo-viewer-arrow-right">
-        <div className="photo-viewer-button-inner" title="Наступне фото (&rarr;, &darr; або свайп праворуч)" onClick={onNext}>
+        <div className="photo-viewer-button-inner" title="Наступне фото (&rarr;, &darr; або свайп)" onClick={onNext}>
           <i className="fas fa-angle-right" />
         </div>
       </div>

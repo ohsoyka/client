@@ -16,7 +16,7 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class NewArticlePage extends ProtectedPage {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const projects = await API.projects.find({}, cookies);
@@ -26,6 +26,7 @@ class NewArticlePage extends ProtectedPage {
       ...parentProps,
       projects: projects.docs,
       categories: categories.docs,
+      pathname,
     };
   }
 
@@ -64,14 +65,19 @@ class NewArticlePage extends ProtectedPage {
   }
 
   render() {
-    const { projects, categories, error } = this.props;
+    const {
+      projects,
+      categories,
+      error,
+      pathname,
+    } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Нова стаття / Панель керування</title>
         </Head>

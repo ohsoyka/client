@@ -36,7 +36,7 @@ class PagesPage extends ProtectedPage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Сторінки / Панель керування</title>
         </Head>

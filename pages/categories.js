@@ -15,13 +15,17 @@ import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class CategoriesPage extends AuthenticatablePage {
-  static async getInitialProps({ req }) {
+  static async getInitialProps({ req, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
       const { docs } = await API.categories.find({ include: 'image' }, cookies);
 
-      return { ...parentProps, categories: docs };
+      return {
+        ...parentProps,
+        categories: docs,
+        pathname,
+      };
     } catch (error) {
       return { error };
     }
@@ -32,11 +36,11 @@ class CategoriesPage extends AuthenticatablePage {
       return <Error error={this.props.error} />;
     }
 
-    const { categories } = this.props;
+    const { categories, pathname } = this.props;
     const title = `Категорії / ${current.meta.title}`;
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={current.meta.description} key="description" />

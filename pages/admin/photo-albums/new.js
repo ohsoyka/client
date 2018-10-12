@@ -17,11 +17,12 @@ import { getAllCookies } from '../../../services/cookies';
 import PhotoUploader from '../../../services/photo-uploader';
 
 class NewPhotoAlbumPage extends ProtectedPage {
-  static async getInitialProps({ req, res }) {
+  static async getInitialProps({ req, res, pathname }) {
     const parentProps = await super.getInitialProps({ req, res });
 
     return {
       ...parentProps,
+      pathname,
     };
   }
 
@@ -74,14 +75,14 @@ class NewPhotoAlbumPage extends ProtectedPage {
   }
 
   render() {
-    const { error } = this.props;
+    const { error, pathname } = this.props;
 
     if (error) {
       return <Error statusCode={error.status} />;
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>Новий фотоальбом / Панель керування</title>
         </Head>

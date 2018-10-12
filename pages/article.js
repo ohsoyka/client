@@ -18,7 +18,7 @@ import { getAllCookies } from '../services/cookies';
 import * as Text from '../services/text';
 
 class ArticlePage extends AuthenticatablePage {
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps({ req, query, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
@@ -58,6 +58,7 @@ class ArticlePage extends AuthenticatablePage {
         ...parentProps,
         article,
         relatedArticles,
+        pathname,
       };
     } catch (error) {
       return { error };
@@ -72,6 +73,7 @@ class ArticlePage extends AuthenticatablePage {
     const {
       article,
       relatedArticles,
+      pathname,
     } = this.props;
 
     const { project, category } = article;
@@ -94,7 +96,7 @@ class ArticlePage extends AuthenticatablePage {
     }
 
     return (
-      <Wrapper>
+      <Wrapper pathname={pathname}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} key="description" />
