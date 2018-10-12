@@ -17,7 +17,7 @@ import API from '../../../services/api';
 import { getAllCookies } from '../../../services/cookies';
 
 class PagesPage extends ProtectedPage {
-  static async getInitialProps({ req, res, query }) {
+  static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
     const pages = await API.pages.find({ sort: '-createdAt', ...query }, cookies);
@@ -25,11 +25,12 @@ class PagesPage extends ProtectedPage {
     return {
       ...parentProps,
       pages: pages.docs,
+      pathname,
     };
   }
 
   render() {
-    const { pages, error } = this.props;
+    const { pages, error, pathname } = this.props;
 
     if (error) {
       return <Error error={this.props.error} />;
