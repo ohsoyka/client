@@ -20,6 +20,10 @@ $padding: 3em;
     @include article-paragraph;
   }
 
+  ul, ol {
+    margin-left: 1em;
+  }
+
   blockquote {
     color: $green;
     margin: 1em;

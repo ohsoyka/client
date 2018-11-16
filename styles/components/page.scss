@@ -3,6 +3,10 @@
     @include article-paragraph;
   }
 
+  ul, ol {
+    margin-left: 1em;
+  }
+
   .image-full-width {
     @include article-image-full-width;
   }
