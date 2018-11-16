@@ -16,7 +16,7 @@ $padding: 3em;
     }
   }
 
-  p {
+  p, ul, ol {
     @include article-paragraph;
   }
 

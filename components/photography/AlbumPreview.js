@@ -4,28 +4,37 @@ import Link from 'next/link';
 import Colors from '../../services/colors';
 import * as Grammar from '../../services/grammar';
 
-const AlbumPreview = (props) => {
-  const averageCoverColor = props.cover.averageColor;
-  const preloadGradient = Colors.RGBToGradient(...averageCoverColor);
+const AlbumPreview = ({
+  title,
+  description,
+  path,
+  photos,
+  cover = {},
+  shootAt,
+  className,
+}) => {
+  const preloadGradient = cover
+    ? Colors.RGBToGradient(...cover.averageColor)
+    : Colors.stringToHEXGradient(title);
+
 
   const style = {};
-  const classList = ['photo-album-preview', props.className];
-  const cover = props.cover || {};
+  const classList = ['photo-album-preview', className];
 
   style.backgroundImage = `url("${cover.small}"), linear-gradient(to bottom right, ${preloadGradient.from}, ${preloadGradient.to})`;
 
-  const photosCount = Grammar.describeWordCount(props.photos.length, ['фотографія', 'фотографії', 'фотографій']);
-  const photosDate = Grammar.formatDate(props.shootAt);
+  const photosCount = Grammar.describeWordCount(photos.length, ['фотографія', 'фотографії', 'фотографій']);
+  const photosDate = Grammar.formatDate(shootAt);
 
   return (
-    <Link href={`/photo-album?path=${props.path}`} as={`/photography/${props.path}`}>
+    <Link href={`/photo-album?path=${path}`} as={`/photography/${path}`}>
       <a className={classList.join(' ')}>
         <div className="photo-album-preview-inner aspect-ratio-16-10" style={style}>
           <div className="photo-album-preview-content">
             <div className="photo-album-preview-text">
-              <h3 className="photo-album-preview-title">{props.title}</h3>
+              <h3 className="photo-album-preview-title">{title}</h3>
               {
-                props.description && <div className="photo-album-preview-description smaller">{props.description}</div>
+                description && <div className="photo-album-preview-description smaller">{description}</div>
               }
               <div className="photo-album-preview-info smaller">{photosCount} / {photosDate}</div>
             </div>
