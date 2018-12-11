@@ -9,7 +9,7 @@ const AlbumPreview = ({
   description,
   path,
   photos,
-  cover = {},
+  cover,
   shootAt,
   className,
 }) => {
@@ -17,11 +17,10 @@ const AlbumPreview = ({
     ? Colors.RGBToGradient(...cover.averageColor)
     : Colors.stringToHEXGradient(title);
 
-
   const style = {};
   const classList = ['photo-album-preview', className];
 
-  style.backgroundImage = `url("${cover.small}"), linear-gradient(to bottom right, ${preloadGradient.from}, ${preloadGradient.to})`;
+  style.backgroundImage = `url("${cover && cover.small}"), linear-gradient(to bottom right, ${preloadGradient.from}, ${preloadGradient.to})`;
 
   const photosCount = Grammar.describeWordCount(photos.length, ['фотографія', 'фотографії', 'фотографій']);
   const photosDate = Grammar.formatDate(shootAt);
