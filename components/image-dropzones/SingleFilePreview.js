@@ -27,10 +27,10 @@ class SingleFilePreview extends React.Component {
             { isTrueFile && <div className="image-dropzone-preview-name">{name}</div>}
             { isTrueFile && <div className="smaller">{prettifyBytes(size)}</div> }
             <div className="layout-row layout-align-center-center margin-top children-horizontal-padding smaller">
-              <Button color="black">
+              <Button color="black" icon="fas fa-exchange-alt">
                 Замінити
               </Button>
-              <Button color="red" onClick={this.remove} >
+              <Button color="red" onClick={this.remove} icon="fas fa-trash-alt">
                 Видалити
               </Button>
             </div>
