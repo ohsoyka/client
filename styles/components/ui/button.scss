@@ -2,7 +2,8 @@
   .button-element {
     @include input;
 
-    display: block;
+    display: flex;
+    align-items: center;
 
     background-color: $white;
     border: 1px solid $grey;
@@ -19,6 +20,11 @@
 
     &:active {
       transform: translateY(2px);
+    }
+
+    .button-icon {
+      margin-right: 0.6em;
+      font-size: 0.75em;
     }
   }
 
