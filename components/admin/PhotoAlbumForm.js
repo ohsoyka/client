@@ -80,14 +80,28 @@ class PhotoAlbumForm extends FormWithAutosave {
       disabled,
       loading,
       uploadProgress,
+      downloadLink,
     } = this.props;
     const { photos = [] } = photoAlbum;
     const formTitle = photoAlbum.path ? 'Редагувати фотоальбом' : 'Новий фотоальбом';
+    const downloadButton = downloadLink
+      ? (
+        <Button
+          icon="fas fa-download"
+          href={downloadLink}
+        >
+          Завантажити оригінали
+        </Button>
+      )
+      : null;
     const link = this.generatePhotoAlbumLink();
 
     return (
       <div className="photo-album-form">
-        <h2>{formTitle}</h2>
+        <div className="layout-row layout-align-space-between-center">
+          <h2>{formTitle}</h2>
+          {downloadButton}
+        </div>
         <div className="children-vertical-padding layout-row layout-wrap">
           <PrettifyableInput
             label="Назва"
@@ -139,8 +153,8 @@ class PhotoAlbumForm extends FormWithAutosave {
               className="flex-100"
             />
           </div>
-          <div className="flex-100 layout-row layout-align-space-between-center">
-            <div className="layout-row layout-align-start-center">
+          <div className="layout-row layout-align-space-between-center flex-100">
+            <div className="layout-row layout-align-start-center flex-100">
               {
                 this.props.photoAlbum.id &&
                 <Button
@@ -201,6 +215,7 @@ PhotoAlbumForm.propTypes = {
   }),
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
+  downloadLink: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
 };
@@ -209,6 +224,7 @@ PhotoAlbumForm.defaultProps = {
   photoAlbum: {},
   disabled: false,
   loading: false,
+  downloadLink: '',
   onRemove: null,
 };
 

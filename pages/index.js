@@ -26,7 +26,7 @@ import { getAllCookies } from '../services/cookies';
 
 class IndexPage extends AuthenticatablePage {
   static async getInitialProps({ req, res, pathname }) {
-    if (!Session.isAuthenticated(req)) { // temporary solution while website is empty
+    if (!Session.isAuthenticated(req)) { // TODO: temporary solution while website is empty
       if (res) {
         return res.redirect('/photography');
       }

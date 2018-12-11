@@ -10,7 +10,7 @@ class MultipleFilesPreview extends React.Component {
 
     return (
       <div className="image-dropzone-preview image-dropzone-preview-multiple" onClick={event => event.stopPropagation()}>
-        <div className="image-dropzone-preview-inner aspect-ratio-1-1" style={{ backgroundImage: `url(${preview})` }}>
+        <div className="image-dropzone-preview-inner aspect-ratio-1-1" style={{ backgroundImage: `url("${preview}")` }}>
           <div className="image-dropzone-preview-mask">
             <div className="image-dropzone-preview-content">
               { isTrueFile && <div className="image-dropzone-preview-name">{name}</div>}

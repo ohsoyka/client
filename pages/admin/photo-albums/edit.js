@@ -4,6 +4,7 @@ import Router from 'next/router';
 
 import ProtectedPage from '../../_protected';
 import Error from '../../_error';
+import { current } from '../../../config';
 
 import Wrapper from '../../../components/Wrapper';
 import Header from '../../../components/Header';
@@ -13,12 +14,13 @@ import Footer from '../../../components/Footer';
 import PhotoAlbumForm from '../../../components/admin/PhotoAlbumForm';
 
 import API from '../../../services/api';
-import { getAllCookies } from '../../../services/cookies';
+import { getAllCookies, getCookie } from '../../../services/cookies';
 import PhotoUploader from '../../../services/photo-uploader';
 
 class EditPhotoAlbumPage extends ProtectedPage {
   static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
+    const token = getCookie('token', req);
     const parentProps = await super.getInitialProps({ req, res });
     const photoAlbum = await API.photoAlbums.findOne(query.path, { include: 'cover, photos, photos.image' }, cookies);
 
@@ -26,6 +28,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
       ...parentProps,
       photoAlbum,
       pathname,
+      token,
     };
   }
 
@@ -85,8 +88,15 @@ class EditPhotoAlbumPage extends ProtectedPage {
   }
 
   async remove() {
-    API.photoAlbums.remove(this.props.photoAlbum.path, getAllCookies())
+    return API.photoAlbums.remove(this.props.photoAlbum.path, getAllCookies())
       .then(() => Router.push('/admin/'));
+  }
+
+  generateDownloadLink() {
+    const { path } = this.props.photoAlbum;
+    const { token } = this.props;
+
+    return `${current.apiURL}/photo-albums/${path}/download?token=${token}`;
   }
 
   render() {
@@ -115,6 +125,7 @@ class EditPhotoAlbumPage extends ProtectedPage {
             uploadProgress={this.state.uploadProgress}
             onSubmit={this.update}
             onRemove={this.remove}
+            downloadLink={this.generateDownloadLink()}
           />
         </Content>
         <Footer />
