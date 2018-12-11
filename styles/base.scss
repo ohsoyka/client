@@ -73,7 +73,7 @@ h3 {
 }
 
 .article, .page, .project, .category {
-  p {
+  p, li {
     line-height: 1.5em;
     hyphens: auto;
   }
@@ -187,6 +187,10 @@ hr {
 }
 
 .grid-item-width-lg {
+  width: calc(100% / 3 * 2);
+}
+
+.grid-item-width-full {
   width: 100%;
 }
 
@@ -214,12 +218,20 @@ hr {
   margin-right: 0.5em;
 }
 
+.margin-bottom-large {
+  margin-bottom: 2em;
+}
+
 .margin-bottom {
   margin-bottom: 1em;
 }
 
 .margin-bottom-small {
   margin-bottom: 0.5em;
+}
+
+.margin-top-large {
+  margin-top: 2em;
 }
 
 .margin-top {
@@ -266,10 +278,6 @@ hr {
 }
 
 @media (max-width: $breakpoint-middle) {
-  .grid-item-width-sm {
-    width: calc(100% / 3);
-  }
-
   .grid-item-width-md {
     width: calc(100% / 3 * 2);
   }
@@ -280,14 +288,16 @@ hr {
     width: 50%;
   }
 
-  .grid-item-width-md {
+  .grid-item-width-md,
+  .grid-item-width-lg {
     width: 100%;
   }
 }
 
 @media (max-width: $breakpoint-tiny) {
   .grid-item-width-sm,
-  .grid-item-width-md {
+  .grid-item-width-md,
+  .grid-item-width-lg {
     width: 100%;
   }
 }

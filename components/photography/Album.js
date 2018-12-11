@@ -40,7 +40,7 @@ class Album extends React.Component {
       };
 
       if (array.length === 1) {
-        classList.push('grid-item-width-lg');
+        classList.push('grid-item-width-full');
       } else if (array.length === 2) {
         classList.push('grid-item-width-md');
       } else {

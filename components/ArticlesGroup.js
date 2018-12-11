@@ -18,43 +18,71 @@ class ArticlesGroup extends React.Component {
   }
 
   render() {
+    let gridSizerClass = 'grid-item-width-sm';
+
     const previews = this.props.articles.map((article, index, array) => {
-      const classList = Object.keys(this.props.articlesCount).map((breakpointName) => {
-        const articlesToShow = this.props.articlesCount[breakpointName];
+      const classList = Object.keys(this.props.articlesCount)
+        .map((breakpointName) => {
+          const articlesToShow = this.props.articlesCount[breakpointName];
 
-        if (index >= articlesToShow) {
-          return `hide-${breakpointName}`;
-        }
-
-        return '';
-      });
+          return index >= articlesToShow ? `hide-${breakpointName}` : '';
+        });
 
       if (array.length === 1) {
-        classList.push('grid-item-width-lg');
+        classList.push('grid-item-width-full');
 
-        return <ArticlePreview {...article} large horizontal key={article.id} className={classList.join(' ')} />;
+        return (
+          <ArticlePreview
+            {...article}
+            large
+            horizontal
+            key={article.id}
+            className={classList.join(' ')}
+          />
+        );
       }
 
       if (array.length === 2) {
         classList.push('grid-item-width-md');
+        gridSizerClass = 'grid-item-width-md';
 
-        return <ArticlePreview {...article} large key={article.id} className={classList.join(' ')} />;
+        return (
+          <ArticlePreview
+            {...article}
+            large
+            key={article.id}
+            className={classList.join(' ')}
+          />
+        );
       }
 
       if (index === 0) {
-        classList.push('grid-item-width-md');
+        classList.push('grid-item-width-lg');
 
-        return <ArticlePreview {...article} large key={article.id} className={classList.join(' ')} />;
+        return (
+          <ArticlePreview
+            {...article}
+            large
+            key={article.id}
+            className={classList.join(' ')}
+          />
+        );
       }
 
       classList.push('grid-item-width-sm');
 
-      return <ArticlePreview {...article} key={article.id} className={classList.join(' ')} />;
+      return (
+        <ArticlePreview
+          {...article}
+          key={article.id}
+          className={classList.join(' ')}
+        />
+      );
     });
 
     return (
       <div className="articles-group children-horizontal-padding-1 compensate-padding-top" ref={this.wrapperElement}>
-        <div className="grid-sizer grid-item-width-sm" />
+        <div className={`grid-sizer ${gridSizerClass}`} />
         {previews}
       </div>
     );
