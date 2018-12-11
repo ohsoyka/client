@@ -124,7 +124,7 @@ class IndexPage extends AuthenticatablePage {
         </Head>
         <Header />
         <Content>
-          <Carousel fullScreen autoplaySpeed={10000} pauseOnHover={false}>
+          <Carousel fullScreen autoplaySpeed={10000} pauseOnHover={false} className="margin-bottom-large">
             {
               lastArticles
                 .slice(0, 5)
