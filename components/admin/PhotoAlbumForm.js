@@ -153,8 +153,8 @@ class PhotoAlbumForm extends FormWithAutosave {
               className="flex-100"
             />
           </div>
-          <div className="flex-100 layout-row layout-align-space-between-center">
-            <div className="layout-row layout-align-start-center">
+          <div className="layout-row layout-align-space-between-center flex-100">
+            <div className="layout-row layout-align-start-center flex-100">
               {
                 this.props.photoAlbum.id &&
                 <Button
