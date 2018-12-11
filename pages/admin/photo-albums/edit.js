@@ -4,7 +4,6 @@ import Router from 'next/router';
 
 import ProtectedPage from '../../_protected';
 import Error from '../../_error';
-import { current } from '../../../config';
 
 import Wrapper from '../../../components/Wrapper';
 import Header from '../../../components/Header';
@@ -92,13 +91,6 @@ class EditPhotoAlbumPage extends ProtectedPage {
       .then(() => Router.push('/admin/'));
   }
 
-  generateDownloadLink() {
-    const { path } = this.props.photoAlbum;
-    const { token } = this.props;
-
-    return `${current.apiURL}/photo-albums/${path}/download?token=${token}`;
-  }
-
   render() {
     const {
       photoAlbum,
@@ -125,7 +117,6 @@ class EditPhotoAlbumPage extends ProtectedPage {
             uploadProgress={this.state.uploadProgress}
             onSubmit={this.update}
             onRemove={this.remove}
-            downloadLink={this.generateDownloadLink()}
           />
         </Content>
         <Footer />

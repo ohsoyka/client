@@ -70,6 +70,7 @@ class NewPhotoAlbumPage extends ProtectedPage {
 
       Router.push(`/admin/photo-albums/edit?path=${savedPhotoAlbum.path}`, `/admin/photo-albums/${savedPhotoAlbum.path}/edit`);
     } catch (error) {
+      console.error(error);
       this.setState({ formDisabled: false });
     }
   }

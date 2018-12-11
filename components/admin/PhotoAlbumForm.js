@@ -10,6 +10,7 @@ import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
+import Select from '../ui/Select';
 import ProgressBar from '../ui/ProgressBar';
 import FormWithAutosave from './FormWithAutosave';
 
@@ -19,11 +20,35 @@ class PhotoAlbumForm extends FormWithAutosave {
   constructor(props) {
     super(props);
 
-    this.state = { ...props.photoAlbum };
+    const imageSizes = [
+      {
+        value: 'original',
+        label: 'Оригінальний',
+      },
+      {
+        value: 'large',
+        label: 'Великий (1920px)',
+      },
+      {
+        value: 'medium',
+        label: 'Середній (1280px)',
+      },
+      {
+        value: 'small',
+        label: 'Маленький (800px)',
+      },
+    ];
+
+    this.state = {
+      ...props.photoAlbum,
+      imageSizes,
+      sizeToDownload: imageSizes.find(size => size.value === 'original'),
+    };
     this.state.removePopupVisible = false;
     this.state.autosaveId = props.photoAlbum.id || 'new-photo-album';
 
     this.generatePhotoAlbumLink = this.generatePhotoAlbumLink.bind(this);
+    this.generateDownloadLink = this.generateDownloadLink.bind(this);
     this.updatePhotos = this.updatePhotos.bind(this);
     this.submit = this.submit.bind(this);
   }
@@ -74,34 +99,26 @@ class PhotoAlbumForm extends FormWithAutosave {
     }
   }
 
+  generateDownloadLink(size = 'original') {
+    const { path } = this.props.photoAlbum;
+
+    return `${current.apiURL}/photo-albums/${path}/download?size=${size}`;
+  }
+
   render() {
     const {
       photoAlbum,
       disabled,
       loading,
       uploadProgress,
-      downloadLink,
     } = this.props;
     const { photos = [] } = photoAlbum;
     const formTitle = photoAlbum.path ? 'Редагувати фотоальбом' : 'Новий фотоальбом';
-    const downloadButton = downloadLink
-      ? (
-        <Button
-          icon="fas fa-download"
-          href={downloadLink}
-        >
-          Завантажити оригінали
-        </Button>
-      )
-      : null;
     const link = this.generatePhotoAlbumLink();
 
     return (
       <div className="photo-album-form">
-        <div className="layout-row layout-align-space-between-center">
-          <h2>{formTitle}</h2>
-          {downloadButton}
-        </div>
+        <h2>{formTitle}</h2>
         <div className="children-vertical-padding layout-row layout-wrap">
           <PrettifyableInput
             label="Назва"
@@ -190,6 +207,37 @@ class PhotoAlbumForm extends FormWithAutosave {
             </div>
           </div>
         </div>
+
+        {
+          this.props.photoAlbum.path &&
+          (
+            <div>
+              <h2>Завантажити фото з альбому</h2>
+              <div className="layout-row layout-wrap children-vertical-padding">
+                <div className="layout-row flex-100">
+                  <Select
+                    label="Розмір фотографій"
+                    value={this.state.sizeToDownload}
+                    options={this.state.imageSizes}
+                    disabled={disabled}
+                    onChange={newSizeToDownload => this.setState({
+                      sizeToDownload: this.state.imageSizes.find(size => size.value === newSizeToDownload),
+                    })}
+                    className="flex-70 flex-gt-xs-50"
+                  />
+                </div>
+                <Button
+                  icon="fas fa-download"
+                  disabled={disabled}
+                  href={this.generateDownloadLink(this.state.sizeToDownload.value)}
+                >
+                  Завантажити
+                </Button>
+              </div>
+            </div>
+          )
+        }
+
         <Popup title="Точно видалити цей фотоальбом?" visible={this.state.removePopupVisible}>
           <div className="layout-row layout-align-end-center">
             <Button onClick={() => this.setState({ removePopupVisible: false })} color="black">Скасувати</Button>
