@@ -19,7 +19,10 @@ const Select = props => (
 );
 
 Select.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.shape({
+    value: PropTypes.any,
+    label: PropTypes.any,
+  }),
   label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChange: PropTypes.func.isRequired,
