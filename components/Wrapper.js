@@ -38,8 +38,11 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const pathTokens = this.props.pathname.slice(1).split('/');
-    const classList = ['wrapper', this.props.className, ...pathTokens];
+    const pathTokens = this.props.pathname
+      .slice(1)
+      .split('/')
+      .map(token => `${token}-page-wrapper`);
+    const classList = ['page-wrapper', this.props.className, ...pathTokens];
 
     return (
       <div className={classList.join(' ')}>

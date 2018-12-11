@@ -26,6 +26,10 @@
       padding: 0 $paragraph-side-padding;
     }
 
+    ul, ol {
+      padding: 0 calc(#{$paragraph-side-padding} + 1em);
+    }
+
     .image-full-width {
       max-width: 100vw !important;
       width: calc(100% + 2 * #{$paragraph-side-padding});
