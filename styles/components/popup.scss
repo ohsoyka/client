@@ -29,24 +29,40 @@ $padding: 2em;
 
     z-index: 100;
 
-    .popup-close-button {
-      position: absolute;
-      top: $padding;
-      right: $padding;
+    .popup-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1em;
+      min-height: 0.5em;
 
-      padding: 0;
-      border: none;
-      cursor: pointer;
+      .popup-title {
+        font-family: $font-family-header;
+        font-size: 1.5em;
 
-      background-color: transparent;
-      transition: fill 100ms linear;
-
-      &:hover {
-        fill: lighten($black, 40%);
+        margin-right: 2em;
       }
 
-      svg {
-        height: 1em;
+      .popup-close-button {
+        position: absolute;
+        top: $padding;
+        right: $padding;
+
+        padding: 0;
+        border: none;
+        cursor: pointer;
+
+        background-color: transparent;
+        transition: fill 100ms linear;
+        margin-top: 0.6em;
+        font-size: 0.9em;
+
+        &:hover {
+          fill: lighten($black, 40%);
+        }
+
+        svg {
+          height: 1em;
+        }
       }
     }
   }
