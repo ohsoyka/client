@@ -110,30 +110,40 @@ class ProjectForm extends FormWithAutosave {
             <Editor disabled={disabled} html={this.state.body} onChange={body => this.updateFormData({ body })} />
           </div>
           <div className="flex-100 layout-row layout-align-space-between-center">
-            <div className="flex-15">
-              {
-                this.props.project.id &&
-                <Button disabled={disabled} onClick={() => this.setState({ removePopupVisible: true })} color="red">
-                  Видалити
-                </Button>
-              }
-            </div>
-            <div className="layout-row layout-align-start-center flex-30">
+            {
+              this.props.project.id &&
+              <Button
+                disabled={disabled}
+                onClick={() => this.setState({ removePopupVisible: true })}
+                color="red"
+                icon="fas fa-trash-alt"
+                className="margin-right"
+              >
+                Видалити
+              </Button>
+            }
+            <div className="layout-row layout-align-start-center">
               <Checkbox
                 label="Заховати"
                 checked={this.state.private}
                 disabled={disabled}
                 onChange={hidden => this.updateFormData({ private: hidden })}
               />
-              <Button disabled={disabled} onClick={this.submit} className="flex-100 margin-left">Зберегти</Button>
+              <Button
+                disabled={disabled}
+                onClick={this.submit}
+                icon="fas fa-save"
+                className="margin-left"
+              >
+                Зберегти
+              </Button>
             </div>
           </div>
         </div>
-        <Popup visible={this.state.removePopupVisible}>
-          <p>Точно видалити цей проект?</p>
-          <div className="layout-row">
+        <Popup title="Точно видалити цей проект?" visible={this.state.removePopupVisible}>
+          <div className="layout-row layout-align-end-center">
             <Button onClick={() => this.setState({ removePopupVisible: false })} color="black">Скасувати</Button>
-            <Button onClick={this.props.onRemove} color="red" className="margin-left">Видалити</Button>
+            <Button onClick={this.props.onRemove} color="red" icon="fas fa-trash-alt" className="margin-left">Видалити</Button>
           </div>
         </Popup>
       </div>

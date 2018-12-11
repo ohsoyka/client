@@ -48,14 +48,14 @@ class Carousel extends React.Component {
 
   render() {
     const settings = { ...defaultSettings, ...this.props };
-    const { children, fullScreen } = this.props;
+    const { children, fullScreen, className } = this.props;
 
     if (!children.length) {
       return null;
     }
 
     return (
-      <Slider {...settings} className={`carousel ${fullScreen ? 'carousel-fullscreen' : ''}`} ref={this.carouselElement}>
+      <Slider {...settings} className={`carousel ${fullScreen ? 'carousel-fullscreen' : ''} ${className}`} ref={this.carouselElement}>
         {children}
       </Slider>
     );
@@ -65,10 +65,12 @@ class Carousel extends React.Component {
 Carousel.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
   fullScreen: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 Carousel.defaultProps = {
   fullScreen: false,
+  className: '',
 };
 
 export default Carousel;

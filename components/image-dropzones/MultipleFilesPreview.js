@@ -16,7 +16,7 @@ class MultipleFilesPreview extends React.Component {
               { isTrueFile && <div className="image-dropzone-preview-name">{name}</div>}
               { isTrueFile && <div className="smaller">{prettifyBytes(size)}</div> }
               <div className="layout-row layout-align-center-center margin-top children-horizontal-padding smaller" ref={this.buttons}>
-                <Button color="red" onClick={() => this.props.onRemove(this.props.file)}>
+                <Button color="red" onClick={() => this.props.onRemove(this.props.file)} icon="fas fa-trash-alt">
                   Видалити
                 </Button>
               </div>
