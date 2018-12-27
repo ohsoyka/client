@@ -45,7 +45,9 @@
   }
 
   .project-preview-hidden-badge {
-    @include hidden-item-badge;
+    position: absolute;
+    top: 1em;
+    right: 1em;
   }
 
   &:hover {

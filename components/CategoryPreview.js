@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import generateBackgroundGradient from '../helpers/generate-background-gradient';
+import HiddenBadge from './ui/badges/Hidden';
 
-const CategoryPreview = (props) => {
+const CategoryPreview = (props, context) => {
   const { from, to } = generateBackgroundGradient(props);
 
   const style = {};
@@ -23,6 +24,9 @@ const CategoryPreview = (props) => {
       <a className={classList.join(' ')}>
         <div className="category-preview-inner" style={style}>
           <div className="category-preview-content">
+            {
+              props.hidden && context.isAuthenticated && <div className="category-preview-hidden-badge"><HiddenBadge /></div>
+            }
             <div className="category-preview-text layout-row layout-align-start-center layout-wrap">
               <h3 className="category-preview-title">{props.title}</h3>
               <div className="category-preview-description flex-100">{props.description}</div>
@@ -46,12 +50,18 @@ CategoryPreview.propTypes = {
     small: PropTypes.string,
     averageColor: PropTypes.arrayOf(PropTypes.number),
   }),
+  hidden: PropTypes.bool,
   className: PropTypes.string,
 };
 
 CategoryPreview.defaultProps = {
   image: {},
   className: '',
+  hidden: false,
+};
+
+CategoryPreview.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default CategoryPreview;

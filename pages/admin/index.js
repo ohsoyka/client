@@ -28,11 +28,11 @@ class IndexPage extends ProtectedPage {
     };
     const lastPublishedArticles = await API.articles.find({
       ...queryParams,
-      private: false,
+      hidden: false,
     }, cookies);
     const lastDrafts = await API.articles.find({
       ...queryParams,
-      private: true,
+      hidden: true,
     }, cookies);
     const lastProjects = await API.projects.find(queryParams, cookies);
     const lastCategories = await API.categories.find(queryParams, cookies);
@@ -81,10 +81,10 @@ class IndexPage extends ProtectedPage {
             <Button color="black" href="/admin/photo-albums/new">Новий альбом</Button>
           </div>
           <div className="layout-row layout-wrap children-horizontal-padding children-vertical-padding">
-            <PanelSection title="Опубліковані статті" href="articles?private=false" className="flex-100 flex-gt-xs-50">
+            <PanelSection title="Опубліковані статті" href="articles?hidden=false" className="flex-100 flex-gt-xs-50">
               {lastPublishedArticles.map(article => <PanelSectionItem key={article.id} {...article} type="article" />)}
             </PanelSection>
-            <PanelSection title="Чернетки" href="articles?private=true" className="flex-100 flex-gt-xs-50">
+            <PanelSection title="Чернетки" href="articles?hidden=true" className="flex-100 flex-gt-xs-50">
               {lastDrafts.map(draft => <PanelSectionItem key={draft.id} hideBadges {...draft} type="article" />)}
             </PanelSection>
             <PanelSection title="Проекти" href="projects" className="flex-100 flex-gt-xs-50">

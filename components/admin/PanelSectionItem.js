@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import HiddenBadge from '../ui/badges/Hidden';
 
 class PanelSectionItem extends React.Component {
   generateItemLink() {
@@ -45,12 +46,20 @@ class PanelSectionItem extends React.Component {
   render() {
     const link = this.generateItemLink();
     const { hideBadges, className } = this.props;
-    const badges = this.props.private ? <div className="admin-panel-section-item-badges">(заховано)</div> : null;
+    const badges = this.props.hidden
+      ? (
+        <div className="admin-panel-section-item-badges">
+          <HiddenBadge />
+        </div>
+      )
+      : null;
 
     return (
       <div className={`admin-panel-section-item layout-row layout-align-start-start ${className}`}>
-        <div className="admin-panel-section-item-title">{link}</div>
-        {!hideBadges && badges}
+        <div className="admin-panel-section-item-title layout-row layout-align-start-center">
+          {link}
+          {!hideBadges && badges}
+        </div>
       </div>
     );
   }
@@ -60,13 +69,13 @@ PanelSectionItem.propTypes = {
   title: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['article', 'category', 'project', 'page', 'photo-album']).isRequired,
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
   hideBadges: PropTypes.bool,
   className: PropTypes.string,
 };
 
 PanelSectionItem.defaultProps = {
-  private: false,
+  hidden: false,
   hideBadges: false,
   className: '',
 };

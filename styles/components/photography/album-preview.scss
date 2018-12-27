@@ -55,4 +55,12 @@
       pointer-events: all;
     }
   }
+
+  &.photo-album-preview-hidden {
+    transition: opacity 200ms linear;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

@@ -9,6 +9,7 @@ import Popup from '../Popup';
 import PrettifyableInput from '../PrettifyableInput';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import Checkbox from '../ui/Checkbox';
 import FormWithAutosave from './FormWithAutosave';
 
 const ImageDropzoneWithPreview = ImageDropzone();
@@ -117,6 +118,12 @@ class CategoryForm extends FormWithAutosave {
               </Button>
             }
             <div className="layout-row layout-align-start-center">
+              <Checkbox
+                label="Заховати"
+                checked={this.state.hidden}
+                disabled={disabled}
+                onChange={hidden => this.updateFormData({ hidden })}
+              />
               <Button
                 disabled={disabled}
                 onClick={this.submit}

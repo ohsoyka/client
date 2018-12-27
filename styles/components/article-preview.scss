@@ -54,7 +54,15 @@
   }
 
   .article-preview-hidden-badge {
-    @include hidden-item-badge;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    color: $white;
+    padding: 0.4em 0.7em;
+
+    text-shadow: 0 0 0.3em transparentize($black, 0.9);
+    transition: text-shadow 200ms linear;
   }
 
   .article-preview-footer {
@@ -112,6 +120,10 @@
 
     .article-preview-bottomline {
       width: 50%;
+    }
+
+    .article-preview-hidden-badge {
+      text-shadow: 0 0 0.3em transparentize($black, 0.6);
     }
   }
 }

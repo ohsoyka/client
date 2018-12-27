@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import generateBackgroundGradient from '../helpers/generate-background-gradient';
+import HiddenBadge from './ui/badges/Hidden';
 
-const ProjectPreview = (props) => {
+const ProjectPreview = (props, context) => {
   const { from, to } = generateBackgroundGradient(props);
 
   const style = {};
@@ -40,7 +41,9 @@ const ProjectPreview = (props) => {
     <Link href={`/project?path=${props.path}`} as={`/projects/${props.path}`}>
       <a className={classList.join(' ')} style={style}>
         <div className="project-preview-content layout-row layout-align-start-center">
-          {props.private && <div className="project-preview-hidden-badge" />}
+          {
+            props.hidden && context.isAuthenticated && <div className="project-preview-hidden-badge"><HiddenBadge /></div>
+          }
           <div className="project-preview-text layout-row layout-align-start-center layout-wrap flex-100">
             {title}
             {props.description && <div className="project-preview-description flex-100">{props.description}</div>}
@@ -63,7 +66,7 @@ ProjectPreview.propTypes = {
     small: PropTypes.string,
     averageColor: PropTypes.arrayOf(PropTypes.number),
   }),
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
   large: PropTypes.bool,
   short: PropTypes.bool,
   className: PropTypes.string,
@@ -73,8 +76,12 @@ ProjectPreview.defaultProps = {
   image: {},
   large: false,
   short: false,
-  private: false,
+  hidden: false,
   className: '',
+};
+
+ProjectPreview.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default ProjectPreview;

@@ -4,6 +4,6 @@ export default {
     title: String,
     body: String,
     path: String,
-    private: Boolean,
+    hidden: Boolean,
   },
 };
