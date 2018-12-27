@@ -5,7 +5,7 @@ export default {
     description: String,
     body: String,
     path: String,
-    private: Boolean,
+    hidden: Boolean,
     image: String,
   },
 };

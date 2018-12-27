@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Colors from '../../services/colors';
+import HiddenBadge from '../ui/badges/Hidden';
 
 class Album extends React.Component {
   constructor(props) {
@@ -27,9 +28,11 @@ class Album extends React.Component {
       title,
       description,
       photos,
+      hidden,
     } = this.props;
     const previews = photos.map((photo, index, array) => {
       const classList = ['photo'];
+
       const averagePhotoColor = photo.image.averageColor;
       const preloadGradient = Colors.RGBToGradient(...averagePhotoColor);
       const [r, g, b] = averagePhotoColor;
@@ -60,7 +63,12 @@ class Album extends React.Component {
 
     return (
       <div className="photo-album">
-        <h1 className="photo-album-title">{title}</h1>
+        <div className="layout-row layout-align-start-center">
+          <h1 className="photo-album-title">{title}</h1>
+          {
+            this.context.isAuthenticated && hidden && <HiddenBadge className="margin-left" />
+          }
+        </div>
         {
           description && <div className="photo-album-description">{description}</div>
         }
@@ -81,11 +89,17 @@ Album.propTypes = {
   path: PropTypes.string.isRequired,
   description: PropTypes.string,
   photos: PropTypes.arrayOf(PropTypes.object),
+  hidden: PropTypes.bool,
 };
 
 Album.defaultProps = {
   description: '',
   photos: [],
+  hidden: false,
+};
+
+Album.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default Album;

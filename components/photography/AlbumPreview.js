@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Colors from '../../services/colors';
 import * as Grammar from '../../services/grammar';
+import HiddenBadge from '../ui/badges/Hidden';
 
 const AlbumPreview = ({
   title,
@@ -11,14 +12,19 @@ const AlbumPreview = ({
   photos,
   cover,
   shootAt,
+  hidden,
   className,
-}) => {
+}, context) => {
   const preloadGradient = cover
     ? Colors.RGBToGradient(...cover.averageColor)
     : Colors.stringToHEXGradient(title);
 
   const style = {};
   const classList = ['photo-album-preview', className];
+
+  if (hidden) {
+    classList.push('photo-album-preview-hidden');
+  }
 
   style.backgroundImage = `url("${cover && cover.small}"), linear-gradient(to bottom right, ${preloadGradient.from}, ${preloadGradient.to})`;
 
@@ -31,7 +37,12 @@ const AlbumPreview = ({
         <div className="photo-album-preview-inner aspect-ratio-16-10" style={style}>
           <div className="photo-album-preview-content">
             <div className="photo-album-preview-text">
-              <h3 className="photo-album-preview-title">{title}</h3>
+              <div className="layout-row layout-align-start-center">
+                <h3 className="photo-album-preview-title">{title}</h3>
+                {
+                  context.isAuthenticated && hidden && <HiddenBadge className="margin-left-small" />
+                }
+              </div>
               {
                 description && <div className="photo-album-preview-description smaller">{description}</div>
               }
@@ -58,6 +69,7 @@ AlbumPreview.propTypes = {
   }),
   shootAt: PropTypes.string.isRequired,
   photos: PropTypes.arrayOf(PropTypes.string),
+  hidden: PropTypes.bool,
   className: PropTypes.string,
 };
 
@@ -65,7 +77,12 @@ AlbumPreview.defaultProps = {
   description: '',
   cover: {},
   photos: [],
+  hidden: false,
   className: '',
+};
+
+AlbumPreview.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default AlbumPreview;

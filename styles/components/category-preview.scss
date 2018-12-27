@@ -37,6 +37,12 @@
     z-index: 20;
   }
 
+  .category-preview-hidden-badge {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+  }
+
   &:hover {
     .category-preview-background-gradient {
       opacity: 0.6;

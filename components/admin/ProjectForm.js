@@ -125,9 +125,9 @@ class ProjectForm extends FormWithAutosave {
             <div className="layout-row layout-align-start-center">
               <Checkbox
                 label="Заховати"
-                checked={this.state.private}
+                checked={this.state.hidden}
                 disabled={disabled}
-                onChange={hidden => this.updateFormData({ private: hidden })}
+                onChange={hidden => this.updateFormData({ hidden })}
               />
               <Button
                 disabled={disabled}

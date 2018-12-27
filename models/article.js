@@ -9,7 +9,7 @@ export default {
     tags: [String],
     views: Number,
     path: String,
-    private: Boolean,
+    hidden: Boolean,
     publishedAt: Date,
     createdAt: Date,
     updatedAt: Date,

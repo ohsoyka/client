@@ -4,7 +4,7 @@ export default {
     title: String,
     description: String,
     path: String,
-    private: Boolean,
+    hidden: Boolean,
     cover: String,
     photos: [String],
     shootAt: Date,

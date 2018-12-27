@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import * as Grammar from '../../services/grammar';
 import Colors from '../../services/colors';
+import HiddenBadge from '../ui/badges/Hidden';
 
-const ArticlePreviewStandart = (props) => {
+const ArticlePreviewStandart = (props, context) => {
   const classList = ['article-preview', props.className];
   const style = {};
   const averageColor = props.image && props.image.averageColor;
@@ -37,7 +38,9 @@ const ArticlePreviewStandart = (props) => {
             <div className="article-preview-image" style={style} />
             <div className="article-preview-image-shadow" />
           </div>
-          {props.private && <div className="article-preview-hidden-badge" />}
+          {
+            props.hidden && context.isAuthenticated && <div className="article-preview-hidden-badge"><HiddenBadge /></div>
+          }
         </a>
       </Link>
       <div className="article-preview-text">
@@ -76,7 +79,7 @@ ArticlePreviewStandart.propTypes = {
   brief: PropTypes.string.isRequired,
   publishedAt: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
-  private: PropTypes.bool,
+  hidden: PropTypes.bool,
   className: PropTypes.string,
   large: PropTypes.bool,
   horizontal: PropTypes.bool,
@@ -88,9 +91,13 @@ ArticlePreviewStandart.defaultProps = {
   large: false,
   horizontal: false,
   withFooter: false,
-  private: false,
+  hidden: false,
   tags: [],
   image: {},
+};
+
+ArticlePreviewStandart.contextTypes = {
+  isAuthenticated: PropTypes.bool,
 };
 
 export default ArticlePreviewStandart;
