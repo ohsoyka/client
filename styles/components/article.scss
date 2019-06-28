@@ -63,11 +63,13 @@ $padding: 3em;
     color: $grey;
     font-style: italic;
     padding: 0 2em;
-    margin: 0 4em;
+    margin-left: 4em;
+    margin-right: 4em;
     border-left: 2px solid $light-grey;
 
     @media (max-width: $breakpoint-small) {
-      margin: 0 2em;
+      margin-left: 2em;
+      margin-right: 2em;
     }
   }
 
