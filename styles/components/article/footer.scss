@@ -4,13 +4,25 @@
   .article-footer-date {
     color: $light-grey;
     font-weight: $font-weight-light;
+    white-space: nowrap;
   }
 
   .article-footer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
     list-style: none;
     font-weight: $font-weight-bold;
     color: $green;
     padding: 0;
+    margin: 2em 0;
+    max-width: 70%;
+
+    @media (max-width: $breakpoint-small) {
+      justify-content: center;
+      margin: 2em auto;
+      max-width: 100%;
+    }
 
     a {
       text-decoration: none;
@@ -19,6 +31,7 @@
     .article-footer-tag {
       display: inline;
       margin-left: 1em;
+      white-space: nowrap;
 
       &:first-child {
         margin-left: 0;
