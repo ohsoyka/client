@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Error from './_error';
@@ -20,20 +19,11 @@ import AlbumPreview from '../components/photography/AlbumPreview';
 import Carousel from '../components/Carousel';
 import ArticlesGroup from '../components/ArticlesGroup';
 
-import Session from '../services/session';
 import API from '../services/api';
 import { getAllCookies } from '../services/cookies';
 
 class IndexPage extends AuthenticatablePage {
-  static async getInitialProps({ req, res, pathname }) {
-    if (!Session.isAuthenticated(req)) { // TODO: temporary solution while website is empty
-      if (res) {
-        return res.redirect('/photography');
-      }
-
-      return Router.push('/photography');
-    }
-
+  static async getInitialProps({ req, pathname }) {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
