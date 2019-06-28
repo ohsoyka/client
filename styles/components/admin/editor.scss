@@ -47,6 +47,13 @@
       }
     }
 
+    .longquote {
+      font-size: 0.9em;
+      color: $grey;
+      font-style: italic;
+      border-left: 2px solid $grey;
+    }
+
     pre {
       background: $dark-grey;
       color: $white;

@@ -46,7 +46,7 @@ $.FroalaEditor.RegisterCommand('imageFullWidth', {
 });
 
 const buttons = [
-  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'clearFormatting',
+  'bold', 'italic', 'underline', 'strikeThrough', '|', 'paragraphFormat', 'paragraphStyle', 'align', 'formatOL', 'formatUL', '|', 'subscript', 'superscript', '|', 'clearFormatting',
   '|', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'quote', 'code', 'insertTable', '|', 'insertHR', 'fullscreen', 'html', 'prettify',
 ];
 
@@ -98,6 +98,10 @@ class Editor extends React.Component {
         H3: 'Заголовок 3',
         H4: 'Заголовок 4',
         SMALL: 'Маленький',
+      },
+
+      paragraphStyles: {
+        longquote: 'Довга цитата',
       },
 
       pastePlain: true,

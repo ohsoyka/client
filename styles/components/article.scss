@@ -58,6 +58,19 @@ $padding: 3em;
     }
   }
 
+  .longquote {
+    font-size: 0.9em;
+    color: $grey;
+    font-style: italic;
+    padding: 0 2em;
+    margin: 0 4em;
+    border-left: 2px solid $light-grey;
+
+    @media (max-width: $breakpoint-small) {
+      margin: 0 2em;
+    }
+  }
+
   .image-full-width {
     @include article-image-full-width;
   }
