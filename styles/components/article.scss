@@ -49,27 +49,56 @@ $padding: 3em;
 
     &:before {
       content: '«';
-      left: -0.3em
+      left: -0.3em;
     }
 
     &:after {
       content: '»';
-      right: -0.3em
+      right: -0.3em;
     }
   }
 
   .longquote {
-    font-size: 0.9em;
-    color: $grey;
+    position: relative;
+    color: $light-grey;
     font-style: italic;
-    padding: 0 2em;
-    margin-left: 4em;
-    margin-right: 4em;
-    border-left: 2px solid $light-grey;
+    padding: 0 5em;
+
+    &:before,
+    &:after {
+      font-size: 4em;
+      line-height: 0;
+      position: absolute;
+      top: 50%;
+    }
+
+    &:before {
+      content: '«';
+      left: .5em;
+      top: 0;
+    }
+
+    &:after {
+      content: '»';
+      right: .5em;
+      top: 100%;
+    }
 
     @media (max-width: $breakpoint-small) {
-      margin-left: 2em;
-      margin-right: 2em;
+      padding: 0 2em;
+
+      &:before,
+      &:after {
+        font-size: 3em;
+      }
+
+      &:before {
+        left: 0;
+      }
+
+      &:after {
+        right: 0;
+      }
     }
   }
 
