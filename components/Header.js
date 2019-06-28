@@ -11,10 +11,10 @@ const menuItems = [
     markup: <Link href="/admin/index" as="/admin"><a><i className="fas fa-lock" />Панель керування</a></Link>,
     loggedInOnly: true,
   },
-  {
-    id: 1,
-    markup: <Link href="/projects"><a>Проекти</a></Link>,
-  },
+  // {
+  //   id: 1,
+  //   markup: <Link href="/projects"><a>Проекти</a></Link>,
+  // },
   {
     id: 2,
     markup: <Link href="/photography"><a><i className="fas fa-camera" />Фотопортфоліо</a></Link>,
