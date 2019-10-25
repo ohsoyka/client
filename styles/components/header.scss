@@ -81,6 +81,8 @@ $border-bottom: 1px solid $extra-light-grey;
   }
 
   @media (max-width: $breakpoint-tiny) {
+    font-size: 1.3em;
+
     .menu {
       background-color: $white;
       border-bottom: $border-bottom;
@@ -100,6 +102,10 @@ $border-bottom: 1px solid $extra-light-grey;
 
       li {
         margin-left: 0;
+      }
+
+      a {
+        padding: 0.5em 0;
       }
 
       &.menu-visible {

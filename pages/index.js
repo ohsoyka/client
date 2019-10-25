@@ -177,7 +177,7 @@ class IndexPage extends AuthenticatablePage {
               <div className="photo-albums-wrapper children-horizontal-padding children-vertical-padding layout-row layout-wrap">
                 {
                   photoAlbums.map((photoAlbum, index) => {
-                    const classList = ['flex-50'];
+                    const classList = ['flex-50 flex-xs-100'];
 
                     if (index > 2) {
                       classList.push('hide-xs');
