@@ -61,27 +61,18 @@ class SearchPage extends AuthenticatablePage {
     this.setState({ loading });
   }
 
-  search(query) {
+  search() {
     clearTimeout(this.state.searchTimeout);
 
-    if (!query) {
-      this.setState({
-        searchQuery: query,
-        loading: false,
-      });
-
-      Router.replace('/search');
-
-      return;
-    }
+    const { searchQuery } = this.state;
 
     const timeout = setTimeout(async () => {
-      Router.replace(`/search?query=${query}`);
+      Router.replace(`/search?query=${searchQuery}`);
     }, SEARCH_DELAY);
 
     this.setState({
+      searchQuery,
       loading: true,
-      searchQuery: query,
       searchTimeout: timeout,
     });
   }
@@ -161,7 +152,7 @@ class SearchPage extends AuthenticatablePage {
             autofocus
             label="Шукайте"
             value={searchQuery}
-            onChange={query => this.search(query)}
+            onChange={query => this.setState({ searchQuery: query }, () => this.search())}
             onEnter={this.search}
             className="search-field"
           />
