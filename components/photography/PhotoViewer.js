@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Colors from '../../services/colors';
 import preloadImages from '../../utils/preload-images';
 import ControlButtons from './photo-viewer/ControlButtons';
-import LoaderIcon from '../../static/icons/oval.svg';
+import LoaderIcon from '../../public/static/icons/oval.svg';
 
 const KEY_CODES = {
   ARROW_LEFT: 37,

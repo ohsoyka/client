@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import LoaderIcon from '../static/icons/oval.svg';
+import LoaderIcon from '../public/static/icons/oval.svg';
 
 const Editor = dynamic(import('../components/admin/Editor'), {
   ssr: false,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDropzone from 'react-dropzone';
-import LoaderIcon from '../static/icons/oval.svg';
+import LoaderIcon from '../public/static/icons/oval.svg';
 
 const DefaultFilePreview = ({ file }) => <div key={file.name}>{file.name}</div>;
 

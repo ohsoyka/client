@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BirdIcon from '../../static/icons/logo.svg';
+import BirdIcon from '../../public/static/icons/logo.svg';
 
 const Logo = (props) => {
   const { text, light, className } = props;

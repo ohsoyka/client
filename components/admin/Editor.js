@@ -5,12 +5,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { current } from '../../config';
 
-import '../../static/libs/froala/froala_editor.pkgd.min';
-import '../../static/libs/froala/plugins/image.min';
-import '../../static/libs/froala/languages/uk';
-import editorStyles from '../../static/libs/froala/froala_editor.pkgd.min.css';
-import styles from '../../static/libs/froala/froala_style.min.css';
-import theme from '../../static/libs/froala/themes/custom.css';
+import '../../public/static/libs/froala/froala_editor.pkgd.min';
+import '../../public/static/libs/froala/plugins/image.min';
+import '../../public/static/libs/froala/languages/uk';
+import editorStyles from '../../public/static/libs/froala/froala_editor.pkgd.min.css';
+import styles from '../../public/static/libs/froala/froala_style.min.css';
+import theme from '../../public/static/libs/froala/themes/custom.css';
 
 const FULL_WIDTH_IMAGE_CLASS = 'image-full-width';
 

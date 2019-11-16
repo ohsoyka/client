@@ -12,7 +12,7 @@ import Content from '../components/Content';
 import SearchResult from '../components/SearchResult';
 import Footer from '../components/Footer';
 import Input from '../components/ui/Input';
-import LoaderIcon from '../static/icons/oval.svg';
+import LoaderIcon from '../public/static/icons/oval.svg';
 
 import API from '../services/api';
 import { describeWordCount } from '../services/grammar';
