@@ -19,7 +19,7 @@ class EditArticlePage extends ProtectedPage {
   static async getInitialProps({ req, res, query, pathname }) {
     const cookies = getAllCookies(req);
     const parentProps = await super.getInitialProps({ req, res });
-    const article = await API.articles.findOne(query.path, { include: 'image' }, cookies);
+    const article = await API.articles.findOne(query.path, { include: 'image, portraitImage' }, cookies);
     const projects = await API.projects.find({}, cookies);
     const categories = await API.categories.find({}, cookies);
 
@@ -30,6 +30,16 @@ class EditArticlePage extends ProtectedPage {
       categories,
       pathname,
     };
+  }
+
+  static async getImageId(image, cookies) {
+    if (image instanceof window.File) {
+      const [uploadedImage] = await API.upload(image, cookies);
+
+      return uploadedImage.id;
+    }
+
+    return typeof image === 'string' ? image : image.id;
   }
 
   constructor(props) {
@@ -47,17 +57,12 @@ class EditArticlePage extends ProtectedPage {
     this.setState({ formDisabled: true });
 
     try {
-      const shouldUploadImage = article.image instanceof window.File;
-      let image = (article.image && article.image.id) || article.image;
-
-      if (shouldUploadImage) {
-        const [uploadedImage] = await API.upload(article.image, cookies);
-
-        image = uploadedImage.id;
-      }
-
-      const articleWithImage = { ...article, image };
-      const savedArticle = await API.articles.update(this.props.article.path, articleWithImage, cookies);
+      const articleWithImages = {
+        ...article,
+        image: await EditArticlePage.getImageId(article.image, cookies),
+        portraitImage: await EditArticlePage.getImageId(article.portraitImage, cookies),
+      };
+      const savedArticle = await API.articles.update(this.props.article.path, articleWithImages, cookies);
 
       this.setState({ formDisabled: false });
 

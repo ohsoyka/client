@@ -24,7 +24,7 @@ class Article extends React.Component {
 
     return (
       <article className="article">
-        <Header image={this.props.image} title={this.props.title} />
+        <Header image={this.props.image} portraitImage={this.props.portraitImage} title={this.props.title} />
         {intro && <div className={introClassNames.join(' ')}>{intro}</div>}
         <div className="article-body" dangerouslySetInnerHTML={{ __html: body }} />
         <Footer date={this.props.publishedAt} tags={this.props.tags} project={this.props.project} />
@@ -42,6 +42,13 @@ Article.propTypes = {
     small: PropTypes.string,
     averageColor: PropTypes.arrayOf(PropTypes.number),
   }).isRequired,
+  portraitImage: PropTypes.shape({
+    original: PropTypes.string,
+    large: PropTypes.string,
+    medium: PropTypes.string,
+    small: PropTypes.string,
+    averageColor: PropTypes.arrayOf(PropTypes.number),
+  }),
   intro: PropTypes.string,
   projectDescriptionAsIntro: PropTypes.bool,
   body: PropTypes.string.isRequired,
@@ -56,6 +63,7 @@ Article.propTypes = {
 Article.defaultProps = {
   intro: '',
   projectDescriptionAsIntro: false,
+  portraitImage: {},
   tags: [],
   project: null,
 };

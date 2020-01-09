@@ -103,12 +103,26 @@ class ArticleForm extends FormWithAutosave {
           </div>
           <div className="flex-100">
             <div className="margin-bottom-small">Головне зображення</div>
-            <ImageDropzoneWithPreview
-              images={[this.state.image]}
-              limit={1}
-              disabled={disabled}
-              onChange={([image]) => this.setState({ image })}
-            />
+            <div className="layout-row flex-100">
+              <div className="flex-65">
+                <div className="margin-bottom-small smaller">Для альбомної орієнтації</div>
+                <ImageDropzoneWithPreview
+                  images={[this.state.image]}
+                  limit={1}
+                  disabled={disabled}
+                  onChange={([image]) => this.setState({ image })}
+                />
+              </div>
+              <div className="flex-35 margin-left">
+                <div className="margin-bottom-small smaller">Для портретної орієнтації</div>
+                <ImageDropzoneWithPreview
+                  images={[this.state.portraitImage]}
+                  limit={1}
+                  disabled={disabled}
+                  onChange={([portraitImage]) => this.setState({ portraitImage })}
+                />
+              </div>
+            </div>
           </div>
           <div className="layout-row flex-100">
             <Select
@@ -232,6 +246,7 @@ ArticleForm.propTypes = {
     tags: PropTypes.arrayOf(PropTypes.string),
     publishedAt: PropTypes.instanceOf(Date),
     image: PropTypes.object,
+    portraitImage: PropTypes.object,
   }),
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,

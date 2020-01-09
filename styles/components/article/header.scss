@@ -19,8 +19,20 @@
     height: 100%;
   }
 
-  .article-header-background-wrapper {
+  .article-header-background-wrapper-landscape {
     height: 100vh;
+
+    @media (orientation: portrait) {
+      display: none;
+    }
+  }
+
+  .article-header-background-wrapper-portrait {
+    height: 100vh;
+
+    @media (orientation: landscape) {
+      display: none;
+    }
   }
 
   .article-header-background {

@@ -15,6 +15,7 @@ export default {
     updatedAt: Date,
     deletedAt: Date,
     image: String,
+    portraitImage: String,
     category: String,
     project: String,
   },
