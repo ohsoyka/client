@@ -24,11 +24,13 @@ $padding: 3em;
     margin-left: 1em;
   }
 
-  blockquote {
+  blockquote,
+  .quote {
     color: $green;
     margin: 1em;
     padding: 0 1em;
     font-size: 2.5em;
+    line-height: 1.2em;
     font-family: $font-family-header;
     font-weight: $font-weight-bold;
     text-align: center;

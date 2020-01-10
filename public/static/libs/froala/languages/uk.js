@@ -76,7 +76,7 @@ $.FE.LANGUAGE['uk'] = {
     "Heading 4": "Заголовок 4",
 
     // Style
-    "Paragraph Style": "\u043f\u0443\u043d\u043a\u0442 \u0441\u0442\u0438\u043b\u044c",
+    "Paragraph Style": "Цитати",
     "Inline Style": "\u0432\u0431\u0443\u0434\u043e\u0432\u0430\u043d\u0438\u0439 \u0441\u0442\u0438\u043b\u044c",
 
     // Alignment

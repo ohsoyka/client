@@ -47,11 +47,27 @@
       }
     }
 
+    .quote {
+      color: $green !important;
+      border-left: 2px solid $green;
+      font-size: 1.1em;
+    }
+
     .longquote {
       font-size: 0.9em;
       color: $grey;
       font-style: italic;
       border-left: 2px solid $grey;
+    }
+
+    .quote,
+    .longquote {
+      margin: 0 6rem;
+      padding: 0 1rem;
+
+      &.fr-command {
+        margin: 0;
+      }
     }
 
     pre {
