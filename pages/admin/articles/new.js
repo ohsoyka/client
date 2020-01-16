@@ -30,6 +30,16 @@ class NewArticlePage extends ProtectedPage {
     };
   }
 
+  static async uploadImage(imageFile, cookies) {
+    if (!imageFile) {
+      return null;
+    }
+
+    const [uploadedImage] = await API.upload(imageFile, cookies);
+
+    return uploadedImage.id;
+  }
+
   constructor(props) {
     super(props);
 
@@ -38,28 +48,30 @@ class NewArticlePage extends ProtectedPage {
     this.submit = this.submit.bind(this);
   }
 
+
   async submit(article) {
     const cookies = getAllCookies();
 
     this.setState({ formDisabled: true });
 
     try {
-      const imageFile = article.image;
-      let savedArticle;
+      const [imageId, portraitImageid] = await Promise.all([
+        NewArticlePage.uploadImage(article.image, cookies),
+        NewArticlePage.uploadImage(article.portraitImage, cookies),
+      ]);
 
-      if (imageFile) {
-        const [uploadedImage] = await API.upload(imageFile, cookies);
-        const articleWithImage = { ...article, image: uploadedImage.id };
-
-        savedArticle = await API.articles.create(articleWithImage, cookies);
-      } else {
-        savedArticle = await API.articles.create(article, cookies);
-      }
+      const savedArticle = {
+        ...article,
+        image: imageId,
+        portraitImage: portraitImageid,
+      };
 
       this.setState({ formDisabled: false });
 
       Router.push(`/admin/articles/edit?path=${savedArticle.path}`, `/admin/articles/${savedArticle.path}/edit`);
     } catch (error) {
+      console.error(error);
+
       this.setState({ formDisabled: false });
     }
   }

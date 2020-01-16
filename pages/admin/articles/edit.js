@@ -33,6 +33,10 @@ class EditArticlePage extends ProtectedPage {
   }
 
   static async getImageId(image, cookies) {
+    if (!image) {
+      return null;
+    }
+
     if (image instanceof window.File) {
       const [uploadedImage] = await API.upload(image, cookies);
 
@@ -57,10 +61,15 @@ class EditArticlePage extends ProtectedPage {
     this.setState({ formDisabled: true });
 
     try {
+      const [imageId, portraitImageid] = await Promise.all([
+        EditArticlePage.getImageId(article.image, cookies),
+        EditArticlePage.getImageId(article.portraitImage, cookies),
+      ]);
+
       const articleWithImages = {
         ...article,
-        image: await EditArticlePage.getImageId(article.image, cookies),
-        portraitImage: await EditArticlePage.getImageId(article.portraitImage, cookies),
+        image: imageId,
+        portraitImage: portraitImageid,
       };
       const savedArticle = await API.articles.update(this.props.article.path, articleWithImages, cookies);
 
@@ -68,6 +77,8 @@ class EditArticlePage extends ProtectedPage {
 
       Router.push(`/admin/articles/edit?path=${savedArticle.path}`, `/admin/articles/${savedArticle.path}/edit`);
     } catch (error) {
+      console.error(error);
+
       this.setState({ formDisabled: false });
     }
   }
