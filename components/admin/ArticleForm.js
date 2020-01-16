@@ -247,6 +247,7 @@ ArticleForm.propTypes = {
     publishedAt: PropTypes.instanceOf(Date),
     image: PropTypes.object,
     portraitImage: PropTypes.object,
+    hidden: PropTypes.bool,
   }),
   onSubmit: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
@@ -256,7 +257,9 @@ ArticleForm.propTypes = {
 };
 
 ArticleForm.defaultProps = {
-  article: {},
+  article: {
+    hidden: true,
+  },
   onRemove: null,
   disabled: false,
 };
