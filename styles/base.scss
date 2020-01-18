@@ -24,7 +24,7 @@ body {
 }
 
 .container {
-  max-width: $breakpoint-middle;
+  max-width: $container-max-width;
   box-sizing: border-box;
   margin: 0 auto;
   padding: 0 $container-padding;
