@@ -80,7 +80,7 @@ class ArticlePage extends AuthenticatablePage {
     const image = article.image || {};
 
     const title = `${article.title} / ${current.meta.title}`;
-    const description = Text.stripHTML(Text.shorten(article.body, 60));
+    const description = article.brief || Text.stripHTML(Text.shorten(article.body, 60));
     const url = `${current.clientURL}/${article.path}`;
 
     let relatedArticlesTitle = <span>Схожі статті</span>;
