@@ -20,93 +20,93 @@ $padding: 3em;
     p, ul, ol, h3, h4, h5, h6 {
       @include article-paragraph;
     }
-  }
 
-  ul, ol {
-    margin-left: 1em;
-  }
-
-  blockquote,
-  .quote {
-    color: $green;
-    margin: 1em;
-    padding: 0 1em;
-    font-size: 2.5em;
-    line-height: 1.2em;
-    font-family: $font-family-header;
-    font-weight: $font-weight-bold;
-    text-align: center;
-    position: relative;
-    word-wrap: break-word;
-
-    @media (max-width: $breakpoint-tiny) {
-      font-size: 1.5em;
+    ul, ol {
+      margin-left: 1em;
     }
 
-    &:before,
-    &:after {
-      font-size: 1.7em;
-      line-height: 0;
-      position: absolute;
-      top: 50%;
-    }
+    blockquote,
+    .quote {
+      color: $green;
+      margin: 1em;
+      padding: 0 1em;
+      font-size: 2.5em;
+      line-height: 1.2em;
+      font-family: $font-family-header;
+      font-weight: $font-weight-bold;
+      text-align: center;
+      position: relative;
+      word-wrap: break-word;
 
-    &:before {
-      content: '«';
-      left: -0.3em;
-    }
-
-    &:after {
-      content: '»';
-      right: -0.3em;
-    }
-  }
-
-  .longquote {
-    position: relative;
-    color: $light-grey;
-    font-style: italic;
-    padding: 0 5em;
-
-    &:before,
-    &:after {
-      font-size: 4em;
-      line-height: 0;
-      position: absolute;
-      top: 50%;
-    }
-
-    &:before {
-      content: '«';
-      left: .5em;
-      top: 0;
-    }
-
-    &:after {
-      content: '»';
-      right: .5em;
-      top: 100%;
-    }
-
-    @media (max-width: $breakpoint-small) {
-      padding: 0 2em;
+      @media (max-width: $breakpoint-tiny) {
+        font-size: 1.5em;
+      }
 
       &:before,
       &:after {
-        font-size: 3em;
+        font-size: 1.7em;
+        line-height: 0;
+        position: absolute;
+        top: 50%;
       }
 
       &:before {
-        left: 0;
+        content: '«';
+        left: -0.3em;
       }
 
       &:after {
-        right: 0;
+        content: '»';
+        right: -0.3em;
       }
     }
-  }
 
-  .image-full-width {
-    @include article-image-full-width;
+    .longquote {
+      position: relative;
+      color: $light-grey;
+      font-style: italic;
+      padding: 0 5em;
+
+      &:before,
+      &:after {
+        font-size: 4em;
+        line-height: 0;
+        position: absolute;
+        top: 50%;
+      }
+
+      &:before {
+        content: '«';
+        left: .5em;
+        top: 0;
+      }
+
+      &:after {
+        content: '»';
+        right: .5em;
+        top: 100%;
+      }
+
+      @media (max-width: $breakpoint-small) {
+        padding: 0 2em;
+
+        &:before,
+        &:after {
+          font-size: 3em;
+        }
+
+        &:before {
+          left: 0;
+        }
+
+        &:after {
+          right: 0;
+        }
+      }
+    }
+
+    .image-full-width {
+      @include article-image-full-width;
+    }
   }
 }
