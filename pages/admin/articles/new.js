@@ -60,11 +60,11 @@ class NewArticlePage extends ProtectedPage {
         NewArticlePage.uploadImage(article.portraitImage, cookies),
       ]);
 
-      const savedArticle = {
+      const savedArticle = await API.articles.create({
         ...article,
         image: imageId,
         portraitImage: portraitImageid,
-      };
+      }, getAllCookies());
 
       this.setState({ formDisabled: false });
 
