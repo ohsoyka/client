@@ -3,7 +3,8 @@ const shared = {
     title: 'Сойка',
     description: '',
     keywords: [],
-    language: 'uk_UA',
+    language: 'uk',
+    languageTerritory: 'uk_UA',
     social: {
       twitter: {
         username: '@ohsoyka',

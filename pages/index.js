@@ -79,7 +79,7 @@ class IndexPage extends AuthenticatablePage {
       title,
       description,
       keywords,
-      language,
+      languageTerritory,
       social,
     } = current.meta;
 
@@ -109,7 +109,7 @@ class IndexPage extends AuthenticatablePage {
           <meta name="og:description" content={description} />
           <meta name="og:url" content={current.clientURL} />
           <meta name="og:site_name" content={title} />
-          <meta name="og:locale" content={language} />
+          <meta name="og:locale" content={languageTerritory} />
           <meta name="og:type" content="website" />
         </Head>
         <Header />

@@ -114,7 +114,7 @@ class ArticlePage extends AuthenticatablePage {
           <meta name="og:image" content={image.medium} />
           <meta name="og:url" content={url} />
           <meta name="og:site_name" content={current.meta.title} />
-          <meta name="og:locale" content={current.meta.language} />
+          <meta name="og:locale" content={current.meta.languageTerritory} />
           <meta name="og:type" content="website" />
         </Head>
         <Header />
