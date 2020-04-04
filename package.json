@@ -10,7 +10,6 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "hammerjs": "^2.0.8",
-    "image-average-color": "^1.0.0",
     "isomorphic-unfetch": "^2.0.0",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
@@ -38,6 +37,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "babel-loader": "^8.1.0",
     "babel-plugin-inline-react-svg": "^0.5.4",
     "cssnano": "^3.10.0",
     "eslint": "^4.16.0",

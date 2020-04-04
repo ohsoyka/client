@@ -22,7 +22,7 @@ class ArticlePage extends AuthenticatablePage {
     try {
       const cookies = getAllCookies(req);
       const parentProps = await super.getInitialProps({ req });
-      const article = await API.articles.findOne(query.path, { include: 'image, project, project.image, category' }, cookies);
+      const article = await API.articles.findOne(query.path, { include: 'image, portraitImage, project, project.image, category' }, cookies);
       let relatedArticles = [];
 
       if (article.project) {
