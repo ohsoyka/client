@@ -6,12 +6,12 @@ import Colors from '../../services/colors';
 const ArticlePreviewFullScreen = (props) => {
   const classList = ['article-preview', 'article-preview-fullscreen', props.className];
   const style = {};
-  const { averageColor } = props.image;
+  const { averageColor } = props.image || {};
   const { from, to } = averageColor
     ? Colors.RGBToGradient(...averageColor)
     : Colors.stringToHEXGradient(props.title);
 
-  style.backgroundImage = `url("${props.image.large}"), linear-gradient(to bottom right, ${from}, ${to})`;
+  style.backgroundImage = `url("${props.image ? props.image.large : null}"), linear-gradient(to bottom right, ${from}, ${to})`;
 
   return (
     <div className={classList.join(' ')} style={style}>
@@ -35,13 +35,14 @@ ArticlePreviewFullScreen.propTypes = {
     averageColor: PropTypes.arrayOf(PropTypes.number),
   }),
   path: PropTypes.string.isRequired,
-  brief: PropTypes.string.isRequired,
+  brief: PropTypes.string,
   className: PropTypes.string,
 };
 
 ArticlePreviewFullScreen.defaultProps = {
-  className: '',
+  brief: '',
   image: {},
+  className: '',
 };
 
 export default ArticlePreviewFullScreen;
