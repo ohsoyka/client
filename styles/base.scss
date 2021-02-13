@@ -31,12 +31,12 @@ body {
 
   @media (max-width: $breakpoint-middle) {
     max-width: 100vw;
-    padding: 0 $container-padding-middle;
+    // padding: 0 $container-padding-middle;
   }
 
-  @media (max-width: $breakpoint-tiny) {
-    padding: 0 $container-padding-tiny;
-  }
+  // @media (max-width: $breakpoint-tiny) {
+  //   padding: 0 $container-padding-tiny;
+  // }
 }
 
 h1, h2, h3, h4 {

@@ -2,16 +2,17 @@
   width: 100vw;
   height: calc(100vh - #{$header-height});
   box-sizing: border-box;
+  overflow: hidden;
 
   margin-left: calc((#{$breakpoint-middle} - 100vw) / 2 - #{$container-padding});
 
   @media (max-width: $breakpoint-middle) {
-    margin-left: -$container-padding-middle;
+    margin-left: -$container-padding;
   }
 
-  @media (max-width: $breakpoint-tiny) {
-    margin-left: -$container-padding-tiny;
-  }
+  // @media (max-width: $breakpoint-tiny) {
+  //   margin-left: -$container-padding-tiny;
+  // }
 
   .react-parallax-content,
   .react-parallax-background-children {
@@ -52,7 +53,7 @@
     padding: 3em;
     box-sizing: border-box;
 
-    width: 100%;
+    width: 100vw;
 
     z-index: 20;
   }

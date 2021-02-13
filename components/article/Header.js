@@ -17,21 +17,36 @@ const ArticleHeader = (props) => {
   const backgroundPortraitImage = generateBackgroundImageCSSString(portraitImage || image, from, to);
 
   return (
-    <Parallax
-      strength={300}
-      className="article-header"
-    >
-      <Background className="article-header-background-wrapper-landscape">
+    <div className="article-header">
+      <div className="article-header-background-wrapper-landscape">
         <div className="article-header-background" style={{ backgroundImage: backgroundLandscapeImage }} />
-      </Background>
-      <Background className="article-header-background-wrapper-portrait">
+      </div>
+      <div className="article-header-background-wrapper-portrait">
         <div className="article-header-background" style={{ backgroundImage: backgroundPortraitImage }} />
-      </Background>
+      </div>
       <div className="article-header-content">
         <h1 className="article-title balance-text">{props.title}</h1>
       </div>
-    </Parallax>
+    </div>
   );
+
+  // return (
+  //   <Parallax
+  //     strength={300}
+  //     blur={10}
+  //     className="article-header"
+  //   >
+  //     <Background className="article-header-background-wrapper-landscape">
+  //       <div className="article-header-background" style={{ backgroundImage: backgroundLandscapeImage }} />
+  //     </Background>
+  //     <Background className="article-header-background-wrapper-portrait">
+  //       <div className="article-header-background" style={{ backgroundImage: backgroundPortraitImage }} />
+  //     </Background>
+  //     <div className="article-header-content">
+  //       <h1 className="article-title balance-text">{props.title}</h1>
+  //     </div>
+  //   </Parallax>
+  // );
 };
 
 ArticleHeader.propTypes = {

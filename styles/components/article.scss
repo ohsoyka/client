@@ -8,11 +8,11 @@ $padding: 3em;
     color: $light-grey;
     font-size: 1.5em;
     font-weight: $font-weight-light;
-    margin: 2em 2em;
+    margin: 2em;
 
     @media (max-width: $breakpoint-middle) {
       font-size: 1.3em;
-      margin: 1.5em 0;
+      margin: 1.5em;
     }
   }
 
