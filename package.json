@@ -15,7 +15,7 @@
     "jwt-decode": "^2.2.0",
     "linakostenko": "^1.0.6",
     "moment": "^2.24.0",
-    "next": "^9.3.4",
+    "next": "^11.1.3",
     "node-sass": "^4.13.1",
     "normalize.css": "^7.0.0",
     "nprogress": "^0.2.0",
