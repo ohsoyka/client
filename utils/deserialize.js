@@ -11,20 +11,20 @@ const deserializeOne = (data, schema) => Object.keys(data).reduce((result, field
   let deserializedValue;
 
   if (Array.isArray(fieldType)) {
-    const deserialize = deserializers[fieldType[0]];
-    deserializedValue = fieldValue.map(item => deserialize(item));
+    const deserializeField = deserializers[fieldType[0]];
+    deserializedValue = fieldValue.map(item => deserializeField(item));
   } else {
-    const deserialize = deserializers[fieldType];
-    deserializedValue = deserialize(fieldValue);
+    const deserializeField = deserializers[fieldType];
+    deserializedValue = deserializeField(fieldValue);
   }
 
   return { ...result, [fieldName]: deserializedValue };
 }, {});
 
-export default (data, schema) => {
+export default function deserialize(data, schema) {
   if (Array.isArray(data)) {
     return data.map(object => deserializeOne(object, schema));
   }
 
   return deserializeOne(data, schema);
-};
+}
