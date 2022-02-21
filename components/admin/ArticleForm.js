@@ -114,7 +114,7 @@ class ArticleForm extends FormWithAutosave {
                 />
               </div>
               <div className="flex-35 margin-left">
-                <div className="margin-bottom-small smaller">Для портретної орієнтації</div>
+                <div className="margin-bottom-small smaller">Для портретної орієнтації (необов&apos;язково)</div>
                 <ImageDropzoneWithPreview
                   images={[this.state.portraitImage]}
                   limit={1}

@@ -8,17 +8,23 @@ const ArticleFooter = props => (
   <div className={`article-footer ${props.className}`}>
     <div className="text-center layout-gt-xs-row layout-align-space-between-center">
       <div className="article-footer-date">{Grammar.formatDate(props.date)}</div>
-      <ul className="article-footer-tags">
-        {
-          props.tags.map(tag => (
-            <li className="article-footer-tag" key={tag}>
-              <Link href={`tag?tag=${tag}`} as={`/tag/${tag}`}>
-                <a>#{tag}</a>
-              </Link>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        props.tags.length ?
+          (
+            <ul className="article-footer-tags">
+              {
+                props.tags.map(tag => (
+                  <li className="article-footer-tag" key={tag}>
+                    <Link href={`tag?tag=${tag}`} as={`/tag/${tag}`}>
+                      <a>#{tag}</a>
+                    </Link>
+                  </li>
+                ))
+              }
+            </ul>
+          )
+          : null
+      }
     </div>
     {props.project && <ProjectPreview {...props.project} short />}
     <hr className="article-footer-separator" />
